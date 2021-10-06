@@ -20,7 +20,7 @@
     "start-js": "react-scripts start",
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "yarn run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
-    "start": "npm-run-all -p watch-css start-js",
+    "start": "npm-run-all -p start-js watch-css",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

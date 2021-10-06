@@ -1,0 +1,52 @@
+@import "styles/_colors.scss";
+
+.sidebar-container .logo {
+  height: 50px;
+  margin: 16px;
+  background-color: $light-blue;
+}
+
+.sidebar-container.ant-layout-sider-light {
+  background: $dark-blue;
+  .ant-menu-light {
+    background: $dark-blue;
+    .ant-menu-item,
+    .ant-menu-submenu-title,
+    .ant-menu-sub {
+      background: $dark-blue;
+      color: $white;
+    }
+
+    .ant-menu-item {
+      &.ant-menu-item-active,
+      &.ant-menu-item-selected {
+        background: $dark-blue-shade-1;
+      }
+      &.ant-menu-item-selected {
+        & a,
+        span {
+          color: $light-blue;
+        }
+      }
+      & a {
+        color: $white;
+      }
+      &.ant-menu-item-active {
+        a,
+        span {
+          color: $light-blue;
+        }
+      }
+      &::after {
+        border-right: 3px solid $light-blue;
+      }
+    }
+
+    .ant-menu-submenu-active .ant-menu-submenu-arrow {
+      color: $light-blue;
+    }
+    .ant-menu-submenu-arrow {
+      color: $white;
+    }
+  }
+}

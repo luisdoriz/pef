@@ -1,4 +1,4 @@
-export const mainInitialState = { auth: false };
+export const mainInitialState = { auth: true };
 
 export const mainReducer = (state, action) => {
   let updatedState = state;
