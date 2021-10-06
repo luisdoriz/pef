@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import "antd/dist/antd.css";
 
-function App() {
+
+import Context from "./contexts/mainContext";
+import Home from "./views/Home";
+import Login from "./views/Login";
+import PrivateRoute from "./components/router/PrivateRoute";
+import PublicRoute from "./components/router/PublicRoute";
+
+import './styles/core.css';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider>
+      <Router>
+        <Switch>
+          <PublicRoute path="/login" component={Login} />
+          <PrivateRoute path="/" component={Home} />
+        </Switch>
+      </Router>
+    </Context.Provider>
   );
-}
+};
 
 export default App;
