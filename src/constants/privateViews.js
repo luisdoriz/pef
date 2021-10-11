@@ -8,6 +8,7 @@ import {
 
 import Home from "../views/Home";
 import Employees from "../views/Employees";
+import Users from "../views/Users";
 
 const views = [
   {
@@ -17,6 +18,10 @@ const views = [
   {
     path: "/settings/employees",
     component: Employees,
+  },
+  {
+    path: "/settings/users",
+    component: Users,
   },
   {
     path: "/facility/:facilityId",
@@ -60,7 +65,6 @@ const views = [
   },
   {
     path: "/settings",
-    component: Home,
     showSidebar: true,
     text: "Configuracion",
     icon: <SettingOutlined />,
