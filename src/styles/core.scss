@@ -1,14 +1,37 @@
-@import 'styles/_colors.scss';
-@import 'styles/_variables.scss';
+@import "styles/_colors.scss";
+@import "styles/_variables.scss";
 
 // *
 // Views
 // *
 body {
   background-color: $white;
+  .ant-page-header {
+    padding: 16px 0;
+  }
+  .ant-btn {
+    &.ant-btn-primary {
+      color: $white !important;
+      border-color: $dark-blue;
+      background: $dark-blue;
+      &:active,
+      &:hover {
+        border-color: $regular-blue;
+        background: $regular-blue;
+      }
+    }
+    &:active,
+    &:hover {
+      color: $regular-blue;
+      border-color: $regular-blue;
+    }
+  }
+  .ant-pagination-item-active a {
+    color: $regular-blue;
+  }
 }
 
-#root, .ant-layout {
-  height: 100%
+#root,
+.ant-layout {
+  height: 100%;
 }
-

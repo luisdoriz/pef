@@ -7,11 +7,16 @@ import {
 } from "@ant-design/icons";
 
 import Home from "../views/Home";
+import Employees from "../views/Employees";
 
 const views = [
   {
     path: "/home",
     component: Home,
+  },
+  {
+    path: "/settings/employees",
+    component: Employees,
   },
   {
     path: "/facility/:facilityId",
@@ -59,6 +64,28 @@ const views = [
     showSidebar: true,
     text: "Configuracion",
     icon: <SettingOutlined />,
+    subMenuItems: [
+      {
+        subItemText: "Edificios",
+        id: "facilities",
+        route: "/settings",
+      },
+      {
+        subItemText: "Empleados",
+        id: "employees",
+        route: "/settings",
+      },
+      {
+        subItemText: "Contagios",
+        id: "contagion",
+        route: "/settings",
+      },
+      {
+        subItemText: "Usuarios",
+        id: "users",
+        route: "/settings",
+      },
+    ],
   },
 ];
 

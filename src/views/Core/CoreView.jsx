@@ -16,7 +16,7 @@ const CoreView = () => {
     <Layout>
       <Sidebar />
       <Layout>
-        <Content style={{ marginLeft: 200, padding: 20}}>
+        <Content style={{ marginLeft: 200, padding: 24}}>
           <Switch>
             <Route exact path={"/"}>
               <h3>Please select a topic.</h3>
