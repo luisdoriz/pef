@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { Button, PageHeader, Row, Col } from 'antd';
+import { Button, PageHeader, Row } from 'antd';
 
 import { UserList, AddUser, EditUser } from "../../components/users";
 const initialUsers = []

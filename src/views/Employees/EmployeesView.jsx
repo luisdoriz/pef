@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { Button, PageHeader, Row, Col } from 'antd';
+import { Button, PageHeader, Row } from 'antd';
 
 import { EmployeeList, AddEmployee, EditEmployee } from "../../components/employees";
 const initialEmployees = [

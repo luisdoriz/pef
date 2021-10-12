@@ -1,0 +1,10 @@
+@import "styles/_colors.scss";
+.login-container {
+  padding-top: 10%;
+  .logo {
+    background-color: $dark-blue;
+    height: 100px;
+    width: auto;
+    margin-bottom: 50px;
+  }
+}
