@@ -6,7 +6,7 @@ import {
 
 import Context from '../../../contexts/mainContext';
 
-const PublicRoute = ({ component, ...props }) => {
+const PublicRoute = ({ children, ...props }) => {
   const {
     mainData,
   } = useContext(Context.Consumer);
@@ -15,7 +15,7 @@ const PublicRoute = ({ component, ...props }) => {
     <Route
       {...props}
       render={({ location }) =>
-        !auth ? component() : (
+        !auth ? children : (
           <Redirect
             to={{
               pathname: "/",

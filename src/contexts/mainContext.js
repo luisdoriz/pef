@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 
 import { mainReducer, mainInitialState } from "../reducers/mainReducer";
 
@@ -10,6 +10,9 @@ const Provider = ({ children }) => {
     mainData,
     mainDispatch,
   };
+  useEffect(() => {
+    mainDispatch({ type: "CHECK_AUTH" });
+  }, []);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
@@ -18,4 +21,4 @@ const exp = {
   Consumer: Context,
 };
 
-export default exp
+export default exp;
