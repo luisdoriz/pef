@@ -3,37 +3,13 @@ import { useState } from 'react';
 import { Button, PageHeader, Row } from 'antd';
 
 import { EmployeeList, AddEmployee, EditEmployee } from "../../components/employees";
-const initialEmployees = [
-  // {
-  //   name: "Juan Perez",
-  //   internalId: "1231",
-  //   facilityId: 1,
-  //   facilityName: "Edificio 1"
-  // },
-  // {
-  //   name: "Jaime Lopez",
-  //   internalId: "1234",
-  //   facilityId: 1,
-  //   facilityName: "Edificio 1"
-  // },
-  // {
-  //   name: "Luis Gonzalez",
-  //   internalId: "123331",
-  //   facilityId: 2,
-  //   facilityName: "Edificio 2"
-  // },
-  // {
-  //   name: "Juan 10x",
-  //   internalId: "12234532431",
-  //   facilityId: 2,
-  //   facilityName: "Edificio 2"
-  // },
-]
+import useEmployees from '../../hooks/Employees';
+
 const EmployeesView = () => {
+  const {employees, setEmployees } = useEmployees()
   const [addEmployeVisible, setAddEmployeVisible] = useState(false)
   const [editEmployeVisible, setEditEmployeVisible] = useState(false)
   const [employee, setCurrentEmployee] = useState(null)
-  const [employees, setEmployees] = useState(initialEmployees)
   const facilities = [
     {
       name: "Edificio 1",

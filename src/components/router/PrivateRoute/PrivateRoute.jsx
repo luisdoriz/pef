@@ -1,21 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import {
   Route,
   Redirect,
 } from "react-router-dom";
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
-import Context from '../../../contexts/mainContext';
+import useAuth from '../../../hooks/Auth';
 
 const PrivateRoute = ({ component, ...props }) => {
-  const {
-    mainData,
-  } = useContext(Context.Consumer);
-  const { auth } = mainData
+  const { loading, checkAuth, auth } = useAuth()
+  useEffect(() => {
+    const init = async () => checkAuth()
+    if (loading) {
+      init()
+    }
+  }, [loading, checkAuth, auth])
+  console.log(loading, auth)
+  if (loading) {
+    const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
+    return (
+      <Spin indicator={antIcon} />
+    )
+  }
   return (
     <Route
       {...props}
       render={({ location }) =>
-      auth ? component() : (
+        auth ? component() : (
           <Redirect
             to={{
               pathname: "/login",

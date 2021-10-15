@@ -1,14 +1,19 @@
 import React from 'react'
 import { Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
+import {
+  Redirect,
+} from "react-router-dom";
 
 import { SignUpForm } from '../../components/signUp';
 import { useSignUp } from '../../hooks';
 import './styles.css';
 
 const SignUpView = () => {
-  const { loading, postUser } = useSignUp();
-
+  const { loading, postUser, sendToLogin } = useSignUp();
+  if (sendToLogin) {
+    return <Redirect to='/login'/>;
+  }
   return (
     <Col className="signup-container">
       <Row justify="center">

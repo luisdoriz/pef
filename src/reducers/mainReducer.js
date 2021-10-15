@@ -5,19 +5,17 @@ export const mainReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       updatedState.auth = true;
+      localStorage.setItem("token", "Bearer " + action.payload.token);
       break;
     case "LOGOUT":
       updatedState.auth = false;
       localStorage.removeItem("token");
       break;
     case "CHECK_AUTH":
-      const token = localStorage.getItem("token");
-      if (token === "true") {
-        updatedState.auth = true;
-      }
+      updatedState.auth = true;
       break;
     default:
-      return state;
+      break;
   }
   return updatedState;
 };

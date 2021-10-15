@@ -1,18 +1,39 @@
 import { useState } from "react";
+import { notification } from "antd";
 import { createUser } from "../../data/user";
-import { useHistory } from "react-router-dom";
+
+const openNotification = (type, title, message) =>
+  notification[type]({
+    message: title,
+    description: message,
+  });
 
 export const useSignUp = () => {
   const [loading, setLoading] = useState(false);
-  const { history } = useHistory();
+  const [sendToLogin, setSendToLogin] = useState(false);
   const postUser = async (data) => {
     setLoading(true);
-    const status = await createUser(data);
+    const { status } = await createUser(data);
     console.log(status);
-    history.push("/login");
+    if (status === 201) {
+      openNotification(
+        "success",
+        "Listo",
+        "¡Su cuenta ha sido creada correctamente!"
+      );
+      setSendToLogin(true);
+    } else if (status === 409) {
+      openNotification("error", "Error", "El correo que envio ya existe.");
+    } else {
+      openNotification(
+        "error",
+        "Error",
+        "Error interno favor de intentar mas tarde."
+      );
+    }
     setLoading(false);
   };
-  return { loading, postUser };
+  return { loading, postUser, sendToLogin };
 };
 
 export default useSignUp;

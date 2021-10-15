@@ -19,7 +19,7 @@ class SignupFormView extends Component {
   onFinish = (values) => {
     const { postUser } = this.props;
     postUser(values);
-    this.onReset();
+    // this.onReset();
   };
   render() {
     const { loading } = this.props;

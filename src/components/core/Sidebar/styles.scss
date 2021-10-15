@@ -8,9 +8,10 @@
 
 .sidebar-container.ant-layout-sider-light {
   background: $dark-blue;
-  border: solid 1px $dark-blue;
+  border-right: solid 1px $dark-blue;
   .ant-menu-light {
     background: $dark-blue;
+    border-right: solid 1px #31327A;
     .ant-menu-item,
     .ant-menu-submenu-title,
     .ant-menu-sub {

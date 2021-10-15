@@ -10,9 +10,10 @@ const Provider = ({ children }) => {
     mainData,
     mainDispatch,
   };
-  useEffect(() => {
-    mainDispatch({ type: "CHECK_AUTH" });
-  }, []);
+  // useEffect(() => {
+  //   const check_auth = async () => await mainDispatch({ type: "CHECK_AUTH" });
+  //   check_auth();
+  // }, []);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
