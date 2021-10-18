@@ -1,17 +1,23 @@
-export const mainInitialState = { auth: true };
+export const mainInitialState = { auth: false };
 
 export const mainReducer = (state, action) => {
-  let updatedState = state;
+  let updatedState = { ...state };
   switch (action.type) {
-    case "login":
+    case "LOGIN":
       updatedState.auth = true;
-      return updatedState;
-    case "logout":
+      localStorage.setItem("token", "Bearer " + action.payload.token);
+      break;
+    case "LOGOUT":
       updatedState.auth = false;
-      return updatedState;
+      localStorage.removeItem("token");
+      break;
+    case "CHECK_AUTH":
+      updatedState.auth = true;
+      break;
     default:
-      return state;
+      break;
   }
+  return updatedState;
 };
 
 export default mainReducer;

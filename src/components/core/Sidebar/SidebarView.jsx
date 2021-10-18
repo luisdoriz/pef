@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Layout, Menu } from 'antd';
-
-import './styles.css';
-import views from '../../../constants/privateViews';
 import { Link } from 'react-router-dom';
+import { LogoutOutlined } from "@ant-design/icons"
+
+import views from '../../../constants/privateViews';
+import Context from '../../../contexts/mainContext';
+import './styles.css';
 
 const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
 const SidebarView = () => {
+  const { mainDispatch } = useContext(Context.Consumer)
   const renderMenuItems = () => {
     const items = []
     views.forEach((item, index) => {
@@ -56,6 +59,9 @@ const SidebarView = () => {
       <div className="logo" />
       <Menu defaultSelectedKeys={['1']} mode="inline">
         {renderMenuItems()}
+        <Item onClick={() => mainDispatch({ type: "LOGOUT" })} icon={<LogoutOutlined />}>
+          Cerrar Sesion
+        </Item>
       </Menu>
     </Sider>
   )
