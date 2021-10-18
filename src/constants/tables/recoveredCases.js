@@ -1,10 +1,6 @@
-import { Button } from 'antd';
 import {sorter, sortDirections} from './index';
-import {
-  PlusCircleOutlined
-} from "@ant-design/icons";
 
-const getCasesColumns = (seeCaseDetail) => ([
+const getRecoveredCasesColumns = () => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
@@ -20,21 +16,10 @@ const getCasesColumns = (seeCaseDetail) => ([
       title: 'Edificio', dataIndex: 'facilityName', key: 'facilityName', sorter,
       sortDirections,
     },
-    {
-      title: 'Ver detalle',
-      dataIndex: '',
-      key: 'x',
-      render: (row) => <Button
-        onClick={() => seeCaseDetail(row)}
-        type="primary"
-        shape="round"
-        icon={<PlusCircleOutlined />}
-      />,
-    },
   ]);
 
 export {
-  getCasesColumns,
+  getRecoveredCasesColumns,
 };
 
-export default getCasesColumns;
+export default getRecoveredCasesColumns;

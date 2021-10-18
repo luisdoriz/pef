@@ -1,38 +1,52 @@
 import React from 'react'
 import { useState } from 'react';
-import { Button, PageHeader, Row } from 'antd';
+import { Modal, Button, PageHeader, Row } from 'antd';
 
 import { ActiveCasesList, AddCase, RecoveredCasesList, CaseDetail } from "../../components/cases";
-const initialCases = []
+import useActiveCases from '../../hooks/Cases/useActiveCases';
+
+const initialCases = [{
+  name: "Daniel Ramirez Viesca",
+  contagionDate: "2021/10/13",
+  facilityName: "Edificio 1"
+}]
+
+const initialRCases = [{
+  name: "Camila Gonzalez Rodriguez",
+  contagionDate: "2021/09/5",
+  facilityName: "Edificio 1"
+}]
 
 const CasesView = () => {
-
+  const { response } = useActiveCases();
+  console.log(response)
   const [addCaseVisible, setAddCaseVisible] = useState(false)
   const [activeCases, setActiveCases] = useState(initialCases)
   const [caseDetailVisible, setCaseDetailVisible] = useState(false)
   const [caseDetail, setCaseDetail] = useState(null)
+  const [recoveredCases, setRecoveredCases] = useState(initialRCases)
 
   const facilities = [
     {
-    facilityName: 'edifiico1',
+    facilityName: 'Edificio 1',
     facilityId: 1,
     employees: [{
-        name: 'vato',
-        id: 1
+        name: 'Daniel Ramirez Viesca',
+        id: 506861
     },{
-        name: 'berno',
-        id: 2
+        name: 'Bernardo Cardenas Domene',
+        id: 666666
     }]
     },
     {
-    facilityName: 'edifiico2',
+    facilityName: 'Edificio 2',
     facilityId: 1,
     employees: [{
-        name: 'vato12',
-        id: 3
+        name: 'Luis Doriz Salazar',
+        id: 222222
     },{
-        name: 'berno3242',
-        id: 4
+        name: 'Mauricio De Leon Cardenas',
+        id: 444444
     }],
     }
     ]
@@ -45,6 +59,23 @@ const CasesView = () => {
   const onCloseCaseDetail = () => {
     setCaseDetailVisible(!caseDetailVisible)
     setCaseDetail(null)
+  }
+
+  const deleteCase = (prop) =>{
+    setCaseDetailVisible(false);
+    //borrar de base
+    let secondsToGo = 10;
+    const modal = Modal.success({
+      title: 'Caso borrado con éxito'
+    });
+    const timer = setInterval(() => {
+      secondsToGo -= 1;
+    }, 1000);
+    setTimeout(() => {
+      clearInterval(timer);
+      modal.destroy();
+    }, secondsToGo * 1000);
+    
   }
 
   return (
@@ -63,6 +94,7 @@ const CasesView = () => {
         activeCase={caseDetail}
         visible={caseDetailVisible}
         onClose={() => onCloseCaseDetail()}
+        deleteCase={deleteCase}
       />
       <Row justify="end">
         <Button
@@ -74,9 +106,14 @@ const CasesView = () => {
           Agregar
         </Button>
       </Row>
+      <h3>Casos activos</h3>
       <ActiveCasesList
         cases={activeCases}
         seeCaseDetail={seeCaseDetail}
+      />
+      <h3>Casos recuperados</h3>
+      <RecoveredCasesList
+        cases={recoveredCases}
       />
     </>
   )

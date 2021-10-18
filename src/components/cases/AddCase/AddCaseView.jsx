@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, DatePicker, Input, Button, Select, Row, Col } from 'antd';
+import { Modal, Form, DatePicker, Button, Select, Row, Col } from 'antd';
 import moment from 'moment'
 
 const { Option, OptGroup } = Select;
@@ -63,9 +63,14 @@ class AddCaseView extends Component {
                   showSearch
                   placeholder="Selecciona el empleado"
                   allowClear
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>{
+                    if(option.children){
+                      return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 ? true : false;
+                    }else if(option.label){
+                      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0 ? true : false;
+                    }
+                    }}
                 >
                   {facilities.map(({facilityName, employees}) => (
                     <OptGroup label={facilityName}>
