@@ -23,6 +23,37 @@ const getRecoveredCases = async () => {
   }
 };
 
-export { getActiveCases, getRecoveredCases };
+const getEmployeesFacilities = async () => {
+  try {
+    const url = REACT_APP_API_URL + "/persons/employees";
+    const { data } = await axios.get(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+const postCase = async (raw_body) => {
+  try {
+    const url = REACT_APP_API_URL + "/cases";
+    const body = { ...raw_body };
+    const { data: { data } } = await axios.post(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+const deleteCase = async ({idCase}) => {
+  try {
+    const url = REACT_APP_API_URL + `/cases/${idCase}`;
+    const { data: { data } } = await axios.delete(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+export { getActiveCases, getRecoveredCases, getEmployeesFacilities, postCase, deleteCase };
 
 export default getActiveCases;

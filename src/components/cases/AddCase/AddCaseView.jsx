@@ -38,11 +38,10 @@ class AddCaseView extends Component {
   }
 
   onFinish = (values) => {
-    const { setActiveCases } = this.props;
-    const date = values.contagionDate.format('YYYY/MM/DD');
-    values.contagionDate = date;
-    console.log(values);
-    setActiveCases(values);
+    const { addCase } = this.props;
+    const date = values.date.format('YYYY/MM/DD');
+    const body = { idEmployee: values.idEmployee, date: date}
+    addCase(body);
     this.onReset()
   };
 
@@ -58,7 +57,7 @@ class AddCaseView extends Component {
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
             <Col span={24}>
-            <Form.Item name="employeeId" label="Empleado" rules={[{ required: true, }]}>
+            <Form.Item name="idEmployee" label="Empleado" rules={[{ required: true, }]}>
                 <Select
                   showSearch
                   placeholder="Selecciona el empleado"
@@ -74,8 +73,8 @@ class AddCaseView extends Component {
                 >
                   {facilities.map(({facilityName, employees}) => (
                     <OptGroup label={facilityName}>
-                      {employees.map(({name, id }) => (
-                        <Option value={id}>{name}</Option>
+                      {employees.map(({name, idEmployee }) => (
+                        <Option value={idEmployee}>{name}</Option>
                       ))}
                     </OptGroup>
                   ))}
@@ -84,7 +83,7 @@ class AddCaseView extends Component {
             </Col>
             <Col span={24}>
               <Form.Item
-                name="contagionDate"
+                name="date"
                 label="Fecha de prueba positiva"
                 rules={[
                   { type: 'date',

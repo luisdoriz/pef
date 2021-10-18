@@ -57,7 +57,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase }) => {
                     </Col>
                     <Col >
                         <h3>Fecha</h3>
-                        <p>{activeCase?.contagionDate}</p>
+                        <p>{activeCase?.date.substring(0,10)}</p>
                     </Col>
                     <Col >
                         <h3>Edificio</h3>
