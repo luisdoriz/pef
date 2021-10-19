@@ -9,6 +9,8 @@ import {
 import Home from "../views/Home";
 import Employees from "../views/Employees";
 import Users from "../views/Users";
+import Cases from "../views/Cases";
+import Alerts from "../views/Alerts"
 
 const views = [
   {
@@ -51,14 +53,14 @@ const views = [
   },
   {
     path: "/alerts",
-    component: Home,
+    component: Alerts,
     showSidebar: true,
     text: "Alertas",
     icon: <BellOutlined />,
   },
   {
-    path: "/contagion",
-    component: Home,
+    path: "/cases",
+    component: Cases,
     showSidebar: true,
     text: "Contagios",
     icon: <MedicineBoxOutlined />,
@@ -77,11 +79,6 @@ const views = [
       {
         subItemText: "Empleados",
         id: "employees",
-        route: "/settings",
-      },
-      {
-        subItemText: "Contagios",
-        id: "contagion",
         route: "/settings",
       },
       {

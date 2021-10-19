@@ -12,7 +12,7 @@ const getUserColumns = (editUser) => [
     sortDirections,
   },
   {
-    title: "Apellido",
+    title: "Apellidos",
     dataIndex: "lastName",
     key: "lastName",
     sorter,
@@ -26,7 +26,14 @@ const getUserColumns = (editUser) => [
     sortDirections,
   },
   {
-    title: "Action",
+    title: "Rol",
+    dataIndex: "roleName",
+    key: "roleName",
+    sorter,
+    sortDirections,
+  },
+  {
+    title: "Editar",
     dataIndex: "",
     key: "x",
     render: (row) => (

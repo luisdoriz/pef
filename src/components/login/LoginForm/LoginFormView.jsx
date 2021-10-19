@@ -13,8 +13,6 @@ const validateMessages = {
 class LoginForm extends Component {
   formRef = React.createRef();
   onReset = () => {
-    const { onClose } = this.props;
-    onClose()
     this.formRef.current.resetFields();
   };
 
@@ -24,6 +22,7 @@ class LoginForm extends Component {
     this.onReset();
   };
   render() {
+    const { loading } = this.props;
     return (
       <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
         <Form.Item
@@ -50,11 +49,11 @@ class LoginForm extends Component {
           <Input type="password" />
         </Form.Item>
         <Row justify="center">
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Iniciar Sesion
-              </Button>
-            </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading}>
+              Iniciar Sesion
+            </Button>
+          </Form.Item>
         </Row>
       </Form>
     )
