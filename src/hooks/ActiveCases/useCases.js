@@ -9,7 +9,7 @@ const openNotification = (type, title, message) =>
   });
 
 export const useCases = () => {
-  const [aCases, setCases] = useState([]);
+  const [activeCases, setCases] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,9 +18,9 @@ export const useCases = () => {
       setCases(response.data);
       setLoading(false)
     };
-    if (aCases.length === 0 && loading)
+    if (activeCases.length === 0 && loading)
       fetchActiveCases();
-  },[aCases, loading]);
+  },[activeCases, loading]);
 
   const postActiveCase = async (body) => {
     const { status } = await postCase(body);
@@ -61,7 +61,7 @@ export const useCases = () => {
   }
   
   return {
-    aCases,
+    activeCases,
     setCases,
     postActiveCase,
     deleteActiveCase

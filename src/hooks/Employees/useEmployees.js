@@ -2,12 +2,6 @@ import { useEffect, useState } from "react";
 import { notification } from "antd";
 import getEmployees from "../../data/employees";
 
-const openNotification = (type, title, message) =>
-  notification[type]({
-    message: title,
-    description: message,
-  });
-
 export const useEmployees = () => {
   const [addEmployeVisible, setAddEmployeVisible] = useState(false);
   const [editEmployeVisible, setEditEmployeVisible] = useState(false);
@@ -29,6 +23,7 @@ export const useEmployees = () => {
     employee,
     setCurrentEmployee,
     employees,
+    setEmployees
   };
 };
 

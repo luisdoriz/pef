@@ -11,7 +11,7 @@ export const useEmployeesFacilities = () => {
       setFacilities(response.data);
       setLoading(false)
     };
-    if (facilities.length ==0 && loading)
+    if (facilities.length === 0 && loading)
       fetchEmployees();
   },[facilities, loading]);
 

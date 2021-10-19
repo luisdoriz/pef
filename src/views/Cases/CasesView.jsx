@@ -9,8 +9,8 @@ import useEmployeesFacilities from '../../hooks/EmployeeFacility/useEmployeesFac
 
 const CasesView = () => {
 
-  const { aCases, postActiveCase, loading, deleteActiveCase } = useActiveCases();
-  const { rCases } = useRecoveredCases();
+  const { activeCases, postActiveCase, loading, deleteActiveCase } = useActiveCases();
+  const { recoveredCases } = useRecoveredCases();
   
   const { facilities } = useEmployeesFacilities();
   const [addCaseVisible, setAddCaseVisible] = useState(false)
@@ -67,13 +67,13 @@ const CasesView = () => {
       </Row>
       <h3>Casos activos</h3>
       <ActiveCasesList
-        cases={aCases}
+        cases={activeCases}
         seeCaseDetail={seeCaseDetail}
         loading={loading}
       />
       <h3>Casos recuperados</h3>
       <RecoveredCasesList
-        cases={rCases}
+        cases={recoveredCases}
         loading={loading}
       />
     </>

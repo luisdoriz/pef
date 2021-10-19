@@ -25,7 +25,7 @@ const getRecoveredCases = async () => {
 
 const getEmployeesFacilities = async () => {
   try {
-    const url = REACT_APP_API_URL + "/persons/employees";
+    const url = REACT_APP_API_URL + "/employees/facilities";
     const { data } = await axios.get(url);
     return data;
   } catch ({ response }) {

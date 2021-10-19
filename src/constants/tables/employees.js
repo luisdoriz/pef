@@ -14,21 +14,28 @@ const getEmployeesColumns = (facilities, editEmployee) => ([
       sortDirections,
     },
     {
+      title: 'Apellidos',
+      dataIndex: 'lastNames',
+      key: 'lastNames',
+      sorter,
+      sortDirections
+    },
+    {
       title: 'Matricula', dataIndex: 'internalId', key: 'internalId', sorter,
       sortDirections,
     },
     {
-      title: 'Rol', dataIndex: 'role', key: 'role', sorter,
+      title: 'Rol', dataIndex: 'privilegeLevel', key: 'privilegeLevel', sorter,
       sortDirections,
     },
     {
-      title: 'Beacon Mac Address', dataIndex: 'beaconMacAddress', key: 'beaconMacAddress', sorter,
+      title: 'Beacon MAC Address', dataIndex: 'beaconMacAddress', key: 'beaconMacAddress', sorter,
       sortDirections,
     },
     {
       title: 'Edificio',
-      dataIndex: 'facilityId',
-      key: 'facilityId',
+      dataIndex: 'facilityName',
+      key: 'facilityName',
       sorter,
       sortDirections,
       filters: facilities.map(({ name, id }) => ({ text: name, value: id })),
@@ -36,7 +43,7 @@ const getEmployeesColumns = (facilities, editEmployee) => ([
       render: (facilityId) => facilities.find(x => x.id === facilityId)?.name,
     },
     {
-      title: 'Action',
+      title: 'Editar',
       dataIndex: '',
       key: 'x',
       render: (row) => <Button

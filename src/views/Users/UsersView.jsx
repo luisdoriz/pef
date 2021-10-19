@@ -9,7 +9,7 @@ const UsersView = () => {
   const [editUserVisible, setEditUserVisible] = useState(false)
   const [user, setCurrentUser] = useState(null)
   const [users, setUsers] = useState(initialUsers)
-
+  const roles = [{idRole: 1, name: "Obrero"}, {idRole: 2, name: "Supervisor"}]
   const editUser = (prop) => {
     setCurrentUser(prop)
     setEditUserVisible(true)
@@ -29,6 +29,7 @@ const UsersView = () => {
         setUsers={(e) => setUsers([e, ...users])}
         visible={addUserVisible}
         onClose={() => setAddUserVisible(!addUserVisible)}
+        roles={roles}
       />
       <EditUser
         user={user}
