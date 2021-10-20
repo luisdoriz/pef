@@ -1,24 +1,29 @@
 import React from 'react'
 import { useState } from 'react';
 import { Button, PageHeader, Row } from 'antd';
-
+import useUsers from '../../hooks/Users/useUsers';
 import { UserList, AddUser, EditUser } from "../../components/users";
-const initialUsers = []
+
 const UsersView = () => {
+  
+  const { users, postUser, roles, removeUser, editUser } = useUsers();
   const [addUserVisible, setAddUserVisible] = useState(false)
   const [editUserVisible, setEditUserVisible] = useState(false)
   const [user, setCurrentUser] = useState(null)
-  const [users, setUsers] = useState(initialUsers)
-  const roles = [{idRole: 1, name: "Obrero"}, {idRole: 2, name: "Supervisor"}]
-  const editUser = (prop) => {
+
+  const setEditUser = (prop) => {
     setCurrentUser(prop)
     setEditUserVisible(true)
   }
 
   const onCloseEditUser = () => {
     setEditUserVisible(!editUserVisible)
-    setCurrentUser(null)
   }
+
+  const addUser = (prop) => {
+    postUser(prop);
+  }
+
   return (
     <>
       <PageHeader
@@ -26,7 +31,7 @@ const UsersView = () => {
         title="Configuracion"
         subTitle="Usuarios" />
       <AddUser
-        setUsers={(e) => setUsers([e, ...users])}
+        addUser={addUser}
         visible={addUserVisible}
         onClose={() => setAddUserVisible(!addUserVisible)}
         roles={roles}
@@ -35,6 +40,10 @@ const UsersView = () => {
         user={user}
         visible={editUserVisible}
         onClose={() => onCloseEditUser()}
+        removeUser={removeUser}
+        editUser={editUser}
+        roles={roles}
+        setEditUserVisible={setEditUserVisible}
       />
       <Row justify="end">
         <Button
@@ -48,7 +57,7 @@ const UsersView = () => {
       </Row>
       <UserList
         users={users}
-        editUser={editUser}
+        editUser={setEditUser}
       />
     </>
   )

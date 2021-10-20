@@ -1,3 +1,3 @@
-import Hook from "./useActiveCases"
+import Hook from "./useCases"
 
 export default Hook

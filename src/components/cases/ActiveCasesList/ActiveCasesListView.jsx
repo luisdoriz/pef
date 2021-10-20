@@ -7,7 +7,6 @@ import {
 
 const ActiveCasesListView = ({ cases, seeCaseDetail, loading }) => {
   const columns = getCasesColumns(seeCaseDetail)
-  
   if(loading){
     return (
       <div style={{ paddingTop: 16 }}>
