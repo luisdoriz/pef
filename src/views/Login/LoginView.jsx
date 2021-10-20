@@ -1,17 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Row, Col } from 'antd';
+import { Link } from 'react-router-dom';
 
 import { LoginForm } from '../../components/login';
-import Context from '../../contexts/mainContext';
+import useLogin from '../../hooks';
 import './styles.css';
 
 const LoginView = () => {
-  const { mainDispatch } = useContext(Context.Consumer);
-
-  const postLogin = (values) => {
-    console.log(values)
-    mainDispatch({ type: "login" })
-  }
+  const { loading, postLogin } = useLogin();
   return (
     <Col className="login-container">
       <Row justify="center">
@@ -19,8 +15,11 @@ const LoginView = () => {
       </Row>
       <Row justify="center">
         <Col span={8}>
-          <LoginForm postLogin={postLogin} />
+          <LoginForm postLogin={postLogin} loading={loading} />
         </Col>
+      </Row>
+      <Row justify="center">
+        <Link to="/signup"><h4>Crear Cuenta</h4></Link>
       </Row>
     </Col>
   )

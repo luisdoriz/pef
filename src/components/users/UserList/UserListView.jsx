@@ -2,7 +2,7 @@ import React from 'react'
 import { Table } from 'antd';
 import { getUserColumns } from '../../../constants/tables';
 
-const EmployeeListView = ({ users, editUser }) => {
+const UserListView = ({ users, editUser }) => {
   const columns = getUserColumns(editUser)
   return (
     <div style={{ paddingTop: 16 }}>
@@ -11,4 +11,4 @@ const EmployeeListView = ({ users, editUser }) => {
   )
 }
 
-export default EmployeeListView
+export default UserListView

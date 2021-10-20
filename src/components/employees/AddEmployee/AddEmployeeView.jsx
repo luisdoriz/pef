@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
 import { Modal, Form, Input, Button, Select, Row, Col } from 'antd';
+import { AddEmployee } from '..';
 
 const { Option } = Select;
 
@@ -8,7 +9,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -24,14 +25,14 @@ class AddEmployeeView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const {setEmployees} = this.props;
-    setEmployees(values);
+    const { addEmployee } = this.props;
+    addEmployee(values)
     this.onReset()
   };
   render() {
     const { visible, onClose, facilities } = this.props;
     return (
-      <Modal footer={null} title="Añadir Empleado" visible={visible} onCancel={onClose}>
+      <Modal footer={null} title="Añadir empleado" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
             <Col span={12}>
@@ -63,7 +64,7 @@ class AddEmployeeView extends Component {
             <Col span={12}>
               <Form.Item
                 name="email"
-                label="Direccion de correo electronico"
+                label="Dirección de correo electrónico"
                 rules={[
                   {
                     type: 'email',
@@ -77,7 +78,7 @@ class AddEmployeeView extends Component {
             <Col span={12}>
               <Form.Item
                 name="beaconMacAddress"
-                label="Direccion MAC (Beacon)"
+                label="Dirección MAC (Beacon)"
                 rules={[
                   { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
                 ]}
