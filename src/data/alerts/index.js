@@ -13,6 +13,16 @@ const getAlerts = async () => {
   }
 };
 
-export { getAlerts };
+const deleteAlert = async ({idAlert}) => {
+  try {
+    const url = REACT_APP_API_URL + `/alerts/${idAlert}`;
+    const { data: { data } } = await axios.delete(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+export { getAlerts, deleteAlert };
 
 export default getAlerts;

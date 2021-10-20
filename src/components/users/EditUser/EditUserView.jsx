@@ -1,6 +1,10 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Input, Button, Row, Col } from 'antd';
+import { Modal, Form, Input, Button, Row, Col, Popconfirm, Select } from 'antd';
+import {
+  DeleteOutlined
+} from "@ant-design/icons";
+const { Option } = Select;
 
 const validateMessages = {
   required: '¡${label} es requerido!',
@@ -35,32 +39,42 @@ class EditEmployeeView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    console.log(values);
-    this.onReset()
+    this.onReset();
+    const { editUser, user } = this.props;
+    editUser({idUser:user.idUser, ...values});
   };
+
+  deleteUser = (user) => {
+    const { removeUser, setEditUserVisible } = this.props;
+    const idUser = user.idUser;
+    removeUser(idUser);
+    setEditUserVisible(false);
+  }
+  
   render() {
-    const { visible, onClose } = this.props;
+    const { visible, onClose, user, roles } = this.props;
     return (
-      <Modal footer={null} title="Editar Empleado" visible={visible} onCancel={onClose}>
-        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
+      <Modal footer={null} title="Editar usuario" visible={visible} onCancel={onClose}>
+       <Row justify="end">
+        <Popconfirm
+          title="¿Seguro que quieres borrar esta alerta?"
+          onConfirm={() => this.deleteUser(user)}
+          okText="Confirmar"
+          cancelText="Cancelar"
+          >
+          <Button
+            type="danger"
+            shape="round"
+            icon={<DeleteOutlined />}
+        />
+        </Popconfirm>
+        </Row>
+        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{paddingTop:16}}>
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item
                 name="name"
                 label="Nombre"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="lastName"
-                label="Apellido"
                 rules={[
                   {
                     required: true,
@@ -82,6 +96,23 @@ class EditEmployeeView extends Component {
                 ]}
               >
                 <Input placeholder="ejemplo@correo.com" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+            <Form.Item name="idRole" label="Rol" rules={[{ required: true, }]}>
+                <Select
+                  showSearch
+                  placeholder="Selecciona el rol"
+                  allowClear
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {roles.map(({idRole, name}) => (
+                    <Option value={idRole}>{name}</Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={24} style={{

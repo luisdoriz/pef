@@ -4,8 +4,13 @@ import useAlerts from '../../hooks/Alerts/useAlerts';
 import { AlertsList } from "../../components/alerts";
 
 const AlertsView = () => {
-    //const alerts = [{type: "Llegada tardía", date: "2021/10/18", IdEmployee: 1, employeeName: "Daniel Ramirez"}]
-    const { alerts } = useAlerts();
+    
+    const { alerts, removeAlert } = useAlerts();
+    console.log(alerts)
+    const deleteAlert = (prop) =>{
+      removeAlert( {idAlert: prop.idAlert} );
+    }
+
   return (
     <>
       <PageHeader
@@ -14,6 +19,7 @@ const AlertsView = () => {
         />
       <AlertsList
         alerts={alerts}
+        deleteAlert={deleteAlert}
       />
     </>
   )

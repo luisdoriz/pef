@@ -6,7 +6,7 @@ import { EmployeeList, AddEmployee, EditEmployee } from "../../components/employ
 import useEmployees from '../../hooks/Employees';
 
 const EmployeesView = () => {
-  const {employees, setEmployees } = useEmployees()
+  const {employees, privilegeLevels, postNewEmployee } = useEmployees();
   const [addEmployeVisible, setAddEmployeVisible] = useState(false)
   const [editEmployeVisible, setEditEmployeVisible] = useState(false)
   const [employee, setCurrentEmployee] = useState(null)
@@ -30,6 +30,11 @@ const EmployeesView = () => {
     setEditEmployeVisible(!editEmployeVisible)
     setCurrentEmployee(null)
   }
+
+  const addEmployee = (prop) => {
+    postNewEmployee(prop);
+  }
+
   return (
     <>
       <PageHeader
@@ -37,7 +42,7 @@ const EmployeesView = () => {
         title="Configuracion"
         subTitle="Empleados" />
       <AddEmployee
-        setEmployees={(e) => setEmployees([e, ...employees])}
+        addEmployee={addEmployee}
         facilities={facilities}
         visible={addEmployeVisible}
         onClose={() => setAddEmployeVisible(!addEmployeVisible)}

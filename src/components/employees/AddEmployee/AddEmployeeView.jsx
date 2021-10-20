@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
 import { Modal, Form, Input, Button, Select, Row, Col } from 'antd';
+import { AddEmployee } from '..';
 
 const { Option } = Select;
 
@@ -24,8 +25,8 @@ class AddEmployeeView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const {setEmployees} = this.props;
-    setEmployees(values);
+    const { addEmployee } = this.props;
+    addEmployee(values)
     this.onReset()
   };
   render() {

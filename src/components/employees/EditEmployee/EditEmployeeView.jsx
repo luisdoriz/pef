@@ -37,7 +37,7 @@ class EditEmployeeView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    console.log(values);
+    
     this.onReset()
   };
   render() {

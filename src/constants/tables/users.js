@@ -12,13 +12,6 @@ const getUserColumns = (editUser) => [
     sortDirections,
   },
   {
-    title: "Apellidos",
-    dataIndex: "lastName",
-    key: "lastName",
-    sorter,
-    sortDirections,
-  },
-  {
     title: "Correo",
     dataIndex: "email",
     key: "email",

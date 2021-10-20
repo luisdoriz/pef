@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { notification } from "antd";
-import { createUser } from "../../data/user";
+import { createAdmin } from "../../data/user";
 
 const openNotification = (type, title, message) =>
   notification[type]({
@@ -13,8 +13,7 @@ export const useSignUp = () => {
   const [sendToLogin, setSendToLogin] = useState(false);
   const postUser = async (data) => {
     setLoading(true);
-    const { status } = await createUser(data);
-    console.log(status);
+    const { status } = await createAdmin(data);
     if (status === 201) {
       openNotification(
         "success",

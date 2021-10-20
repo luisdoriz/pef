@@ -23,9 +23,8 @@ class AddUserView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { setUsers } = this.props;
-    setUsers(values);
-    console.log(values);
+    const { addUser } = this.props;
+    addUser(values);
     this.onReset()
   };
   render() {
@@ -34,7 +33,7 @@ class AddUserView extends Component {
       <Modal footer={null} title="Añadir Usuario" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item
                 name="name"
                 label="Nombre"
@@ -47,20 +46,7 @@ class AddUserView extends Component {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={24}>
-              <Form.Item
-                name="lastName"
-                label="Apellido"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
+            <Col span={12}>
               <Form.Item
                 name="email"
                 label="Direccion de correo electronico"
@@ -74,8 +60,8 @@ class AddUserView extends Component {
                 <Input placeholder="ejemplo@correo.com" />
               </Form.Item>
             </Col>
-            <Col span={24}>
-            <Form.Item name="role" label="Rol" rules={[{ required: true, }]}>
+            <Col span={12}>
+            <Form.Item name="idRole" label="Rol" rules={[{ required: true, }]}>
                 <Select
                   showSearch
                   placeholder="Selecciona el rol"
@@ -89,6 +75,46 @@ class AddUserView extends Component {
                     <Option value={idRole}>{name}</Option>
                   ))}
                 </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+            <Form.Item
+                name="password"
+                label="Contraseña"
+                rules={[
+                  {
+                    required: true,
+                  },
+                  {
+                    pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+                    message: '¡La contraseña debe de tener minimo 1 letra en mayuscula, 1 en minuscula, 1 digito y debe de contener al menos 8 caracteres!',
+                  }
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
+              </Col>
+              <Col span={12}>
+              <Form.Item
+                name="confirmPassword"
+                dependencies={['password']}
+                label="Confirma contraseña"
+                rules={[
+                  {
+                    required: true,
+                    message: '¡Favor de confirmar contraseña!',
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('La contraseña introducida no coincide con la definida anteriormente!'));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
               </Form.Item>
             </Col>
             <Col span={24} style={{

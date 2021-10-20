@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAlerts } from "../../data/alerts";
+import { getAlerts, deleteAlert } from "../../data/alerts";
 
 export const useAlerts = () => {
   const [alerts, setAlerts] = useState([]);
@@ -14,9 +14,15 @@ export const useAlerts = () => {
     if (alerts.length === 0 && loading)
       fetchAlerts();
   },[alerts, loading]);
-  
+
+  const removeAlert = async (body) => {
+    const { status } = await deleteAlert(body);
+    setLoading(true);
+    setAlerts(alerts)
+  }
+
   return {
-    alerts,
+    alerts, removeAlert
   };
 };
 
