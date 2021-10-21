@@ -5,8 +5,8 @@ import {
   LoadingOutlined
 } from "@ant-design/icons";
 
-const ActiveCasesListView = ({ cases, seeCaseDetail, loading }) => {
-  const columns = getCasesColumns(seeCaseDetail)
+const ActiveCasesListView = ({ cases, seeCaseDetail, loading, facilities }) => {
+  const columns = getCasesColumns(seeCaseDetail, facilities)
   if(loading){
     return (
       <div style={{ paddingTop: 16 }}>

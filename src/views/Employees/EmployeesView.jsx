@@ -67,6 +67,7 @@ const EmployeesView = () => {
         employees={employees}
         facilities={facilities}
         editEmployee={setEditEmployee}
+        roles={privilegeLevels}
       />
     </>
   )

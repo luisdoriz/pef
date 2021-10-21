@@ -5,7 +5,7 @@ import {
 
 import {sorter, sortDirections} from './index';
 
-const getEmployeesColumns = (facilities, editEmployee) => ([
+const getEmployeesColumns = (facilities, editEmployee,roles) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
@@ -27,6 +27,8 @@ const getEmployeesColumns = (facilities, editEmployee) => ([
     {
       title: 'Rol', dataIndex: 'privilegeLevel', key: 'privilegeLevel', sorter,
       sortDirections,
+      filters: roles.map(({ name }) => ({ text: name, value: name })),
+      onFilter: (value, record) => record.privilegeLevel === value,
     },
     {
       title: 'Beacon MAC Address', dataIndex: 'macAddress', key: 'macAddress', sorter,
@@ -36,10 +38,9 @@ const getEmployeesColumns = (facilities, editEmployee) => ([
       title: 'Edificio',
       dataIndex: 'facilityName',
       key: 'facilityName',
-      sorter,
-      sortDirections,
-      filters: facilities.map(({ name, id }) => ({ text: name, value: id })),
-      onFilter: (value, record) => record.facilityId === value,
+      sorter, sortDirections,
+      filters: facilities.map(({ name }) => ({ text: name, value: name })),
+      onFilter: (value, record) => record.facilityName === value,
     },
     {
       title: 'Editar',

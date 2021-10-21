@@ -1,6 +1,6 @@
 import {sorter, sortDirections} from './index';
 
-const getRecoveredCasesColumns = () => ([
+const getRecoveredCasesColumns = (facilities) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
@@ -16,6 +16,8 @@ const getRecoveredCasesColumns = () => ([
     {
       title: 'Edificio', dataIndex: 'facilityName', key: 'facilityName', sorter,
       sortDirections,
+      filters: facilities.map(({ facilityName }) => ({ text: facilityName, value: facilityName })),
+      onFilter: (value, record) => record.facilityName === value,
     },
   ]);
 

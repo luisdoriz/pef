@@ -58,6 +58,7 @@ const UsersView = () => {
       <UserList
         users={users}
         editUser={setEditUser}
+        roles={roles}
       />
     </>
   )
