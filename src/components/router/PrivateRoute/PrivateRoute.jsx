@@ -9,14 +9,13 @@ import { LoadingOutlined } from '@ant-design/icons';
 import useAuth from '../../../hooks/Auth';
 
 const PrivateRoute = ({ component, ...props }) => {
-  const { loading, checkAuth, auth } = useAuth()
+  const { loading, checkAuth, auth, user } = useAuth()
   useEffect(() => {
     const init = async () => checkAuth()
     if (loading) {
       init()
     }
   }, [loading, checkAuth, auth])
-  console.log(loading, auth)
   if (loading) {
     const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
     return (
@@ -27,7 +26,7 @@ const PrivateRoute = ({ component, ...props }) => {
     <Route
       {...props}
       render={({ location }) =>
-        auth ? component() : (
+        auth ? component({ user }) : (
           <Redirect
             to={{
               pathname: "/login",

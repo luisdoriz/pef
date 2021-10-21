@@ -1,6 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { getUsers, getRoles, createUser, deleteUser, putUser } from "../../data/user";
-import { notification } from "antd";
 
 export const useUsers = () => {
   const [users, setUsers] = useState([]);

@@ -6,14 +6,14 @@ import Context from "../../contexts/mainContext";
 export const useAuth = () => {
   const [loading, setLoading] = useState(true);
   const { mainDispatch, mainData } = useContext(Context.Consumer);
-  const { auth } = mainData;
+  const { auth, user} = mainData;
   const checkAuth = async () => {
     const token = localStorage.getItem("token");
     if (token) {
       axios.defaults.headers.common.Authorization = token;
-      const { status } = await getUser();
+      const { status, data } = await getUser();
       if (status === 200) {
-        mainDispatch({ type: "CHECK_AUTH" });
+        mainDispatch({  type: "CHECK_AUTH", payload: data.data.users[4]});
         setLoading(false);
         return true;
       }
@@ -22,7 +22,7 @@ export const useAuth = () => {
     setLoading(false);
     return false;
   };
-  return { loading, checkAuth, auth };
+  return { loading, checkAuth, auth, user };
 };
 
 export default useAuth;

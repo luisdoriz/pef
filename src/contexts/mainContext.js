@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer } from "react";
 
 import { mainReducer, mainInitialState } from "../reducers/mainReducer";
 
@@ -10,10 +10,6 @@ const Provider = ({ children }) => {
     mainData,
     mainDispatch,
   };
-  // useEffect(() => {
-  //   const check_auth = async () => await mainDispatch({ type: "CHECK_AUTH" });
-  //   check_auth();
-  // }, []);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 

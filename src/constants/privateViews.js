@@ -10,27 +10,16 @@ import Home from "../views/Home";
 import Employees from "../views/Employees";
 import Users from "../views/Users";
 import Cases from "../views/Cases";
-import Alerts from "../views/Alerts"
+import Alerts from "../views/Alerts";
 
 const views = [
-  {
-    path: "/home",
-    component: Home,
-  },
-  {
-    path: "/settings/employees",
-    component: Employees,
-  },
-  {
-    path: "/settings/users",
-    component: Users,
-  },
   {
     path: "/facility/:facilityId",
     component: Home,
     showSidebar: true,
     text: "Edificios",
     icon: <BankOutlined />,
+    access: [2, 3],
     subMenuItems: [
       {
         subItemText: "Edificio 1",
@@ -50,6 +39,7 @@ const views = [
     showSidebar: true,
     text: "Reportes",
     icon: <FileOutlined />,
+    access: [2, 3],
   },
   {
     path: "/alerts",
@@ -57,6 +47,7 @@ const views = [
     showSidebar: true,
     text: "Alertas",
     icon: <BellOutlined />,
+    access: [2, 3],
   },
   {
     path: "/cases",
@@ -64,12 +55,13 @@ const views = [
     showSidebar: true,
     text: "Contagios",
     icon: <MedicineBoxOutlined />,
+    access: [2, 3],
   },
   {
-    path: "/settings",
     showSidebar: true,
     text: "Configuracion",
     icon: <SettingOutlined />,
+    access: [2],
     subMenuItems: [
       {
         subItemText: "Edificios",
@@ -80,14 +72,49 @@ const views = [
         subItemText: "Empleados",
         id: "employees",
         route: "/settings",
+        path: "/settings/employees",
+        component: Employees,
       },
       {
         subItemText: "Usuarios",
         id: "users",
         route: "/settings",
+        path: "/settings/users",
+        component: Users,
       },
     ],
   },
 ];
+export const getRoutes = (idRole) => {
+  const routes = [];
+  views.forEach((viewItem) => {
+    const { subMenuItems, access } = viewItem;
+    if (access.includes(idRole)) {
+      const hasNestedRoutes = typeof subMenuItems !== "undefined";
+      if (hasNestedRoutes) {
+        subMenuItems.forEach((subMenuItem) => {
+          const { component } = subMenuItem;
+          if (typeof component !== "undefined") {
+            routes.push(subMenuItem);
+          }
+        });
+      } else {
+        routes.push(viewItem);
+      }
+    }
+  });
+  return routes;
+};
 
-export default views;
+export const getSidebarContent = (idRole) => {
+  const content = [];
+  views.forEach((viewItem) => {
+    const { access } = viewItem;
+    if (access.includes(idRole)) {
+      content.push(viewItem);
+    }
+  });
+  return content;
+};
+
+export default getRoutes;

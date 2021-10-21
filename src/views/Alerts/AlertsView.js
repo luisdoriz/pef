@@ -1,28 +1,21 @@
-import React from 'react'
-import { PageHeader } from 'antd';
-import useAlerts from '../../hooks/Alerts/useAlerts';
+import React from "react";
+import { PageHeader } from "antd";
+import useAlerts from "../../hooks/Alerts/useAlerts";
 import { AlertsList } from "../../components/alerts";
 
-const AlertsView = () => {
-    
-    const { alerts, removeAlert } = useAlerts();
-    console.log(alerts)
-    const deleteAlert = (prop) =>{
-      removeAlert( {idAlert: prop.idAlert} );
-    }
+const AlertsView = ({ user }) => {
+  const { idRole } = user;
+  const { alerts, removeAlert } = useAlerts();
+  const deleteAlert = (prop) => {
+    removeAlert({ idAlert: prop.idAlert });
+  };
 
   return (
     <>
-      <PageHeader
-        onBack={null}
-        title="Alertas"
-        />
-      <AlertsList
-        alerts={alerts}
-        deleteAlert={deleteAlert}
-      />
+      <PageHeader onBack={null} title="Alertas" />
+      <AlertsList idRole={idRole} alerts={alerts} deleteAlert={deleteAlert} />
     </>
-  )
-}
+  );
+};
 
-export default AlertsView
+export default AlertsView;

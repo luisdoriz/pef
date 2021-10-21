@@ -7,11 +7,12 @@ import useActiveCases from '../../hooks/ActiveCases/useCases';
 import useRecoveredCases from '../../hooks/RecoveredCases/useRecoveredCases';
 import useEmployeesFacilities from '../../hooks/EmployeeFacility/useEmployeesFacilities';
 
-const CasesView = () => {
+const CasesView = ({ user }) => {
+  const { idRole } = user;
 
   const { activeCases, postActiveCase, loading, deleteActiveCase } = useActiveCases();
   const { recoveredCases } = useRecoveredCases();
-  
+
   const { facilities } = useEmployeesFacilities();
   const [addCaseVisible, setAddCaseVisible] = useState(false)
   const [caseDetailVisible, setCaseDetailVisible] = useState(false)
@@ -31,8 +32,8 @@ const CasesView = () => {
     setCaseDetail(null)
   }
 
-  const deleteCase = (prop) =>{
-    deleteActiveCase( {idCase: prop.idCase} );
+  const deleteCase = (prop) => {
+    deleteActiveCase({ idCase: prop.idCase });
     setCaseDetailVisible(false);
 
   }
@@ -54,8 +55,9 @@ const CasesView = () => {
         visible={caseDetailVisible}
         onClose={() => onCloseCaseDetail()}
         deleteCase={deleteCase}
+        idRole={idRole}
       />
-      <Row justify="end">
+      {idRole === 2 && (<Row justify="end">
         <Button
           type="primary"
           size="large"
@@ -64,7 +66,7 @@ const CasesView = () => {
         >
           Agregar
         </Button>
-      </Row>
+      </Row>)}
       <h3>Casos activos</h3>
       <ActiveCasesList
         cases={activeCases}

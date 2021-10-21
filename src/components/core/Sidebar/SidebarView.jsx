@@ -3,15 +3,17 @@ import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { LogoutOutlined } from "@ant-design/icons"
 
-import views from '../../../constants/privateViews';
+import { getSidebarContent } from '../../../constants/privateViews';
 import Context from '../../../contexts/mainContext';
 import './styles.css';
 
 const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
-const SidebarView = () => {
+const SidebarView = ({ user }) => {
   const { mainDispatch } = useContext(Context.Consumer)
+  const { idRole } = user;
+  const views = getSidebarContent(idRole);
   const renderMenuItems = () => {
     const items = []
     views.forEach((item, index) => {
