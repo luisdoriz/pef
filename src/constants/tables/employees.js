@@ -29,7 +29,7 @@ const getEmployeesColumns = (facilities, editEmployee) => ([
       sortDirections,
     },
     {
-      title: 'Beacon MAC Address', dataIndex: 'beaconMacAddress', key: 'beaconMacAddress', sorter,
+      title: 'Beacon MAC Address', dataIndex: 'macAddress', key: 'macAddress', sorter,
       sortDirections,
     },
     {
@@ -40,7 +40,6 @@ const getEmployeesColumns = (facilities, editEmployee) => ([
       sortDirections,
       filters: facilities.map(({ name, id }) => ({ text: name, value: id })),
       onFilter: (value, record) => record.facilityId === value,
-      render: (facilityId) => facilities.find(x => x.id === facilityId)?.name,
     },
     {
       title: 'Editar',
