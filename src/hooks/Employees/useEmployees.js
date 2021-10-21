@@ -34,7 +34,7 @@ export const useEmployees = () => {
 
   const postNewEmployee = async (body) => {
     const response = await postBeacon({macAddress:body.macAddress, idPrivilegeLevel: body.idPrivilegeLevel});
-    const { status } = await createEmployee({idBeacon: response.idBeacon, ...body});
+    const status = await createEmployee({idBeacon: response.idBeacon, ...body});
     setLoading(true);
     setEmployees([])
     if (status === 201) {

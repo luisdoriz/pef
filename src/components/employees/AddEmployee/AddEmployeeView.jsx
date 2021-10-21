@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
 import { Modal, Form, Input, Button, Select, Row, Col } from 'antd';
+import MaskedInput from 'antd-mask-input'
 
 const { Option } = Select;
 
@@ -25,9 +26,32 @@ class AddEmployeeView extends Component {
   }
   onFinish = (values) => {
     const { addEmployee } = this.props;
+
+    const fName = values.name.split(' ');
+    for (var i = 0; i < fName.length; i++) {
+      fName[i] = fName[i].charAt(0).toUpperCase() + fName[i].slice(1);
+    }
+    const ucName = fName.join(' ');
+
+    const fLName = values.firstLastName.split(' ');
+    for (var i = 0; i < fLName.length; i++) {
+      fLName[i] = fLName[i].charAt(0).toUpperCase() + fLName[i].slice(1);
+    }
+    const uc1LName = fLName.join(' ');
+
+    const sLName = values.secondLastName.split(' ');
+    for (var i = 0; i < sLName.length; i++) {
+      sLName[i] = sLName[i].charAt(0).toUpperCase() + sLName[i].slice(1);
+    }
+    const uc2LName = sLName.join(' ');
+
+    values.name = ucName;
+    values.firstLastName = uc1LName;
+    values.secondLastName = uc2LName;
     addEmployee(values)
     this.onReset()
   };
+
   render() {
     const { visible, onClose, facilities, roles } = this.props;
     return (
@@ -87,17 +111,18 @@ class AddEmployeeView extends Component {
                 <Input placeholder="ejemplo@correo.com" />
               </Form.Item>
             </Col>
+            
             <Col span={12}>
               <Form.Item
                 name="macAddress"
                 label="Dirección MAC (Beacon)"
                 rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
+                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
                 ]}
               >
-                <Input placeholder="00:00:00:00:00:00" />
+                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>
               </Form.Item>
-            </Col>
+            </Col>  
             <Col span={12}>
               <Form.Item name="idPrivilegeLevel" label="Rol" rules={[{ required: true, }]}>
                 <Select

@@ -24,6 +24,12 @@ class AddUserView extends Component {
   }
   onFinish = (values) => {
     const { addUser } = this.props;
+    const names = values.name.split(' ');
+    for (var i = 0; i < names.length; i++) {
+      names[i] = names[i].charAt(0).toUpperCase() + names[i].slice(1);
+   }
+    const ucName = names.join(' ');
+    values.name = ucName;
     addUser(values);
     this.onReset()
   };
