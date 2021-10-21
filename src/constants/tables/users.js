@@ -3,7 +3,7 @@ import { EditOutlined } from "@ant-design/icons";
 
 import { sorter, sortDirections } from "./index";
 
-const getUserColumns = (editUser) => [
+const getUserColumns = (editUser, roles) => [
   {
     title: "Nombre",
     dataIndex: "name",
@@ -24,6 +24,8 @@ const getUserColumns = (editUser) => [
     key: "roleName",
     sorter,
     sortDirections,
+    filters: roles.map(({ name }) => ({ text: name, value: name })),
+      onFilter: (value, record) => record.roleName === value,
   },
   {
     title: "Editar",

@@ -72,11 +72,13 @@ const CasesView = ({ user }) => {
         cases={activeCases}
         seeCaseDetail={seeCaseDetail}
         loading={loading}
+        facilities={facilities}
       />
       <h3>Casos recuperados</h3>
       <RecoveredCasesList
         cases={recoveredCases}
         loading={loading}
+        facilities={facilities}
       />
     </>
   )

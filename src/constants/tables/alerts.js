@@ -10,11 +10,8 @@ const getAlertsColumns = (alerts, deleteAlert, idRole) => {
       key: "type",
       sorter,
       sortDirections,
-      filters: alerts.map(({ type, idAlert }) => ({
-        text: type,
-        value: idAlert,
-      })),
-      onFilter: (value, record) => record.idAlert === value,
+      filters: alerts.map(({ type }) => ({ text: type, value: type })),
+      onFilter: (value, record) => record.type === value,
     },
     {
       title: "Fecha",
@@ -37,11 +34,16 @@ const getAlertsColumns = (alerts, deleteAlert, idRole) => {
       key: "facilityName",
       sorter,
       sortDirections,
+<<<<<<< HEAD
       filters: alerts.map(({ facilityName, idFacility }) => ({
         text: facilityName,
         value: idFacility,
       })),
       onFilter: (value, record) => record.idFacility === value,
+=======
+      filters: alerts.map(({ facilityName }) => ({ text: facilityName, value: facilityName })),
+      onFilter: (value, record) => record.facilityName === value,
+>>>>>>> fc341fc14eb38a535db520bf30c0ff09b9776baa
     },
     {
       title: "Área",

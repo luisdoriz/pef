@@ -4,7 +4,7 @@ import {
   ArrowRightOutlined
 } from "@ant-design/icons";
 
-const getCasesColumns = (seeCaseDetail) => ([
+const getCasesColumns = (seeCaseDetail, facilities) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
@@ -20,6 +20,8 @@ const getCasesColumns = (seeCaseDetail) => ([
     {
       title: 'Edificio', dataIndex: 'facilityName', key: 'facilityName', sorter,
       sortDirections,
+      filters: facilities.map(({ facilityName }) => ({ text: facilityName, value: facilityName })),
+      onFilter: (value, record) => record.facilityName === value,
     },
     {
       title: 'Ver detalle',

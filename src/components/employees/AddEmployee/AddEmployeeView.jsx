@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
 import { Modal, Form, Input, Button, Select, Row, Col } from 'antd';
+import MaskedInput from 'antd-mask-input'
 
 const { Option } = Select;
 
@@ -25,11 +26,34 @@ class AddEmployeeView extends Component {
   }
   onFinish = (values) => {
     const { addEmployee } = this.props;
+
+    const fName = values.name.split(' ');
+    for (var i = 0; i < fName.length; i++) {
+      fName[i] = fName[i].charAt(0).toUpperCase() + fName[i].slice(1);
+    }
+    const ucName = fName.join(' ');
+
+    const fLName = values.firstLastName.split(' ');
+    for (var i = 0; i < fLName.length; i++) {
+      fLName[i] = fLName[i].charAt(0).toUpperCase() + fLName[i].slice(1);
+    }
+    const uc1LName = fLName.join(' ');
+
+    const sLName = values.secondLastName.split(' ');
+    for (var i = 0; i < sLName.length; i++) {
+      sLName[i] = sLName[i].charAt(0).toUpperCase() + sLName[i].slice(1);
+    }
+    const uc2LName = sLName.join(' ');
+
+    values.name = ucName;
+    values.firstLastName = uc1LName;
+    values.secondLastName = uc2LName;
     addEmployee(values)
     this.onReset()
   };
+
   render() {
-    const { visible, onClose, facilities } = this.props;
+    const { visible, onClose, facilities, roles } = this.props;
     return (
       <Modal footer={null} title="Añadir empleado" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
@@ -49,8 +73,21 @@ class AddEmployeeView extends Component {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="lastName"
-                label="Apellido"
+                name="firstLastName"
+                label="Apellido paterno"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name="secondLastName"
+                label="Apellido materno"
                 rules={[
                   {
                     required: true,
@@ -74,30 +111,43 @@ class AddEmployeeView extends Component {
                 <Input placeholder="ejemplo@correo.com" />
               </Form.Item>
             </Col>
+            
             <Col span={12}>
               <Form.Item
-                name="beaconMacAddress"
+                name="macAddress"
                 label="Dirección MAC (Beacon)"
                 rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
+                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
                 ]}
               >
-                <Input placeholder="00:00:00:00:00:00" />
+                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>
+              </Form.Item>
+            </Col>  
+            <Col span={12}>
+              <Form.Item name="idPrivilegeLevel" label="Rol" rules={[{ required: true, }]}>
+                <Select
+                  showSearch
+                  placeholder="Selecciona el rol"
+                  allowClear
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {roles.map(({idPrivilegeLevel, name}) => (
+                    <Option value={idPrivilegeLevel}>{name}</Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="role" label="Rol">
-                <Input placeholder="Obrero, supervisor, lider, etc.." />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="facilityId" label="Edificio" rules={[{ required: true, }]}>
+              <Form.Item name="idFacility" label="Edificio" rules={[{ required: true, }]}>
                 <Select
                   placeholder="Selecciona el edificio del empleado"
                   allowClear
                 >
-                  {facilities.map(({ id, name }) => (
-                    <Option value={id}>{name}</Option>
+                  {facilities.map(({ idFacility, name }) => (
+                    <Option value={idFacility}>{name}</Option>
                   ))}
                 </Select>
               </Form.Item>

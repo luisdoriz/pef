@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {createEmployee, getEmployees, getPrivilegeLevel} from "../../data/employees";
+import { getEmployees, createEmployee, getPrivilegeLevel, putEmployee, postBeacon, deleteEmployee } from "../../data/employees";
 import { notification } from "antd";
 
 const openNotification = (type, title, message) =>
@@ -9,9 +9,7 @@ const openNotification = (type, title, message) =>
   });
 
 export const useEmployees = () => {
-  const [addEmployeVisible, setAddEmployeVisible] = useState(false);
-  const [editEmployeVisible, setEditEmployeVisible] = useState(false);
-  const [employee, setCurrentEmployee] = useState(null);
+  const [facilities, setFacilities] = useState(null);
   const [employees, setEmployees] = useState([]);
   const [privilegeLevels, setPrivilegeLevels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,8 +31,10 @@ export const useEmployees = () => {
     setPrivilegeLevels(response.data)
 
   }
+
   const postNewEmployee = async (body) => {
-    const { status } = await createEmployee(body);
+    const response = await postBeacon({macAddress:body.macAddress, idPrivilegeLevel: body.idPrivilegeLevel});
+    const status = await createEmployee({idBeacon: response.idBeacon, ...body});
     setLoading(true);
     setEmployees([])
     if (status === 201) {
@@ -52,17 +52,27 @@ export const useEmployees = () => {
     }
   }
 
+  const editEmployee = async (body) => {
+    console.log(body);
+    const status  = await putEmployee(body);
+    setLoading(true);
+    setEmployees([]);
+  }
+
+  const removeEmployee = async (body) => {
+    const  status  = await deleteEmployee(body);
+    setLoading(true);
+    setEmployees([])
+  }
+
   return {
-    addEmployeVisible,
-    setAddEmployeVisible,
-    editEmployeVisible,
-    setEditEmployeVisible,
-    employee,
-    setCurrentEmployee,
     employees,
-    setEmployees,
+    facilities,
+    setFacilities,
     privilegeLevels,
-    postNewEmployee
+    postNewEmployee,
+    editEmployee,
+    removeEmployee
   };
 };
 

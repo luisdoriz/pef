@@ -4,7 +4,7 @@ require("dotenv").config();
 const { REACT_APP_API_URL } = process.env;
 const createEmployee = async (body) => {
   try {
-    const url = REACT_APP_API_URL + "/employees";
+    const url = REACT_APP_API_URL + "/persons/employee";
     const {
       data: { data },
     } = await axios.post(url, body);
@@ -16,7 +16,7 @@ const createEmployee = async (body) => {
 
 const getEmployees = async () => {
   try {
-    const url = REACT_APP_API_URL + "/employees";
+    const url = REACT_APP_API_URL + "/persons/employees";
     const { data } = await axios.get(url);
     return data;
   } catch ({ response }) {
@@ -34,7 +34,42 @@ const getPrivilegeLevel = async () => {
   }
 };
 
+const putEmployee = async (raw_body) => {
+  try {
+    const url = REACT_APP_API_URL + `/persons/employee/${raw_body.idEmployee}`;
+    const body = { ...raw_body };
+    const {
+      data: { data },
+    } = await axios.put(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
 
-export { getEmployees, createEmployee, getPrivilegeLevel };
+const deleteEmployee = async (idEmployee) => {
+  try {
+    const url = REACT_APP_API_URL + `/persons/employee/${idEmployee}`;
+    const { data: { data } } = await axios.delete(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
 
-export default getEmployees;
+const postBeacon = async (body) => {
+  try {
+    const url = REACT_APP_API_URL + "/beacons";
+    const {
+      data: { data },
+    } = await axios.post(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+
+export { getEmployees, createEmployee, getPrivilegeLevel, deleteEmployee, putEmployee, postBeacon };
+
+export default createEmployee;
