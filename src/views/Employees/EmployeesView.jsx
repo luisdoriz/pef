@@ -6,6 +6,7 @@ import { EmployeeList, AddEmployee, EditEmployee } from "../../components/employ
 import useEmployees from '../../hooks/Employees';
 
 const EmployeesView = () => {
+  // eslint-disable-next-line no-unused-vars
   const {employees, privilegeLevels, postNewEmployee } = useEmployees();
   const [addEmployeVisible, setAddEmployeVisible] = useState(false)
   const [editEmployeVisible, setEditEmployeVisible] = useState(false)

@@ -1,7 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
 import { Modal, Form, Input, Button, Select, Row, Col } from 'antd';
-import { AddEmployee } from '..';
 
 const { Option } = Select;
 

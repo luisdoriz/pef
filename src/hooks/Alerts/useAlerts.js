@@ -16,6 +16,7 @@ export const useAlerts = () => {
   },[alerts, loading]);
 
   const removeAlert = async (body) => {
+    // eslint-disable-next-line no-unused-vars
     const { status } = await deleteAlert(body);
     setLoading(true);
     setAlerts(alerts)
