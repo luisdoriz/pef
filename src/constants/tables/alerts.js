@@ -34,16 +34,8 @@ const getAlertsColumns = (alerts, deleteAlert, idRole) => {
       key: "facilityName",
       sorter,
       sortDirections,
-<<<<<<< HEAD
-      filters: alerts.map(({ facilityName, idFacility }) => ({
-        text: facilityName,
-        value: idFacility,
-      })),
-      onFilter: (value, record) => record.idFacility === value,
-=======
       filters: alerts.map(({ facilityName }) => ({ text: facilityName, value: facilityName })),
       onFilter: (value, record) => record.facilityName === value,
->>>>>>> fc341fc14eb38a535db520bf30c0ff09b9776baa
     },
     {
       title: "Área",
