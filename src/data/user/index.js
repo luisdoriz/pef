@@ -57,7 +57,7 @@ const sendLogin = async (body) => {
 
 const getUser = async () => {
   try {
-    const url = REACT_APP_API_URL + "/users";
+    const url = REACT_APP_API_URL + "/users/individual";
     const response = await axios.get(url);
     return response;
   } catch ({ response }) {

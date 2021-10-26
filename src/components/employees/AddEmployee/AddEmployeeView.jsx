@@ -34,14 +34,14 @@ class AddEmployeeView extends Component {
     const ucName = fName.join(' ');
 
     const fLName = values.firstLastName.split(' ');
-    for (var i = 0; i < fLName.length; i++) {
-      fLName[i] = fLName[i].charAt(0).toUpperCase() + fLName[i].slice(1);
+    for (var index = 0; index < fLName.length; index++) {
+      fLName[index] = fLName[index].charAt(0).toUpperCase() + fLName[index].slice(1);
     }
     const uc1LName = fLName.join(' ');
 
     const sLName = values.secondLastName.split(' ');
-    for (var i = 0; i < sLName.length; i++) {
-      sLName[i] = sLName[i].charAt(0).toUpperCase() + sLName[i].slice(1);
+    for (var slNameIndex = 0; slNameIndex < sLName.length; slNameIndex++) {
+      sLName[slNameIndex] = sLName[slNameIndex].charAt(0).toUpperCase() + sLName[slNameIndex].slice(1);
     }
     const uc2LName = sLName.join(' ');
 
