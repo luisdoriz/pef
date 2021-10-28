@@ -1,0 +1,99 @@
+import React, { useState, useEffect } from 'react'
+
+const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, setAddRoomVisible, setRooms, currentRoom, setCurrentRoom }) => {
+  const [point, setCurrentPoint] = useState(null);
+  // if (points.length === 0) {
+  //   return null
+  // }
+  const printCoordinates = (e) => {
+    const { clientX: x, clientY: y } = e
+    const rect = e.target.getBoundingClientRect()
+    const { left, top, height } = rect
+    const formattedX = Math.round(((x - left) / height) * range)
+    const formattedY = Math.round(((height - (y - top)) / height) * range)
+
+    const coords = { x: formattedX, y: formattedY }
+    const newPoints = points
+    const points_array = Object.values(newPoints)
+    let id = points_array.length + 1
+    const matchingIndex = points_array.findIndex((c) => c.x === coords.x & c.y === coords.y)
+    if (matchingIndex === -1) {
+      newPoints[id] = coords
+      setPoints(newPoints)
+    } else {
+        id = matchingIndex + 1
+    }
+
+    if (point === null) {
+      setCurrentPoint(id)
+    } else {
+        const wall = [point, id]
+        setCurrentPoint(id)
+        const newWalls = walls
+        newWalls.push(wall)
+        if (
+          newWalls.filter((wallItem) => (
+            wallItem.includes(point) & wallItem.includes(id)
+          ))
+            .length === 0) {
+          newWalls.push(wall)
+          setWalls(newWalls)
+        }
+    }
+    if(matchingIndex === 0){
+      let newRooms = rooms;
+      newRooms.push({vertices:[], edges: []});
+      setRooms(newRooms);
+      setPoints({});
+      setWalls([]);
+      setCurrentPoint(null);
+      setAddRoomVisible(true);
+      
+    }
+    else{
+      let newRoom = currentRoom;
+      newRoom = {vertices: points, edges: walls};
+      setCurrentRoom(newRoom);
+      let newRooms = rooms;
+      if(rooms.length > 0){
+        newRooms[rooms.length-1] = newRoom;
+      }
+      else{
+        newRooms.push(newRoom);
+      }
+      setRooms(newRooms);
+    }
+  }
+  return (
+    <div className="blueprintmap-container">
+      <svg height="100%" width="100%" onClick={printCoordinates} viewBox="0 0 400 400">
+        {rooms.map((room) => (
+          <>
+          {Object.values(room.vertices).map(({ x, y }) => (<circle cx={`${(x * range)}%`} cy={`${(100 - (y * range))}%`} r="2" fill="black" />))}
+          {Object.values(room.edges).map(( wall ) => (
+            <line
+              x1={`${room.vertices[wall[0]].x * range}%`}
+              y1={`${100 - (room.vertices[wall[0]].y * range)}%`}
+              x2={`${room.vertices[wall[1]].x * range}%`}
+              y2={`${100 - (room.vertices[wall[1]].y * range)}%`}
+              style={{ stroke: "rgb(255, 0, 0)", strokeWidth: 2 }}
+            />
+          ))}
+          </>
+        ))}
+        <defs>
+          <pattern id="smallGrid" width="8" height="8" patternUnits="userSpaceOnUse">
+            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="gray" stroke-width="0.5" />
+          </pattern>
+          <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+            <rect width="80" height="80" fill="url(#smallGrid)" />
+            <path d="M 80 0 L 0 0 0 80" fill="none" stroke="gray" stroke-width="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
+  )
+}
+
+export default BluePrintMapView

@@ -8,7 +8,6 @@ export const useEmployeesFacilities = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await getEmployeesFacilities();
-      console.log(response.data)
       setFacilities(response.data);
       setLoading(false)
     };

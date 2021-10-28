@@ -28,7 +28,7 @@ const UsersView = () => {
     <>
       <PageHeader
         onBack={null}
-        title="Configuracion"
+        title="Configuración"
         subTitle="Usuarios" />
       <AddUser
         addUser={addUser}

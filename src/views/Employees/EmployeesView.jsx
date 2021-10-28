@@ -34,7 +34,7 @@ const EmployeesView = () => {
     <>
       <PageHeader
         onBack={null}
-        title="Configuracion"
+        title="Configuración"
         subTitle="Empleados" />
       <AddEmployee
         addEmployee={addEmployee}
