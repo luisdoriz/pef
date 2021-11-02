@@ -3,29 +3,21 @@ import {
   EditOutlined
 } from "@ant-design/icons";
 
-import {sorter, sortDirections} from './index';
-
 const getAreasColumns = ( editArea ) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
-      sorter,
-      sortDirections,
     },
     {
         title: 'Tiempo límite',
         dataIndex: 'timeLimit',
         key: 'timeLimit',
-        sorter,
-        sortDirections,
     },
     {
         title: 'Capacidad máxima',
         dataIndex: 'maxCapacity',
         key: 'maxCapacity',
-        sorter,
-        sortDirections,
       },
     {
       title: 'Editar',

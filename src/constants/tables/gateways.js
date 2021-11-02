@@ -3,29 +3,21 @@ import {
   EditOutlined
 } from "@ant-design/icons";
 
-import {sorter, sortDirections} from './index';
-
 const getGatewaysColumns = ( editGateway ) => ([
     {
       title: 'Dirección MAC',
       dataIndex: 'macAddress',
       key: 'macAddress',
-      sorter,
-      sortDirections,
     },
     {
         title: 'Coordenada x',
         dataIndex: 'x',
         key: 'x',
-        sorter,
-        sortDirections,
     },
     {
         title: 'Coordenada y',
         dataIndex: 'y',
         key: 'y',
-        sorter,
-        sortDirections,
       },
     {
       title: 'Editar',

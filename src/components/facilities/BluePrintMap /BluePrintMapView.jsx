@@ -1,4 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { intersect, insideArea } from "../../../helpers/determineArea"
+import { notification } from "antd";
+
+const openNotification = (type, title, message) =>
+  notification[type]({
+    message: title,
+    description: message,
+  });
+
+const areEqual = (obj1, obj2) => {
+    if(obj1 === null){
+      return false;
+    }
+    return (obj1.x === obj2.x && obj1.y === obj2.y)
+}
 
 const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, setAddRoomVisible, setRooms, currentRoom, setCurrentRoom }) => {
   const [point, setCurrentPoint] = useState(null);
@@ -6,62 +21,87 @@ const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, se
   //   return null
   // }
   const printCoordinates = (e) => {
+    let intersects = false;
     const { clientX: x, clientY: y } = e
     const rect = e.target.getBoundingClientRect()
     const { left, top, height } = rect
     const formattedX = Math.round(((x - left) / height) * range)
     const formattedY = Math.round(((height - (y - top)) / height) * range)
-
     const coords = { x: formattedX, y: formattedY }
+    let prevPoint = null;
+    if(point !== null)
+      prevPoint = currentRoom.vertices[point]
+    rooms.map((room) => (
+      Object.values(room.edges).map(( wall ) => {
+      if(room.vertices1 !== [] && prevPoint){
+        const bool = intersect(room.vertices[wall[0]],room.vertices[wall[1]], prevPoint, coords)
+        if(bool === true)
+          intersects = bool;
+        return bool;
+        }
+      }
+      )
+    ))
+    
     const newPoints = points
     const points_array = Object.values(newPoints)
     let id = points_array.length + 1
     const matchingIndex = points_array.findIndex((c) => c.x === coords.x & c.y === coords.y)
-    if (matchingIndex === -1) {
-      newPoints[id] = coords
-      setPoints(newPoints)
-    } else {
-        id = matchingIndex + 1
-    }
+    if(!intersects && !areEqual(prevPoint, coords) || (matchingIndex === 0 && points_array.length >= 3)){
+      if (matchingIndex === -1) {
+        newPoints[id] = coords
+        setPoints(newPoints)
+      } else {
+          id = matchingIndex + 1
+      }
 
-    if (point === null) {
-      setCurrentPoint(id)
-    } else {
-        const wall = [point, id]
+      if (point === null) {
         setCurrentPoint(id)
-        const newWalls = walls
-        newWalls.push(wall)
-        if (
-          newWalls.filter((wallItem) => (
-            wallItem.includes(point) & wallItem.includes(id)
-          ))
-            .length === 0) {
+      } else {
+          const wall = [point, id]
+          setCurrentPoint(id)
+          const newWalls = walls
           newWalls.push(wall)
-          setWalls(newWalls)
-        }
-    }
-    if(matchingIndex === 0){
-      let newRooms = rooms;
-      newRooms.push({vertices:[], edges: []});
-      setRooms(newRooms);
-      setPoints({});
-      setWalls([]);
-      setCurrentPoint(null);
-      setAddRoomVisible(true);
-      
-    }
-    else{
-      let newRoom = currentRoom;
-      newRoom = {vertices: points, edges: walls};
-      setCurrentRoom(newRoom);
-      let newRooms = rooms;
-      if(rooms.length > 0){
-        newRooms[rooms.length-1] = newRoom;
+          if (
+            newWalls.filter((wallItem) => (
+              wallItem.includes(point) & wallItem.includes(id)
+            ))
+              .length === 0) {
+            newWalls.push(wall)
+            setWalls(newWalls)
+          }
+      }
+      if(matchingIndex === 0 && points_array.length >= 3 ){
+        let newRooms = rooms;
+        newRooms.push({name:"Área actual", vertices:[], edges: []});
+        setRooms(newRooms);
+        setPoints({});
+        setWalls([]);
+        setCurrentPoint(null);
+        setAddRoomVisible(true);
+        setCurrentRoom([])
+        
       }
       else{
-        newRooms.push(newRoom);
+        let newRoom = currentRoom;
+        newRoom = { vertices: points, edges: walls};
+        setCurrentRoom(newRoom);
+        let newRooms = rooms;
+        if(rooms.length > 0){
+          newRooms[rooms.length-1] = newRoom;
+        }
+        else{
+          newRooms.push(newRoom);
+        }
+        setRooms(newRooms);
       }
-      setRooms(newRooms);
+    } 
+    else{
+      openNotification(
+        "error",
+        "Punto no válido",
+        "El punto que ingresó no es válido, revise que no intersecte otras paredes"
+      );
     }
   }
   return (

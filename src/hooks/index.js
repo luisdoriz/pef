@@ -8,7 +8,8 @@ import useEmployeeFacility from "./EmployeeFacility";
 import useRecoveredCases from "./RecoveredCases";
 import useUsers from "./Users";
 import { useFacilities, useFacility } from "./Facilities";
+import useBeacons from "./Beacons"
 
-export { useLogin, useSignUp, useEmployees, useAuth, useCases, useAlerts, useEmployeeFacility, useRecoveredCases, useUsers, useFacilities, useFacility };
+export { useLogin, useSignUp, useEmployees, useAuth, useCases, useAlerts, useEmployeeFacility, useRecoveredCases, useUsers, useFacilities, useFacility, useBeacons };
 
 export default useLogin;

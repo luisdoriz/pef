@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getEmployees, createEmployee, getPrivilegeLevel, putEmployee, postBeacon, deleteEmployee } from "../../data/employees";
+import { getEmployees, createEmployee, getPrivilegeLevel, putEmployee, deleteEmployee } from "../../data/employees";
+import { postBeacon } from "../../data/beacons";
 import { notification } from "antd";
 
 const openNotification = (type, title, message) =>
@@ -33,7 +34,7 @@ export const useEmployees = () => {
   }
 
   const postNewEmployee = async (body) => {
-    const response = await postBeacon({macAddress:body.macAddress, idPrivilegeLevel: body.idPrivilegeLevel});
+    const response = await postBeacon({macAddress:body.macAddress, idPrivilegeLevel: body.idPrivilegeLevel, idFacility: body.idFacility});
     const status = await createEmployee({idBeacon: response.idBeacon, ...body});
     setLoading(true);
     setEmployees([])

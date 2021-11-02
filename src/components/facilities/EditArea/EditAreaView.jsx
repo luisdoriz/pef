@@ -39,14 +39,14 @@ class EditAreaView extends Component {
   }
   onFinish = (values) => {
     this.onReset();
-    // const { editArea, area } = this.props;
-    // editArea({idArea:area.idArea, ...values});
+    const { editArea, area } = this.props;
+    editArea({idArea:area.idArea, ...values});
   };
 
   deleteArea = (area) => {
     const { setEditAreaVisible, removeArea } = this.props;
-    // const idArea = area.idArea;
-    // removeArea(idArea);
+    const idArea = area.idArea;
+    removeArea(idArea);
     setEditAreaVisible(false);
   }
   

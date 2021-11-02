@@ -53,7 +53,7 @@ class AddEmployeeView extends Component {
   };
 
   render() {
-    const { visible, onClose, facilities, roles } = this.props;
+    const { visible, onClose, facilities, roles, beacons } = this.props;
     return (
       <Modal footer={null} title="Añadir empleado" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
@@ -104,20 +104,36 @@ class AddEmployeeView extends Component {
                 rules={[
                   {
                     type: 'email',
-                    required: true,
+                    required: false,
                   },
                 ]}
               >
                 <Input placeholder="ejemplo@correo.com" />
               </Form.Item>
             </Col>
-            
+            <Col span={12}>
+              <Form.Item name="macAddress" label="Beacons ya registrados" rules={[{ required: true, }]}>
+                <Select
+                  showSearch
+                  placeholder="Selecciona el beacon"
+                  allowClear
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {beacons.map(({idBeacon, macAddress}) => (
+                    <Option value={idBeacon}>{macAddress}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
             <Col span={12}>
               <Form.Item
                 name="macAddress"
                 label="Dirección MAC (Beacon)"
                 rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
+                  { required: false, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
                 ]}
               >
                 <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>

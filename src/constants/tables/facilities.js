@@ -3,15 +3,14 @@ import {
   EditOutlined
 } from "@ant-design/icons";
 import { Link } from 'react-router-dom';
-import {sorter, sortDirections} from './index';
 
 const getFacilitiesColumns = ( editFacility ) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
-      sorter,
-      sortDirections,
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      defaultSortOrder: 'ascend',
     },
     {
       title: 'Editar',

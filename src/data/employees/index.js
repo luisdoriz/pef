@@ -57,19 +57,9 @@ const deleteEmployee = async (idEmployee) => {
   }
 };
 
-const postBeacon = async (body) => {
-  try {
-    const url = REACT_APP_API_URL + "/beacons";
-    const {
-      data: { data },
-    } = await axios.post(url, body);
-    return data;
-  } catch ({ response }) {
-    return response;
-  }
-};
 
 
-export { getEmployees, createEmployee, getPrivilegeLevel, deleteEmployee, putEmployee, postBeacon };
+
+export { getEmployees, createEmployee, getPrivilegeLevel, deleteEmployee, putEmployee };
 
 export default createEmployee;

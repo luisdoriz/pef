@@ -7,10 +7,9 @@ import { getAlertsColumns } from "./alerts";
 import { getFacilitiesColumns } from "./facilities"
 import { getAreasColumns } from "./areas"
 import { getGatewaysColumns } from "./gateways"
+import { getCurrentAreasColumns } from "./currentAreas"
+import { getBeaconsColumns } from "./beacons"
 
-const sorter = (a, b) => a.name.length - b.name.length;
-const sortDirections = ["descend"];
+export { getEmployeesColumns, getUserColumns,  getCasesColumns, getCloseContactsColumns, getRecoveredCasesColumns, getAlertsColumns, getFacilitiesColumns, getAreasColumns, getGatewaysColumns, getCurrentAreasColumns, getBeaconsColumns};
 
-export { sorter, sortDirections, getEmployeesColumns, getUserColumns,  getCasesColumns, getCloseContactsColumns, getRecoveredCasesColumns, getAlertsColumns, getFacilitiesColumns, getAreasColumns, getGatewaysColumns};
-
-export default sorter;
+export default getEmployeesColumns;

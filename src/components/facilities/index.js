@@ -7,6 +7,7 @@ import EditArea from "./EditArea";
 import GatewaysList from "./GatewaysList";
 import EditGateway from "./EditGateway"
 import AddGateway from "./AddGateway";
+import CurrentAreasList from "./CurrentAreasList"
 
 export {
   AddRoom,
@@ -17,7 +18,8 @@ export {
   EditArea,
   GatewaysList,
   EditGateway,
-  AddGateway
+  AddGateway,
+  CurrentAreasList
 };
 
 
