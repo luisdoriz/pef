@@ -24,10 +24,50 @@ const getEmployees = async () => {
   }
 };
 
-const getPrivilegeLevel = async () => {
+
+const postPrivilegeLevel = async (body) => {
   try {
     const url = REACT_APP_API_URL + "/persons/privilegeLevel";
+    const {
+      data: { data },
+    } = await axios.post(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+const getPrivilegeLevel = async (raw_body) => {
+  try {
+    let url
+    if(raw_body)
+      url = REACT_APP_API_URL + `/persons/privilegeLevel?idFacility=${raw_body}`;
+    else
+      url = REACT_APP_API_URL + `/persons/privilegeLevel`;
     const { data } = await axios.get(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+const putPrivilegeLevel = async (raw_body) => {
+  try {
+    const url = REACT_APP_API_URL + `/persons/privilegeLevel`;
+    const body = { ...raw_body };
+    const {
+      data: { data },
+    } = await axios.put(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+const deletePrivilegeLevel = async (idPrivilegeLevel) => {
+  try {
+    const url = REACT_APP_API_URL + `/persons/privilegeLevel/${idPrivilegeLevel}`;
+    const { data: { data } } = await axios.delete(url);
     return data;
   } catch ({ response }) {
     return response;
@@ -60,6 +100,6 @@ const deleteEmployee = async (idEmployee) => {
 
 
 
-export { getEmployees, createEmployee, getPrivilegeLevel, deleteEmployee, putEmployee };
+export { getEmployees, createEmployee, getPrivilegeLevel, deleteEmployee, putEmployee, postPrivilegeLevel, putPrivilegeLevel,deletePrivilegeLevel };
 
 export default createEmployee;

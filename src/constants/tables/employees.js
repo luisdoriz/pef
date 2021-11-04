@@ -3,7 +3,7 @@ import {
   EditOutlined
 } from "@ant-design/icons";
 
-const getEmployeesColumns = (facilities, editEmployee,roles) => ([
+const getEmployeesColumns = (facilities, editEmployee,privilegeLevels) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
@@ -19,7 +19,7 @@ const getEmployeesColumns = (facilities, editEmployee,roles) => ([
     },
     {
       title: 'Rol', dataIndex: 'privilegeLevel', key: 'privilegeLevel', 
-      filters: roles.map(({ name }) => ({ text: name, value: name })),
+      filters: privilegeLevels.map(({ name }) => ({ text: name, value: name })),
       onFilter: (value, record) => record.privilegeLevel === value,
     },
     {

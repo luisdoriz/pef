@@ -23,7 +23,7 @@ export const useBeacons = (idFacility) => {
   }
 
   const createBeacon = async (body) => {
-    const response = await postBeacon({macAddress:body.macAddress, idPrivilegeLevel: body.idPrivilegeLevel, idFacility: idFacility});
+    const response = await postBeacon({macAddress:body.macAddress, idFacility: idFacility});
     setLoading(true);
     setBeacons([])
   }
@@ -31,7 +31,8 @@ export const useBeacons = (idFacility) => {
   return {
     beacons,
     removeBeacon,
-    createBeacon
+    createBeacon,
+    loading,
   };
 };
 

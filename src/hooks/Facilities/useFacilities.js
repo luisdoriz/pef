@@ -25,7 +25,8 @@ export const useFacilities = () => {
   return {
     facilities,
     setFacilities,
-    createArea
+    createArea,
+    loading
   };
 };
 

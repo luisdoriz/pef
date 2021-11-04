@@ -16,7 +16,8 @@ export const useRecoveredCases = () => {
 
   return {
     recoveredCases,
-    setCases
+    setCases,
+    loading
   };
 };
 

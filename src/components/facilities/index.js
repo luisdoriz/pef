@@ -8,6 +8,9 @@ import GatewaysList from "./GatewaysList";
 import EditGateway from "./EditGateway"
 import AddGateway from "./AddGateway";
 import CurrentAreasList from "./CurrentAreasList"
+import RolesList from "./RolesList"
+import EditRole from "./EditRole"
+import AddRole from "./AddRole"
 
 export {
   AddRoom,
@@ -19,7 +22,10 @@ export {
   GatewaysList,
   EditGateway,
   AddGateway,
-  CurrentAreasList
+  CurrentAreasList,
+  RolesList,
+  EditRole,
+  AddRole
 };
 
 

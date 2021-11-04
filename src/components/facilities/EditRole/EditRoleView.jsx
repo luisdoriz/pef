@@ -1,9 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Input, Button, Row, Col, Popconfirm, InputNumber } from 'antd';
+import { Modal, Form, Input, Button, Row, Col, Popconfirm, Select } from 'antd';
 import {
   DeleteOutlined
 } from "@ant-design/icons";
+
+const { Option } = Select;
 
 const validateMessages = {
   required: '¡${label} es requerido!',
@@ -13,7 +15,7 @@ const validateMessages = {
   },
 };
 
-class EditAreaView extends Component {
+class EditRoleView extends Component {
   formRef = React.createRef();
   onReset = () => {
     const { onClose } = this.props;
@@ -29,8 +31,9 @@ class EditAreaView extends Component {
   }
 
   setFormState = () => {
-    const { area } = this.props
-    this.formRef.current.setFieldsValue(area);
+    const { role } = this.props
+    const areasIds = role.areas.map(({idArea}) => idArea)
+    this.formRef.current.setFieldsValue({name:role.name, areas: areasIds});
 
   }
 
@@ -39,25 +42,32 @@ class EditAreaView extends Component {
   }
   onFinish = (values) => {
     this.onReset();
-    const { editArea, area } = this.props;
-    editArea({idArea:area.idArea, ...values});
+    let name = values.name.trim();
+    name = name.split(' ');
+    
+    for(var i = 0; i<name.length; i++){
+      name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
+    }
+    values.name = name.join(' ')
+    const { editRole, role } = this.props;
+    editRole({idPrivilegeLevel:role.idPrivilegeLevel, idFacility:role.idFacility, ...values});
   };
 
-  deleteArea = (area) => {
-    const { setEditAreaVisible, removeArea } = this.props;
-    const idArea = area.idArea;
-    removeArea(idArea);
-    setEditAreaVisible(false);
+  deleteRole = (role) => {
+    const { setEditRoleVisible, removeRole } = this.props;
+    const idPrivilegeLevel = role.idPrivilegeLevel;
+    removeRole(idPrivilegeLevel);
+    setEditRoleVisible(false);
   }
   
   render() {
-    const { visible, onClose, area } = this.props;
+    const { visible, onClose, role, areas } = this.props;
     return (
-      <Modal footer={null} title="Editar área" visible={visible} onCancel={onClose}>
+      <Modal footer={null} title="Editar rol" visible={visible} onCancel={onClose}>
        <Row justify="end">
         <Popconfirm
-          title="¿Seguro que quieres borrar esta área?"
-          onConfirm={() => this.deleteArea(area)}
+          title="¿Seguro que quieres borrar este rol?"
+          onConfirm={() => this.deleteRole(role)}
           okText="Confirmar"
           cancelText="Cancelar"
           >
@@ -85,28 +95,22 @@ class EditAreaView extends Component {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="timeLimit"
-                label="Tiempo límite"
+                name="areas"
+                label="Áreas permitidas"
                 rules={[
                   {
-                    required: false,
+                    required: true,
                   },
                 ]}
               >
-                <InputNumber min={1} max={720}/>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="maxCapacity"
-                label="Capacidad máxima"
-                rules={[
-                  {
-                    required: false,
-                  },
-                ]}
-              >
-                <InputNumber min={1}/>
+                <Select 
+                  mode="multiple"
+                  placeholder="Selecciona las áreas permitidas"
+                >
+                  {areas.map(({idArea, name}) => (
+                      <Option value={idArea}>{name}</Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={24} style={{
@@ -133,4 +137,4 @@ class EditAreaView extends Component {
   }
 }
 
-export default EditAreaView
+export default EditRoleView

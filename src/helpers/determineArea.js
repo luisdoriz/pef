@@ -33,24 +33,31 @@ function areEqual(obj1, obj2){
  
 // The function that returns true if
     // line segment 'p1q1' and 'p2q2' intersect.
-function intersect(p1,q1,p2,q2){
+function intersect(p1,q1,p2,q2, isSameRoom){
         if(areEqual(p1,q2) && areEqual(q1,p2))
             return true
-        
+
     // Find the four orientations needed for
         // general and special cases
         let o1 = orientation(p1, q1, p2);
         let o2 = orientation(p1, q1, q2);
         let o3 = orientation(p2, q2, p1);
         let o4 = orientation(p2, q2, q1);
-
-        if(areEqual(p2, q1)){
-            if( o3=== 0 && o2 === 0 && onSegment(p1, q2, q1))
-                return true
-            else
-                return false
+        if(isSameRoom){
+            if(areEqual(p2, q1)){
+                if( o3=== 0 && o2 === 0 && onSegment(p1, q2, q1)){
+                    return true
+                }
+                else{
+                    return false
+                }
+            }
         }
-        
+        else {
+            if(onSegment(p1, q2, q1) || onSegment(p1, p2, q1)){
+                return false;
+            }
+        }
         if (o1 != o2 && o3 != o4){
             return true;
         }

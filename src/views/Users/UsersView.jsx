@@ -6,7 +6,7 @@ import { UserList, AddUser, EditUser } from "../../components/users";
 
 const UsersView = () => {
   
-  const { users, postUser, roles, removeUser, editUser } = useUsers();
+  const { users, postUser, roles, removeUser, editUser, loading } = useUsers();
   const [addUserVisible, setAddUserVisible] = useState(false)
   const [editUserVisible, setEditUserVisible] = useState(false)
   const [user, setCurrentUser] = useState(null)
@@ -59,6 +59,7 @@ const UsersView = () => {
         users={users}
         editUser={setEditUser}
         roles={roles}
+        loading={loading}
       />
     </>
   )

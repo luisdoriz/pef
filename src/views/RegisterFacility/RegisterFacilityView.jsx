@@ -6,7 +6,7 @@ import useFacilities from '../../hooks/Facilities';
 import './styles.css';
 
 const RegisterFacilityView = () => {
-    const { facilities, createArea } = useFacilities();
+    const { facilities, createArea, loading } = useFacilities();
     const [points, setPoints] = useState({});
     const [walls, setWalls] = useState([]);
     const [range, setRange] = useState(10); //HARDCODEADO
@@ -27,8 +27,8 @@ const RegisterFacilityView = () => {
         setRooms(newRooms)
         setCurrentRoom(null);
         let newNames = names;
-        newRooms.map((room) =>(
-            newNames.push({name: room.name})
+        newRooms.map((room, i) =>(
+            newNames.push({name: room.name, key: i})
         ))
         setNames(newNames)
     }
@@ -88,7 +88,7 @@ const RegisterFacilityView = () => {
                 <Col span={6}>
                 <h2>Áreas</h2>
                     <CurrentAreasList 
-                        areas={names}
+                        names={names}
                     />
                 </Col>
             </Row>
@@ -108,6 +108,7 @@ const RegisterFacilityView = () => {
             <FacilitiesList 
                 facilities={facilities}
                 editFacility={setEditFacility}
+                loading={loading}
             />
         </>
         }

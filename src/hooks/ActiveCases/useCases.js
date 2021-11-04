@@ -64,7 +64,8 @@ export const useCases = () => {
     activeCases,
     setCases,
     postActiveCase,
-    deleteActiveCase
+    deleteActiveCase,
+    loading
   };
 };
 

@@ -7,13 +7,14 @@ import useEmployees from '../../hooks/Employees';
 import useFacilities from '../../hooks/Facilities';
 
 const EmployeesView = () => {
-  const { employees, privilegeLevels, postNewEmployee, editEmployee, removeEmployee } = useEmployees();
   const { facilities } = useFacilities();
-  const { beacons } = useBeacons();
+  const [selectedFacility, setSelectedFacility] = useState(null)
+  const { employees, privilegeLevels, postNewEmployee, editEmployee, removeEmployee, loading:loadingEmployees } = useEmployees();
+  const { beacons } = useBeacons()
   const [addEmployeeVisible, setAddEmployeeVisible] = useState(false)
   const [editEmployeeVisible, setEditEmployeeVisible] = useState(false)
   const [employee, setCurrentEmployee] = useState(null);
-  console.log(beacons);
+
   const setEditEmployee = (prop) => {
     setCurrentEmployee(prop)
     setEditEmployeeVisible(true)
@@ -43,18 +44,22 @@ const EmployeesView = () => {
         facilities={facilities}
         visible={addEmployeeVisible}
         onClose={() => setAddEmployeeVisible(!addEmployeeVisible)}
-        roles={privilegeLevels}
+        privilegeLevels={privilegeLevels}
         beacons={beacons}
+        setSelectedFacility={setSelectedFacility}
+        selectedFacility={selectedFacility}
       />
       <EditEmployee
         employee={employee}
         facilities={facilities}
         visible={editEmployeeVisible}
         onClose={() => onCloseEditEmployee()}
-        roles={privilegeLevels}
+        privilegeLevels={privilegeLevels}
         modifyEmployee={modifyEmployee}
         removeEmployee={removeEmployee}
         setEditEmployeeVisible={setEditEmployeeVisible}
+        beacons={beacons}
+        setSelectedFacility={setSelectedFacility}
       />
       <Row justify="end">
         <Button
@@ -70,7 +75,8 @@ const EmployeesView = () => {
         employees={employees}
         facilities={facilities}
         editEmployee={setEditEmployee}
-        roles={privilegeLevels}
+        privilegeLevels={privilegeLevels}
+        loading={loadingEmployees}
       />
     </>
   )

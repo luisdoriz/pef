@@ -51,6 +51,7 @@ export const useFacility = (idFacility) => {
     createGateway,
     editGateway,
     removeGateway,
+    loading
   };
 };
 

@@ -2,12 +2,11 @@ import React from 'react'
 import { Table } from 'antd';
 import { getCurrentAreasColumns } from '../../../constants/tables';
 
-const CurrentAreasListView = ({ areas, deleteArea }) => {
-  console.log(areas)
+const CurrentAreasListView = ({ names, deleteArea }) => {
   const columns = getCurrentAreasColumns(deleteArea);
   return (
     <div >
-      <Table columns={columns} dataSource={areas} />
+      <Table columns={columns} dataSource={names} />
     </div>
   )
 }

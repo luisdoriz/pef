@@ -25,6 +25,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole }) =>
       email: "juan.10x@mail.com"
     },
   ]
+  const loading = false; //TODO: HACER CLOSE CONTACTS
   const columns = getCloseContactsColumns()
   const confirm = () => {
     deleteCase(activeCase)
@@ -67,7 +68,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole }) =>
         </Col>
         <Col style={{ paddingTop: 30 }}>
           <h2>Contactos cercanos a caso positivo</h2>
-          <Table columns={columns} dataSource={contacts} />
+          <Table columns={columns} dataSource={contacts} loading={loading} />
         </Col>
       </Col>
     </Modal>

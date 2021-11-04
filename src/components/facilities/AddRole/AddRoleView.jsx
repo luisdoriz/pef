@@ -1,13 +1,14 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Button, Row, Col, Input, InputNumber } from 'antd';
+import { Modal, Form, Button, Row, Col, Input, Select } from 'antd';
+const { Option } = Select
 
 const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
 };
 
-class AddRoomView extends Component {
+class AddRoleView extends Component {
   formRef = React.createRef();
   constructor(props) {
     super(props)
@@ -28,7 +29,7 @@ class AddRoomView extends Component {
   }
 
   onFinish = (values) => {
-    const { saveRoom } = this.props;
+    const { addRole } = this.props;
     let name = values.name.trim();
     name = name.split(' ');
     
@@ -36,17 +37,17 @@ class AddRoomView extends Component {
       name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
     }
     values.name = name.join(' ')
-    saveRoom(values);
+    addRole(values);
     this.onReset()
   };
 
   render() {
-    const { visible, onClose } = this.props;
+    const { visible, onClose, areas } = this.props;
     return (
-      <Modal footer={null} title="Agregar área" visible={visible} onCancel={onClose}>
-        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
+      <Modal footer={null} title="Editar rol" visible={visible} onCancel={onClose}>
+        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{paddingTop:16}}>
           <Row gutter={24}>
-          <Col span={12}>
+            <Col span={12}>
               <Form.Item
                 name="name"
                 label="Nombre"
@@ -61,28 +62,22 @@ class AddRoomView extends Component {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="timeLimit"
-                label="Tiempo límite (minutos)"
+                name="areas"
+                label="Áreas permitidas"
                 rules={[
                   {
-                    required: false,
+                    required: true,
                   },
                 ]}
               >
-                <InputNumber min={1} max={720}/>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="maxCapacity"
-                label="Capacidad máxima"
-                rules={[
-                  {
-                    required: false,
-                  },
-                ]}
-              >
-                <InputNumber min={1} max={720}/>
+                <Select 
+                  mode="multiple"
+                  placeholder="Selecciona las áreas permitidas"
+                >
+                  {areas.map(({idArea, name}) => (
+                      <Option value={idArea}>{name}</Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={24} style={{
@@ -109,4 +104,4 @@ class AddRoomView extends Component {
   }
 }
 
-export default AddRoomView
+export default AddRoleView

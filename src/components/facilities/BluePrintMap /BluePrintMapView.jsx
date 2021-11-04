@@ -31,17 +31,22 @@ const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, se
     let prevPoint = null;
     if(point !== null)
       prevPoint = currentRoom.vertices[point]
-    rooms.map((room) => (
+
+    let isSameRoom = false;
+    rooms.map((room, i) => {
+      if(i === rooms.length-1){
+        isSameRoom = true
+      }
       Object.values(room.edges).map(( wall ) => {
-      if(room.vertices1 !== [] && prevPoint){
-        const bool = intersect(room.vertices[wall[0]],room.vertices[wall[1]], prevPoint, coords)
-        if(bool === true)
-          intersects = bool;
-        return bool;
-        }
+        if(room.vertices1 !== [] && prevPoint){
+          const bool = intersect(room.vertices[wall[0]],room.vertices[wall[1]], prevPoint, coords, isSameRoom)
+          if(bool === true)
+            intersects = bool;
+          return bool;
+          }
       }
       )
-    ))
+    })
     
     const newPoints = points
     const points_array = Object.values(newPoints)
@@ -100,7 +105,7 @@ const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, se
       openNotification(
         "error",
         "Punto no válido",
-        "El punto que ingresó no es válido, revise que no intersecte otras paredes"
+        "El punto que ingresó no es válido, revise que no intersecte otras paredes o esté dentro de otras áreas"
       );
     }
   }

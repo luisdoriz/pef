@@ -7,16 +7,9 @@ import {
 
 const ActiveCasesListView = ({ cases, seeCaseDetail, loading, facilities }) => {
   const columns = getCasesColumns(seeCaseDetail, facilities)
-  if(loading){
-    return (
-      <div style={{ paddingTop: 16 }}>
-        <LoadingOutlined />
-      </div>
-    )
-  }
   return (
     <div style={{ paddingTop: 16 }}>
-      <Table columns={columns} dataSource={cases} />
+      <Table columns={columns} dataSource={cases} loading={loading}/>
     </div>
   )
 }
