@@ -2,9 +2,9 @@ import moment from "moment";
 import { Button } from "antd";
 import { sorter, sortDirections } from "./index";
 import { EditOutlined } from "@ant-design/icons";
-import 'moment/locale/es';
+import "moment/locale/es";
 
-moment.locale("es")
+moment.locale("es");
 
 const getVisitorColumns = (editVisitor) => [
   {
@@ -57,8 +57,16 @@ const getVisitorColumns = (editVisitor) => [
     key: "expirationDate",
     sorter,
     sortDirections,
-    render: (date) =>
-      moment(date).format("MMMM D YYYY, h:mm:ss a"),
+    render: (date) => {
+      const momentDate = moment(date);
+      const momentDateFormatted = momentDate.format("MMMM D YYYY, h:mm a");
+      if (momentDate > moment()) {
+        return momentDateFormatted;
+      }
+      return (
+        <strong style={{ color: "#AD0000" }}>{momentDateFormatted}</strong>
+      );
+    },
   },
   {
     title: "Editar",

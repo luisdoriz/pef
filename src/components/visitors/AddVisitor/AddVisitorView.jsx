@@ -10,7 +10,8 @@ import {
   Col,
   DatePicker,
   notification,
-  Popconfirm
+  Popconfirm,
+  Switch,
 } from 'antd';
 import {
   DeleteOutlined
@@ -21,7 +22,7 @@ import moment from 'moment';
 import getAvailableBeacons from '../../../data/beacons';
 import getFacilities from '../../../data/facilities';
 import getPrivilegeLevels from '../../../data/privilegeLevels';
-import { editVisitor, postVisitor } from '../../../data/visitors';
+import getVisitors, { editVisitor, postVisitor } from '../../../data/visitors';
 const { Option } = Select;
 
 const validateMessages = {
@@ -38,10 +39,14 @@ const initialState = {
   privilegeLevels: [],
   currentFacility: null,
   visitorBeacon: null,
+  registerAgain: false,
+  visitors: [],
+  visitor: null,
 }
 
 class AddVisitorView extends Component {
   formRef = React.createRef();
+  seconFormRef = React.createRef();
   constructor(props) {
     super(props)
 
@@ -50,10 +55,10 @@ class AddVisitorView extends Component {
 
 
   componentDidUpdate = (prevProps) => {
-    const { visible, type } = this.props;
+    const { visible, type, visitor } = this.props;
     if (visible && prevProps.visible === false) {
       if (type === "edit") {
-        this.setFormData()
+        this.setFormData(visitor)
       }
       this.setBeacons()
       this.setFacilites()
@@ -61,8 +66,7 @@ class AddVisitorView extends Component {
     }
   }
 
-  setFormData = () => {
-    const { visitor } = this.props;
+  setFormData = visitor => {
     const {
       email,
       expirationDate,
@@ -84,7 +88,7 @@ class AddVisitorView extends Component {
       secondLastName,
       name,
     });
-    this.setState({ visitorBeacon: { idBeacon, macAddress, idFacility } })
+    this.setState({ visitor, visitorBeacon: { idBeacon, macAddress, idFacility } })
   }
   setFacilites = async () => {
     const { data } = await getFacilities()
@@ -94,6 +98,11 @@ class AddVisitorView extends Component {
   setBeacons = async () => {
     const { data } = await getAvailableBeacons()
     this.setState({ beacons: data })
+  }
+
+  setVisitors = async () => {
+    const { data } = await getVisitors("all")
+    this.setState({ visitors: data })
   }
 
   setPrivilegeLevels = async () => {
@@ -106,6 +115,9 @@ class AddVisitorView extends Component {
     onClose()
     this.setState(initialState)
     this.formRef.current.resetFields();
+    if (this.seconFormRef?.current !== null) {
+      this.seconFormRef.current.resetFields()
+    }
   };
 
   onCancel = () => {
@@ -133,21 +145,45 @@ class AddVisitorView extends Component {
     return { ucName, uc1LName, uc2LName }
   }
 
+  desactivateVisitor = async () => {
+    const {fetchVisitors } = this.props
+    const { visitor } = this.state;
+    const { status } = await editVisitor({
+      ...visitor,
+      isActive: 0,
+    })
+    if (status === "success") {
+      this.onReset()
+      fetchVisitors()
+      notification.success({
+        message: "Exito",
+        description: "Se registro la salida de la visita con exito.",
+      })
+    } else {
+      notification.error({
+        message: "Error",
+        description: "Error interno, favor de intentarlo mas tarde."
+      })
+    }
+  }
+
   onFinish = async (values) => {
-    const { type, fetchVisitors, visitor } = this.props
+    const { type, fetchVisitors } = this.props
+    const { registerAgain, visitor } = this.state;
     const { ucName, uc1LName, uc2LName } = this.formatNames(values)
     values.name = ucName;
     values.firstLastName = uc1LName;
     values.secondLastName = uc2LName;
     let responseStatus = ""
     let description = ""
-    if (type === "add") {
+    if (type === "add" && !registerAgain) {
       const { status } = await postVisitor(values)
       responseStatus = status
       description = "La visita fue creada con exito."
-    } else if (type === "edit") {
+    } else if (type === "edit" || registerAgain) {
       const { status } = await editVisitor({
         ...values,
+        isActive: 1,
         idVisitor: visitor.idVisitor,
       })
       responseStatus = status
@@ -179,10 +215,104 @@ class AddVisitorView extends Component {
     this.onReset()
   }
 
+  setRegisterAgain = () => {
+    const { registerAgain } = this.state
+    this.setState({ registerAgain: !registerAgain })
+    if (!registerAgain) {
+      this.setVisitors()
+    }
+  }
+
+  setCurrentVisitor = (idVisitor) => {
+    const { visitors } = this.state;
+    const visitor = visitors.find((item) => item.idVisitor === idVisitor)
+    this.setFormData(visitor)
+  }
+  renderFormHeader = () => {
+    const { type } = this.props;
+    const {
+      registerAgain,
+      visitors,
+    } = this.state;
+
+    if (type === "edit") {
+      return (
+        <Row justify="end" gutter={[8]}>
+          <Col >
+            <Popconfirm
+              title="¿Desea concluir con la visita?"
+              onConfirm={() => this.desactivateVisitor()}
+              okText="Confirmar"
+              cancelText="Cancelar"
+            >
+              <Button
+                shape="round"
+              >
+                Registrar salida
+              </Button>
+            </Popconfirm>
+          </Col>
+          <Col span={3}>
+            <Popconfirm
+              title="¿Seguro que quieres borrar esta alerta?"
+              onConfirm={() => this.deleteVisitor()}
+              okText="Confirmar"
+              cancelText="Cancelar"
+            >
+              <Button
+                type="danger"
+                shape="round"
+                icon={<DeleteOutlined />}
+              />
+            </Popconfirm>
+          </Col>
+        </Row>
+      )
+    }
+    return (
+      <Form ref={this.seconFormRef} layout="vertical">
+        <Row gutter={24}>
+          <Col span={12}>
+            <Form.Item label="Registrar visita previa">
+              <Switch checked={registerAgain} onChange={this.setRegisterAgain} />
+            </Form.Item>
+          </Col>
+          {registerAgain ? (
+            <Col span={12}>
+              <Form.Item label="Eliga visita">
+                <Select
+                  showSearch
+                  // disabled={!registerAgain}
+                  placeholder="Selecciona el Beacon"
+                  allowClear
+                  onChange={this.setCurrentVisitor}
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {visitors.map(({ idVisitor, name, firstLastName, secondLastName }) => (
+                    <Option value={idVisitor}>{`${name}, ${firstLastName}, ${secondLastName}`}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          ) : null}
+        </Row >
+      </Form>
+    )
+  }
+
   render() {
     const { visible, type } = this.props;
-    const { beacons: beaconsData, visitorBeacon, facilities, currentFacility, privilegeLevels } = this.state;
-    let title = "Añadir Visita"
+    const {
+      beacons: beaconsData,
+      visitorBeacon,
+      facilities,
+      currentFacility,
+      privilegeLevels,
+    } = this.state;
+    let title = "Registrar Visita"
     let beacons = [...beaconsData]
     if (type === "edit") {
       title = "Editar Visita"
@@ -197,20 +327,7 @@ class AddVisitorView extends Component {
         visible={visible}
         onCancel={this.onCancel}
       >
-        {type === "edit" ? (<Row justify="end">
-          <Popconfirm
-            title="¿Seguro que quieres borrar esta alerta?"
-            onConfirm={() => this.deleteVisitor()}
-            okText="Confirmar"
-            cancelText="Cancelar"
-          >
-            <Button
-              type="danger"
-              shape="round"
-              icon={<DeleteOutlined />}
-            />
-          </Popconfirm>
-        </Row>) : (null)}
+        {this.renderFormHeader()}
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
             <Col span={12}>
@@ -219,8 +336,8 @@ class AddVisitorView extends Component {
                   showSearch
                   placeholder="Selecciona el edificio"
                   allowClear
-                  optionFilterProp="children"
                   onChange={this.onChangeFacility}
+                  optionFilterProp="children"
                   filterOption={(input, option) =>
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }
@@ -345,7 +462,7 @@ class AddVisitorView extends Component {
             </Col>
           </Row>
         </Form>
-      </Modal>
+      </Modal >
     )
   }
 }

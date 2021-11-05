@@ -3,9 +3,9 @@ require("dotenv").config();
 
 const { REACT_APP_API_URL } = process.env;
 
-const getVisitors = async () => {
+const getVisitors = async (query = "active") => {
   try {
-    const url = REACT_APP_API_URL + "/persons/visitors";
+    const url = REACT_APP_API_URL + `/persons/visitors?query=${query}`;
     const { data } = await axios.get(url);
     return data;
   } catch ({ response }) {
