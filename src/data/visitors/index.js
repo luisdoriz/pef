@@ -23,6 +23,26 @@ const removeVisitor = async (idVisitor) => {
   }
 };
 
-export { getVisitors, removeVisitor };
+const postVisitor = async (body) => {
+  try {
+    const url = REACT_APP_API_URL + `/persons/visitor`;
+    const { data } = await axios.post(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+const editVisitor = async (body) => {
+  try {
+    const url = REACT_APP_API_URL + `/persons/visitor`;
+    const { data } = await axios.put(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+export { getVisitors, removeVisitor, postVisitor, editVisitor };
 
 export default getVisitors;

@@ -5,9 +5,16 @@ import { useVisitors } from '../../hooks';
 
 const VisitorsViews = ({ user }) => {
   const [addVisitorVisible, setAddVisitor] = useState(false)
-  const { visitors, loading, deleteVisitor } = useVisitors()
-  if (loading) {
-    return (<p>Loading..</p>)
+  const [editVisitorVisible, setEditVisitor] = useState(false)
+  const [currentVisitor, setCurrentVisitor] = useState(null)
+  const { visitors, loading, deleteVisitor, fetchVisitors } = useVisitors()
+  const editVisitor = (visitor) => {
+    setCurrentVisitor(visitor)
+    setEditVisitor(true)
+  }
+  const onCloseEdit = () => {
+    setCurrentVisitor(null)
+    setEditVisitor(false)
   }
   return (
     <>
@@ -15,7 +22,20 @@ const VisitorsViews = ({ user }) => {
         onBack={null}
         title="Visitantes"
       />
-      <AddVisitor visible={addVisitorVisible} onClose={() => setAddVisitor(false)} />
+      <AddVisitor
+        fetchVisitors={fetchVisitors}
+        type="add"
+        visible={addVisitorVisible}
+        onClose={() => setAddVisitor(false)}
+      />
+      <AddVisitor
+        fetchVisitors={fetchVisitors}
+        type="edit"
+        visible={editVisitorVisible}
+        onClose={onCloseEdit}
+        deleteVisitor={deleteVisitor}
+        visitor={currentVisitor}
+      />
       <Row justify="end">
         <Button
           type="primary"
@@ -26,7 +46,11 @@ const VisitorsViews = ({ user }) => {
           Agregar
         </Button>
       </Row>
-      <VisitorsList visitors={visitors} deleteVisitor={deleteVisitor} />
+      <VisitorsList
+        loading={loading}
+        visitors={visitors}
+        editVisitor={editVisitor}
+      />
 
     </>
   )

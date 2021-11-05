@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { notification } from "antd";
 import { useEffect, useState } from "react";
 import { getVisitors, removeVisitor } from "../../data/visitors";
 
@@ -17,28 +18,26 @@ export const useVisitors = () => {
     }
   }, [visitors, loading]);
 
-  // const postUser = async (body) => {
-  //   const { status } = await createUser(body);
-  //   setLoading(true);
-  //   setUsers([]);
-  // }
-
   const deleteVisitor = async ({ idVisitor }) => {
     const status = await removeVisitor(idVisitor);
+    notification.success({
+      message: "Exito",
+      description: "Se elimino la visita con exito."
+    })
     setLoading(true);
-    setVisitors([])
+    setVisitors([]);
   };
 
-  // const editUser = async (body) => {
-  //   const { status } = await putUser(body);
-  //   setLoading(true);
-  //   setUsers([]);
-  // }
+  const fetchVisitors = async () => {
+    setLoading(true);
+    setVisitors([]);
+  };
 
   return {
     visitors,
     loading,
     deleteVisitor,
+    fetchVisitors,
   };
 };
 

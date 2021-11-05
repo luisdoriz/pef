@@ -1,8 +1,12 @@
-import { Popconfirm, Button, Tag } from "antd";
+import moment from "moment";
+import { Button } from "antd";
 import { sorter, sortDirections } from "./index";
-import { DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
+import 'moment/locale/es';
 
-const getVisitorColumns = (deleteVisitor) => [
+moment.locale("es")
+
+const getVisitorColumns = (editVisitor) => [
   {
     title: "Nombre",
     dataIndex: "name",
@@ -12,10 +16,12 @@ const getVisitorColumns = (deleteVisitor) => [
   },
   {
     title: "Apellidos",
-    dataIndex: "lastNames",
-    key: "lastNames",
     sorter,
     sortDirections,
+    dataIndex: "",
+    key: "x",
+    render: ({ firstLastName, secondLastName }) =>
+      `${firstLastName} ${secondLastName}`,
   },
   {
     title: "Direccion de correo",
@@ -30,7 +36,6 @@ const getVisitorColumns = (deleteVisitor) => [
     key: "privilegeLevel",
     sorter,
     sortDirections,
-    render: (row) => <Tag color="processing">{row}</Tag>,
   },
   {
     title: "Id del beacon",
@@ -40,25 +45,32 @@ const getVisitorColumns = (deleteVisitor) => [
     sortDirections,
   },
   {
+    title: "Mac address del beacon",
+    dataIndex: "macAddress",
+    key: "macAddress",
+    sorter,
+    sortDirections,
+  },
+  {
     title: "Fecha limite",
     dataIndex: "expirationDate",
     key: "expirationDate",
     sorter,
     sortDirections,
+    render: (date) =>
+      moment(date).format("MMMM D YYYY, h:mm:ss a"),
   },
   {
-    title: "Borrar",
+    title: "Editar",
     dataIndex: "",
     key: "x",
     render: (row) => (
-      <Popconfirm
-        title="¿Seguro que quieres borrar esta alerta?"
-        onConfirm={() => deleteVisitor(row)}
-        okText="Confirmar"
-        cancelText="Cancelar"
-      >
-        <Button type="danger" shape="round" icon={<DeleteOutlined />} />
-      </Popconfirm>
+      <Button
+        onClick={() => editVisitor(row)}
+        type="primary"
+        shape="round"
+        icon={<EditOutlined />}
+      />
     ),
   },
 ];

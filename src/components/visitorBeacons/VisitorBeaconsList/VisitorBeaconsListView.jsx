@@ -2,11 +2,11 @@ import React from 'react'
 import { Table } from 'antd';
 import { getVisitorBeaconsColumns } from '../../../constants/tables';
 
-const VisitorBeaconsListView = ({ beacons, deleteBeacon }) => {
+const VisitorBeaconsListView = ({ beacons, deleteBeacon, loading }) => {
   const columns = getVisitorBeaconsColumns(deleteBeacon)
   return (
     <div style={{ paddingTop: 16 }}>
-      <Table columns={columns} dataSource={beacons} />
+      <Table loading={loading} columns={columns} dataSource={beacons} />
     </div>
   )
 }
