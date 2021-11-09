@@ -2,9 +2,10 @@ import axios from "axios";
 require("dotenv").config();
 
 const { REACT_APP_API_URL } = process.env;
-const getFacilities = async () => {
+
+const getAvailableBeacons = async () => {
   try {
-    const url = REACT_APP_API_URL + "/facilities";
+    const url = REACT_APP_API_URL + "/beacons/available";
     const { data } = await axios.get(url);
     return data;
   } catch ({ response }) {
@@ -12,6 +13,6 @@ const getFacilities = async () => {
   }
 };
 
-export { getFacilities };
+export { getAvailableBeacons };
 
-export default getFacilities;
+export default getAvailableBeacons;
