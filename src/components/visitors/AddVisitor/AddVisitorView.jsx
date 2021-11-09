@@ -146,7 +146,7 @@ class AddVisitorView extends Component {
   }
 
   desactivateVisitor = async () => {
-    const {fetchVisitors } = this.props
+    const { fetchVisitors } = this.props
     const { visitor } = this.state;
     const { status } = await editVisitor({
       ...visitor,
@@ -302,6 +302,7 @@ class AddVisitorView extends Component {
       </Form>
     )
   }
+  disableDateTime = (current) => current && current <= moment()
 
   render() {
     const { visible, type } = this.props;
@@ -410,8 +411,21 @@ class AddVisitorView extends Component {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="expirationDate" label="Fecha limite">
-                <DatePicker showTime />
+              <Form.Item
+                name="expirationDate"
+                label="Fecha limite"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <DatePicker
+                  showTime
+                  allowClear
+                  disabledDate={this.disableDateTime}
+                  disabledTime={this.disableDateTime}
+                />
               </Form.Item>
             </Col>
             <Col span={12}>

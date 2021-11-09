@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { PageHeader, Row, Button } from 'antd';
-import { AddVisitor, VisitorsList } from '../../components/visitors';
+import { PageHeader, Row, Col, Button } from 'antd';
+import { AddVisitor, ReassignBeacon, VisitorsList } from '../../components/visitors';
 import { useVisitors } from '../../hooks';
 
 const VisitorsViews = ({ user }) => {
   const [addVisitorVisible, setAddVisitor] = useState(false)
   const [editVisitorVisible, setEditVisitor] = useState(false)
   const [currentVisitor, setCurrentVisitor] = useState(null)
+  const [reassignBeacon, setReassignBeacon] = useState(false)
   const { visitors, loading, deleteVisitor, fetchVisitors } = useVisitors()
   const editVisitor = (visitor) => {
     setCurrentVisitor(visitor)
@@ -36,15 +37,30 @@ const VisitorsViews = ({ user }) => {
         deleteVisitor={deleteVisitor}
         visitor={currentVisitor}
       />
-      <Row justify="end">
-        <Button
-          type="primary"
-          size="large"
-          shape="round"
-          onClick={() => setAddVisitor(true)}
-        >
-          Agregar
-        </Button>
+      <ReassignBeacon
+        visible={reassignBeacon}
+        onClose={() => setReassignBeacon(false)}
+      />
+      <Row justify="end" gutter={8}>
+        <Col>
+          <Button
+            size="large"
+            shape="round"
+            onClick={() => setReassignBeacon(true)}
+          >
+            Reasignar beacon
+          </Button>
+        </Col>
+        <Col>
+          <Button
+            type="primary"
+            size="large"
+            shape="round"
+            onClick={() => setAddVisitor(true)}
+          >
+            Agregar
+          </Button>
+        </Col>
       </Row>
       <VisitorsList
         loading={loading}

@@ -44,14 +44,6 @@ const views = [
     access: [2, 3],
   },
   {
-    path: "/beacons",
-    component: VisitorBeacons,
-    showSidebar: true,
-    text: "Beacons",
-    icon: <FileOutlined />,
-    access: [4],
-  },
-  {
     path: "/",
     component: Visitors,
     showSidebar: true,
