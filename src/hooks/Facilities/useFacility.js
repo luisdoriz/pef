@@ -23,6 +23,11 @@ export const useFacility = (idFacility) => {
     setLoading(true);
     setAreas([]);
   }
+  const removeArea = async (body) => {
+    const status = await deleteArea(body);
+    setLoading(true);
+    setAreas([]);
+  }
 
   const createGateway = async (body) => {
     const { status } = await postGateway(body);
@@ -51,7 +56,8 @@ export const useFacility = (idFacility) => {
     createGateway,
     editGateway,
     removeGateway,
-    loading
+    loading,
+    removeArea
   };
 };
 

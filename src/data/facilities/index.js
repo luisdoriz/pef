@@ -33,6 +33,17 @@ const getFacilities = async () => {
     }
   };
 
+  const postFacility = async (raw_body) => {
+    try {
+      const url = REACT_APP_API_URL + "/facilities";
+      const body = { ...raw_body };
+      const { data: { data } } = await axios.post(url, body);
+      return data;
+    } catch ({ response }) {
+      return response;
+    }
+  };
+
   const putArea = async (raw_body) => {
     try {
       const url = REACT_APP_API_URL + `/areas/${raw_body.idArea}`;
@@ -48,7 +59,7 @@ const getFacilities = async () => {
 
   const deleteArea = async ({idArea}) => {
     try {
-      const url = REACT_APP_API_URL + `/facilities/area/${idArea}`;
+      const url = REACT_APP_API_URL + `/facilities/area/${idArea}`; //TODO: CHECAR ESTA RUTA
       const { data: { data } } = await axios.delete(url);
       return data;
     } catch ({ response }) {
@@ -90,6 +101,6 @@ const getFacilities = async () => {
     }
   };
 
-  export { getFacilities, getAreas, putArea, deleteArea, postGateway, putGateway, deleteGateway, postAreas };
+  export { getFacilities, getAreas, putArea, deleteArea, postGateway, putGateway, deleteGateway, postAreas,postFacility };
 
 export default getFacilities;

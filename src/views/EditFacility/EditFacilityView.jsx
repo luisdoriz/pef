@@ -12,7 +12,7 @@ const EditFacilityView = () => {
     let history = useHistory();
     let { idFacility } = useParams();
     const { beacons, removeBeacon, createBeacon, loading: loadingBeacons } = useBeacons(idFacility);
-    const { areas, editArea, gateways, createGateway, editGateway, removeGateway, loading: loadingAreas} = useFacility(idFacility);
+    const { areas, editArea, gateways, createGateway, editGateway, removeGateway, loading: loadingAreas, removeArea} = useFacility(idFacility);
     const { privilegeLevels, loading: loadingRoles, createPrivilegeLevel, editPrivilegeLevel, removePrivilegelevel} = useEmployees(idFacility);
     const [area, setArea] = useState(null);
     const [editAreaVisible, setEditAreaVisible] = useState(false)
@@ -67,7 +67,7 @@ const EditFacilityView = () => {
             area={area}
             visible={editAreaVisible}
             onClose={() => setEditAreaVisible(!editAreaVisible)}
-            // removeArea={removeArea}
+            removeArea={removeArea}
             editArea={editArea}
             setEditAreaVisible={setEditAreaVisible}
         />

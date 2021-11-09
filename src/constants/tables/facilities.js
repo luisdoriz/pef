@@ -4,7 +4,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from 'react-router-dom';
 
-const getFacilitiesColumns = ( editFacility ) => ([
+const getFacilitiesColumns = ( ) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
@@ -18,7 +18,6 @@ const getFacilitiesColumns = ( editFacility ) => ([
       key: 'x',
       render: (row) =>  <Link to={`/settings/facility/${row.idFacility}`}>
           <Button
-              onClick={() => editFacility(row)}
               type="primary"
               shape="round"
               icon={<EditOutlined />}

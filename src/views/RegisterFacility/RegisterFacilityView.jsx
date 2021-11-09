@@ -1,21 +1,25 @@
 import React from 'react'
 import { useState } from 'react';
-import { PageHeader, Row, Button, Col } from 'antd';
-import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList } from "../../components/facilities";
+import { PageHeader, Row, Button, Col, Popconfirm} from 'antd';
+import {
+  DeleteOutlined
+} from "@ant-design/icons";
+
+import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList, AddFacility } from "../../components/facilities";
 import useFacilities from '../../hooks/Facilities';
 import './styles.css';
 
 const RegisterFacilityView = () => {
-    const { facilities, createArea, loading } = useFacilities();
+    const { facilities, createArea, loading, createFacility } = useFacilities();
     const [points, setPoints] = useState({});
     const [walls, setWalls] = useState([]);
+    const [createdFacility, setCreatedFacility] = useState({name: null, idFacility: null});
     const [range, setRange] = useState(10); //HARDCODEADO
     const [rooms, setRooms] = useState([]);
-    const [facility, setFacility] = useState(null);
     const [currentRoom, setCurrentRoom] = useState([]);
     const [addRoomVisible, setAddRoomVisible] = useState(false);
+    const [addFacilityVisible, setAddFacilityVisible] = useState(false);
     const [facilitySetupVisible, setFacilitySetupVisible] = useState(false);
-    const [editFacilityVisible, setEditFacilityVisible] = useState(false)
     const [names, setNames] = useState([]);
 
     const saveRoom = (values) =>{
@@ -33,40 +37,38 @@ const RegisterFacilityView = () => {
         setNames(newNames)
     }
 
-    const setEditFacility = (prop) => {
-        setFacility(prop)
-        setEditFacilityVisible(true)
-    }
-
     const deleteArea = (prop) =>{
         
     }
 
+    const saveFacility = (prop) =>{
+        // const id = createFacility(prop)
+        setCreatedFacility({name: prop.name, idFacility: prop.idFacility}); //TODO: CAMBIAR A ID
+    }
+
     return (
     <>
-        <PageHeader
-            onBack={null}
-            title="Configuración"
-            subTitle="Edificios" 
+        
+        <AddFacility 
+            visible={addFacilityVisible}
+            createFacility={saveFacility}
+            onClose={() => setAddFacilityVisible(!addFacilityVisible)}
+            setFacilitySetupVisible={setFacilitySetupVisible}
         />
         {facilitySetupVisible ?
         <>
+            <PageHeader
+                    onBack={null}
+                    title="Crear"
+                    subTitle={createdFacility?.name} 
+                    onBack={() => setFacilitySetupVisible(!facilitySetupVisible)} //TODO: AGREGAR CONFIRMACIION
+                />
             <AddRoom
                 rooms={rooms}
                 visible={addRoomVisible}
                 saveRoom={saveRoom}
                 onClose={() => setAddRoomVisible(!addRoomVisible)}
             />
-            <Row justify="end">
-                <Button
-                    type="primary"
-                    size="large"
-                    shape="round"
-                    onClick={() => setFacilitySetupVisible(!facilitySetupVisible)}
-                    >
-                    Cancelar
-                </Button>
-            </Row>
             <Row>
                 <Col span={18}>
                     <div className="blueprint-container">
@@ -95,19 +97,23 @@ const RegisterFacilityView = () => {
         </>
         :
         <>
+            <PageHeader
+                onBack={null}
+                title="Configuración"
+                subTitle="Edificios" 
+            />
             <Row justify="end">
                 <Button
                     type="primary"
                     size="large"
                     shape="round"
-                    onClick={() => setFacilitySetupVisible(!facilitySetupVisible)}
+                    onClick={() => setAddFacilityVisible(!addFacilityVisible)}
                     >
                     Agregar
                 </Button>
             </Row>
             <FacilitiesList 
                 facilities={facilities}
-                editFacility={setEditFacility}
                 loading={loading}
             />
         </>

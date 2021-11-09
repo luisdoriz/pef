@@ -31,37 +31,36 @@ function areEqual(obj1, obj2){
     return (obj1.x === obj2.x && obj1.y === obj2.y)
 }
  
-// The function that returns true if
+// The function that returns true i
     // line segment 'p1q1' and 'p2q2' intersect.
-function intersect(p1,q1,p2,q2, isSameRoom){
+function intersect(p1,q1,p2,q2, isSameRoom, ia = false, vertices){
         if(areEqual(p1,q2) && areEqual(q1,p2))
             return true
-
     // Find the four orientations needed for
         // general and special cases
-        let o1 = orientation(p1, q1, p2);
-        let o2 = orientation(p1, q1, q2);
-        let o3 = orientation(p2, q2, p1);
+        let o1 = orientation(p1, q1, p2); 
+        let o2 = orientation(p1, q1, q2); 
+        let o3 = orientation(p2, q2, p1); 
         let o4 = orientation(p2, q2, q1);
-        if(isSameRoom){
-            if(areEqual(p2, q1)){
-                if( o3=== 0 && o2 === 0 && onSegment(p1, q2, q1)){
-                    return true
-                }
-                else{
-                    return false
+        if(!ia){
+            if(isSameRoom){
+                if(areEqual(p2, q1)){
+                    return (o3 === 0 && o2 === 0 && onSegment(p1, q2, q1))
                 }
             }
-        }
-        else {
-            if(onSegment(p1, q2, q1) || onSegment(p1, p2, q1)){
-                return false;
+            else {
+                if((o2 === 0 && onSegment(p1, q2, q1))){
+                    return false;
+                }
+                if(o1 === 0 && onSegment(p1, p2, q1)){
+                    return insideArea(vertices, q2);
+                }
             }
         }
         if (o1 != o2 && o3 != o4){
             return true;
         }
-        
+    
         // General case
         
   
@@ -98,10 +97,10 @@ function intersect(p1,q1,p2,q2, isSameRoom){
         return false;
 }
 
-function  insideArea(vertices,n,p)
+function  insideArea(vertices, p)
 {
     // There must be at least 3 vertices in polygon[]
-        if (n < 3)
+        if (vertices.length < 3)
         {
             return false;
         }
@@ -114,12 +113,12 @@ function  insideArea(vertices,n,p)
         let count = 0, i = 0;
         do
         {
-            let next = (i + 1) % n;
+            let next = (i + 1) % vertices.length;
   
             // Check if the line segment from 'p' to
             // 'extreme' intersects with the line
             // segment from 'polygon[i]' to 'polygon[next]'
-            if (intersect(vertices[i], vertices[next], p, extreme))
+            if (intersect(vertices[i], vertices[next], p, extreme, false, true))
             {
                 // If the point 'p' is colinear with line
                 // segment 'i-next', then check if it lies
@@ -134,7 +133,6 @@ function  insideArea(vertices,n,p)
             }
             i = next;
         } while (i != 0);
-  
         // Return true if count is odd, false otherwise
         return (count % 2 == 1); // Same as (count%2 == 1)
 }

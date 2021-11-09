@@ -17,11 +17,14 @@ const areEqual = (obj1, obj2) => {
 
 const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, setAddRoomVisible, setRooms, currentRoom, setCurrentRoom }) => {
   const [point, setCurrentPoint] = useState(null);
+  const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
   // if (points.length === 0) {
   //   return null
   // }
   const printCoordinates = (e) => {
     let intersects = false;
+    let firstPointInvalid = false;
+    let finalPoint = false;
     const { clientX: x, clientY: y } = e
     const rect = e.target.getBoundingClientRect()
     const { left, top, height } = rect
@@ -29,30 +32,35 @@ const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, se
     const formattedY = Math.round(((height - (y - top)) / height) * range)
     const coords = { x: formattedX, y: formattedY }
     let prevPoint = null;
-    if(point !== null)
+    if(point !== null){
       prevPoint = currentRoom.vertices[point]
-
+    }
+    const newPoints = points
+    const points_array = Object.values(newPoints)
+    let id = points_array.length + 1
+    const matchingIndex = points_array.findIndex((c) => c.x === coords.x & c.y === coords.y)
+    if(matchingIndex === 0 && points_array.length >= 3)
+      finalPoint = true;
     let isSameRoom = false;
     rooms.map((room, i) => {
       if(i === rooms.length-1){
         isSameRoom = true
       }
-      Object.values(room.edges).map(( wall ) => {
-        if(room.vertices1 !== [] && prevPoint){
-          const bool = intersect(room.vertices[wall[0]],room.vertices[wall[1]], prevPoint, coords, isSameRoom)
+      if( prevPoint  === null && insideArea(Object.values(room.vertices), coords)){
+        firstPointInvalid = true;
+      }
+      Object.values(room.edges).map(( wall, i ) => {
+        if(room.vertices1 !== [] && prevPoint && !(finalPoint && isSameRoom && i === 0)){
+          const bool = intersect(room.vertices[wall[0]],room.vertices[wall[1]], prevPoint, coords, isSameRoom, false, Object.values(room.vertices))
           if(bool === true)
             intersects = bool;
+          
           return bool;
           }
       }
       )
     })
-    
-    const newPoints = points
-    const points_array = Object.values(newPoints)
-    let id = points_array.length + 1
-    const matchingIndex = points_array.findIndex((c) => c.x === coords.x & c.y === coords.y)
-    if(!intersects && !areEqual(prevPoint, coords) || (matchingIndex === 0 && points_array.length >= 3)){
+    if(!firstPointInvalid && !intersects && !areEqual(prevPoint, coords) || (matchingIndex === 0 && points_array.length >= 3 && !intersects)){
       if (matchingIndex === -1) {
         newPoints[id] = coords
         setPoints(newPoints)
@@ -112,7 +120,7 @@ const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, se
   return (
     <div className="blueprintmap-container">
       <svg height="100%" width="100%" onClick={printCoordinates} viewBox="0 0 400 400">
-        {rooms.map((room) => (
+        {rooms.map((room, i) => (
           <>
           {Object.values(room.vertices).map(({ x, y }) => (<circle cx={`${(x * range)}%`} cy={`${(100 - (y * range))}%`} r="2" fill="black" />))}
           {Object.values(room.edges).map(( wall ) => (
@@ -121,7 +129,7 @@ const BluePrintMapView = ({ range, points, setPoints, walls, setWalls, rooms, se
               y1={`${100 - (room.vertices[wall[0]].y * range)}%`}
               x2={`${room.vertices[wall[1]].x * range}%`}
               y2={`${100 - (room.vertices[wall[1]].y * range)}%`}
-              style={{ stroke: "rgb(255, 0, 0)", strokeWidth: 2 }}
+              style={{ stroke: colors[i % colors.length], strokeWidth: 2 }}
             />
           ))}
           </>

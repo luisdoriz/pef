@@ -11,6 +11,7 @@ import CurrentAreasList from "./CurrentAreasList"
 import RolesList from "./RolesList"
 import EditRole from "./EditRole"
 import AddRole from "./AddRole"
+import AddFacility from "./AddFacility"
 
 export {
   AddRoom,
@@ -25,7 +26,8 @@ export {
   CurrentAreasList,
   RolesList,
   EditRole,
-  AddRole
+  AddRole,
+  AddFacility
 };
 
 

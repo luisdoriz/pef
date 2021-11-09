@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFacilities, getAreas, putArea, postAreas } from "../../data/facilities";
+import { getFacilities, postAreas, postFacility } from "../../data/facilities";
 
 export const useFacilities = () => {
   const [facilities, setFacilities] = useState([]);
@@ -22,11 +22,19 @@ export const useFacilities = () => {
     setFacilities([])
   }
 
+  const createFacility = async (body) => {
+    const { response } = await postFacility(body);
+    return response;
+    setLoading(true);
+    setFacilities([])
+  }
+
   return {
     facilities,
     setFacilities,
     createArea,
-    loading
+    loading,
+    createFacility
   };
 };
 
