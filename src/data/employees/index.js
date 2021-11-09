@@ -64,6 +64,19 @@ const putPrivilegeLevel = async (raw_body) => {
   }
 };
 
+const putEmployeeBeacon = async (raw_body) => {
+  try {
+    const url = REACT_APP_API_URL + `/persons/beacon/`;
+    const body = { ...raw_body };
+    const {
+      data: { data },
+    } = await axios.put(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
 const deletePrivilegeLevel = async (idPrivilegeLevel) => {
   try {
     const url = REACT_APP_API_URL + `/persons/privilegeLevel/${idPrivilegeLevel}`;
@@ -100,6 +113,6 @@ const deleteEmployee = async (idEmployee) => {
 
 
 
-export { getEmployees, createEmployee, getPrivilegeLevel, deleteEmployee, putEmployee, postPrivilegeLevel, putPrivilegeLevel,deletePrivilegeLevel };
+export { getEmployees, createEmployee, getPrivilegeLevel, deleteEmployee, putEmployee, postPrivilegeLevel, putPrivilegeLevel,deletePrivilegeLevel, putEmployeeBeacon };
 
 export default createEmployee;

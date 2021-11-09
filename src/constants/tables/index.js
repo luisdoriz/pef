@@ -10,7 +10,21 @@ import { getGatewaysColumns } from "./gateways"
 import { getCurrentAreasColumns } from "./currentAreas"
 import { getBeaconsColumns } from "./beacons"
 import { getPrivilegeLevelColumns } from "./privilegeLevels"
+import { getVisitorColumns } from "./visitors";
+import { getVisitorBeaconsColumns } from "./visitorBeacons";
 
-export { getEmployeesColumns, getUserColumns,  getCasesColumns, getCloseContactsColumns, getRecoveredCasesColumns, getAlertsColumns, getFacilitiesColumns, getAreasColumns, getGatewaysColumns, getCurrentAreasColumns, getBeaconsColumns, getPrivilegeLevelColumns};
+export {
+  sorter,
+  sortDirections,
+  getEmployeesColumns,
+  getUserColumns,
+  getCasesColumns,
+  getCloseContactsColumns,
+  getRecoveredCasesColumns,
+  getAlertsColumns,
+  getVisitorColumns,
+  getVisitorBeaconsColumns,
+  getFacilitiesColumns, getAreasColumns, getGatewaysColumns, getCurrentAreasColumns, getBeaconsColumns, getPrivilegeLevelColumns
+};
 
-export default getEmployeesColumns;
+export default sorter;
