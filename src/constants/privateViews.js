@@ -8,7 +8,6 @@ import {
 
 import Home from "../views/Home";
 import Visitors from "../views/Visitors";
-import VisitorBeacons from "../views/VisitorBeacons";
 import Employees from "../views/Employees";
 import Users from "../views/Users";
 import Cases from "../views/Cases";

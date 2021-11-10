@@ -14,8 +14,6 @@ import { getVisitorColumns } from "./visitors";
 import { getVisitorBeaconsColumns } from "./visitorBeacons";
 
 export {
-  sorter,
-  sortDirections,
   getEmployeesColumns,
   getUserColumns,
   getCasesColumns,
@@ -27,4 +25,4 @@ export {
   getFacilitiesColumns, getAreasColumns, getGatewaysColumns, getCurrentAreasColumns, getBeaconsColumns, getPrivilegeLevelColumns
 };
 
-export default sorter;
+export default getEmployeesColumns;

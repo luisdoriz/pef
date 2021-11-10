@@ -27,12 +27,8 @@ export const useEmployees = (idFacility) => {
     }
   },[employees, loading]);
 
-  useEffect(() => {
-    fetchPrivilegeLevels()
-  },[idFacility]);
-
   const fetchPrivilegeLevels = async () => {
-    const response = await getPrivilegeLevel(idFacility);
+    const response = await getPrivilegeLevel();
     setPrivilegeLevels(response.data)
 
   }

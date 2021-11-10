@@ -15,6 +15,11 @@ const validateMessages = {
   },
 };
 
+const initialState = {
+  newMacAddress: true,
+  selectedFacility: null
+}
+
 class EditEmployeeView extends Component {
   formRef = React.createRef();
   onReset = () => {
@@ -22,19 +27,16 @@ class EditEmployeeView extends Component {
     onClose()
     this.formRef.current.resetFields();
   };
-  
+
   constructor(props) {
     super(props)
 
-    this.state = {
-      newMacAddress:true,
-      selectedFacility: 1
-    }
+    this.state = initialState
   }
 
-  componentDidUpdate = () => {
+  componentDidUpdate = (prevProps) => {
     const { visible } = this.props;
-    if (visible) {
+    if (visible && prevProps.visible !== visible) {
       this.setFormState()
     }
   }
@@ -42,13 +44,16 @@ class EditEmployeeView extends Component {
   setFormState = () => {
     const { employee } = this.props
     const lastNames = employee?.lastNames.split(' ');
-    if(lastNames.length === 2){
-      const values = {firstLastName: lastNames[0], secondLastName: lastNames[1] ,...employee};
+    if (lastNames && lastNames.length === 2) {
+      const values = { firstLastName: lastNames[0], secondLastName: lastNames[1], ...employee };
       delete values.lastNames;
       this.formRef.current.setFieldsValue(values);
     }
     else
       this.formRef.current.setFieldsValue(employee);
+
+    const { idFacility } = employee;
+    this.setState({ selectedFacility: idFacility })
 
   }
 
@@ -81,7 +86,7 @@ class EditEmployeeView extends Component {
     values.name = ucName;
     values.firstLastName = uc1LName;
     values.secondLastName = uc2LName;
-    modifyEmployee({idEmployee:employee.idEmployee, ...values});
+    modifyEmployee({ idEmployee: employee.idEmployee, ...values });
     this.onReset()
   };
 
@@ -95,32 +100,34 @@ class EditEmployeeView extends Component {
 
   changeMacAddress = () => {
     const { newMacAddress } = this.state
-    this.setState({newMacAddress:!newMacAddress})
+    this.setState({ newMacAddress: !newMacAddress })
   }
 
-  changePrivilegeLevels = (prop) =>{
-    const { selectedFacility } = this.state
-    this.setState({selectedFacility: prop})
+  changePrivilegeLevels = (prop) => {
+    this.setState({ selectedFacility: prop })
+    this.formRef.current.setFieldsValue({ idPrivilegeLevel: null })
+
   }
 
   render() {
     const { visible, facilities, privilegeLevels, employee, beacons } = this.props;
     const { newMacAddress, selectedFacility } = this.state
+    console.log(selectedFacility)
     return (
       <Modal footer={null} title="Editar Empleado" visible={visible} onCancel={this.onCancel}>
         <Row justify="end">
           <Popconfirm
-              title="¿Seguro que quieres borrar este empleado?"
-              onConfirm={() => this.deleteEmployee(employee)}
-              okText="Confirmar"
-              cancelText="Cancelar"
-              >
-              <Button
-                type="danger"
-                shape="round"
-                icon={<DeleteOutlined />}
+            title="¿Seguro que quieres borrar este empleado?"
+            onConfirm={() => this.deleteEmployee(employee)}
+            okText="Confirmar"
+            cancelText="Cancelar"
+          >
+            <Button
+              type="danger"
+              shape="round"
+              icon={<DeleteOutlined />}
             />
-            </Popconfirm>
+          </Popconfirm>
         </Row>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
@@ -182,41 +189,41 @@ class EditEmployeeView extends Component {
                 onChange={this.changeMacAddress}
                 size="small"
               />
-              <h5 style={{paddingLeft:10}}>Cambiar entre beacon nuevo o beacon ya registrado</h5>
+              <h5 style={{ paddingLeft: 10 }}>Cambiar entre beacon nuevo o beacon ya registrado</h5>
             </Row>
             {(!newMacAddress) ? (
-            <Col span={24}>
-              <Form.Item name="macAddress" label="Beacons ya registrados" rules={[{ required: true, }]}>
-                <Select
-                  showSearch
-                  placeholder="Selecciona el beacon"
-                  allowClear
-                  optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {beacons.map(({idBeacon, macAddress}) => (
-                    <Option value={idBeacon}>{macAddress}</Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
+              <Col span={24}>
+                <Form.Item name="macAddress" label="Beacons ya registrados" rules={[{ required: true, }]}>
+                  <Select
+                    showSearch
+                    placeholder="Selecciona el beacon"
+                    allowClear
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {beacons.map(({ idBeacon, macAddress }) => (
+                      <Option value={idBeacon}>{macAddress}</Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
             )
-            : (
-            <Col span={24}>
-              <Form.Item
-                name="macAddress"
-                label="Dirección MAC (Beacon)"
-                rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
-                ]}
-              >
-                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>
-              </Form.Item>
-            </Col>  
-            
-            )}
+              : (
+                <Col span={24}>
+                  <Form.Item
+                    name="macAddress"
+                    label="Dirección MAC (Beacon)"
+                    rules={[
+                      { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
+                    ]}
+                  >
+                    <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00" />
+                  </Form.Item>
+                </Col>
+
+              )}
             <Col span={12}>
               <Form.Item name="idFacility" label="Edificio" rules={[{ required: true, }]} >
                 <Select
@@ -225,7 +232,7 @@ class EditEmployeeView extends Component {
                   onChange={this.changePrivilegeLevels}
                 >
                   {facilities.map(({ idFacility, name }) => (
-                    <Option key={idFacility}>{name}</Option>
+                    <Option key={idFacility} value={idFacility}>{name}</Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -235,8 +242,9 @@ class EditEmployeeView extends Component {
                 <Select
                   placeholder="Selecciona el rol"
                   allowClear
+                  disabled={!selectedFacility}
                 >
-                  {privilegeLevels.filter((privilegeLevel) => privilegeLevel.idFacility === selectedFacility).map(({idPrivilegeLevel, name}) => (
+                  {privilegeLevels.filter((privilegeLevel) => privilegeLevel.idFacility === selectedFacility).map(({ idPrivilegeLevel, name }) => (
                     <Option value={idPrivilegeLevel}>{name}</Option>
                   ))}
                 </Select>
