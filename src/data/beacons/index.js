@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const { REACT_APP_API_URL } = process.env;
 
-const getAvailableBeacons = async () => {
+const getBeacons = async () => {
   try {
     const url = REACT_APP_API_URL + "/beacons/available";
     const { data } = await axios.get(url);
@@ -35,6 +35,6 @@ const postBeacon = async (body) => {
   }
 };
 
-export { getAvailableBeacons, deleteBeacon, postBeacon};
+export { getBeacons, deleteBeacon, postBeacon};
 
-export default getAvailableBeacons;
+export default getBeacons;

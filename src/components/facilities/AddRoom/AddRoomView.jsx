@@ -24,11 +24,12 @@ class AddRoomView extends Component {
   };
 
   onCancel = () => {
-    this.onReset()
+    const { cancelRoom } = this.props;
+    cancelRoom();
   }
 
   onFinish = (values) => {
-    const { saveRoom } = this.props;
+    const { saveRoom, setAddingGateways } = this.props;
     let name = values.name.trim();
     name = name.split(' ');
     
@@ -37,13 +38,14 @@ class AddRoomView extends Component {
     }
     values.name = name.join(' ')
     saveRoom(values);
+    setAddingGateways(true);
     this.onReset()
   };
 
   render() {
     const { visible, onClose } = this.props;
     return (
-      <Modal footer={null} title="Agregar área" visible={visible} onCancel={onClose}>
+      <Modal footer={null} title="Agregar área" visible={visible} onCancel={this.onCancel}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
           <Col span={12}>
@@ -94,11 +96,11 @@ class AddRoomView extends Component {
                   style={{
                     margin: '0 8px',
                   }}
-                  type="button" onClick={this.onReset}>
+                  type="button" onClick={this.onCancel}>
                   Cancelar
                 </Button>
                 <Button type="primary" htmlType="submit">
-                  Guardar
+                  Continuar a agregar gateways
                 </Button>
               </Form.Item>
             </Col>

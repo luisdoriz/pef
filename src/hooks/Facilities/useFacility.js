@@ -28,34 +28,13 @@ export const useFacility = (idFacility) => {
     setLoading(true);
     setAreas([]);
   }
-
-  const createGateway = async (body) => {
-    const { status } = await postGateway(body);
-    setLoading(true);
-    setAreas([])
-  }
-
-  const editGateway = async (body) => {
-    const status = await putGateway(body);
-    setLoading(true);
-    setAreas([]);
-  }
-
-  const removeGateway = async (body) => {
-    const { status } = await deleteGateway(body);
-    setLoading(true);
-    setAreas([])
-  }
-
+  
   return {
     areas,
     setAreas,
     editArea,
     gateways,
     setGateways,
-    createGateway,
-    editGateway,
-    removeGateway,
     loading,
     removeArea
   };

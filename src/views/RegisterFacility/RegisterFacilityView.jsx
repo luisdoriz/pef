@@ -1,125 +1,190 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { PageHeader, Row, Button, Col, Popconfirm} from 'antd';
-import {
-  DeleteOutlined
-} from "@ant-design/icons";
-
+import { PageHeader, Row, Button, Col, Modal } from 'antd';
 import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList, AddFacility } from "../../components/facilities";
 import useFacilities from '../../hooks/Facilities';
-import './styles.css';
+import { WarningOutlined } from '@ant-design/icons';
+import useGateways from '../../hooks/Gateways';
 
+const { confirm } = Modal
 const RegisterFacilityView = () => {
     const { facilities, createArea, loading, createFacility } = useFacilities();
+    const { createGateway } = useGateways();
     const [points, setPoints] = useState({});
     const [walls, setWalls] = useState([]);
-    const [createdFacility, setCreatedFacility] = useState({name: null, idFacility: null});
-    const [range, setRange] = useState(10); //HARDCODEADO
+    const [createdFacility, setCreatedFacility] = useState({});
     const [rooms, setRooms] = useState([]);
     const [currentRoom, setCurrentRoom] = useState([]);
     const [addRoomVisible, setAddRoomVisible] = useState(false);
     const [addFacilityVisible, setAddFacilityVisible] = useState(false);
     const [facilitySetupVisible, setFacilitySetupVisible] = useState(false);
     const [names, setNames] = useState([]);
+    const [point, setCurrentPoint] = useState(null);
+    const [addingGateways, setAddingGateways] = useState(false);
+    const [gateways, setGateways] = useState([]);
+    const [currentAreaId, setCurrentAreaId] = useState(null)
 
-    const saveRoom = (values) =>{
-        //createArea({...values, vertices: currentRoom.vertices})
-        let newRoom = rooms[rooms.length-2];
-        newRoom = {name: values.name, ...newRoom};
+    const saveRoom = (values) => {
+        //const idArea = createArea({...values, vertices: currentRoom.vertices}) 
+        //setCurrentAreaId(idArea);
+        let newRoom = rooms[rooms.length - 2];
+        newRoom = { name: values.name, ...newRoom };
         let newRooms = rooms;
-        newRooms[rooms.length-2] = newRoom;
+        newRooms[rooms.length - 2] = newRoom;
         setRooms(newRooms)
-        setCurrentRoom(null);
         let newNames = names;
-        newRooms.map((room, i) =>(
-            newNames.push({name: room.name, key: i})
+        newRooms.map((room, i) => (
+            newNames.push({ name: room.name, key: i })
         ))
         setNames(newNames)
+        setAddingGateways(true);
     }
 
-    const deleteArea = (prop) =>{
-        
+    const deleteArea = (prop) => {
+
     }
 
-    const saveFacility = (prop) =>{
+    const cancelRoom = () => {
+        const newRooms = rooms.filter((room) => !(room.vertices === currentRoom.vertices && room.edges === currentRoom.edges))
+        setRooms(newRooms);
+        setAddRoomVisible(false);
+        setCurrentRoom([]);
+        setCurrentPoint(null);
+        setPoints({});
+        setWalls([]);
+    }
+
+    const saveFacility = (prop) => {
         // const id = createFacility(prop)
-        setCreatedFacility({name: prop.name, idFacility: prop.idFacility}); //TODO: CAMBIAR A ID
+        setCreatedFacility({ name: prop.name, idFacility: prop.idFacility, sizeX: prop.sizeX, sizeY: prop.sizeY }); //TODO: CAMBIAR A ID
+    }
+
+    const saveGateways = () => {
+        //createGateway({...gateways, idArea: currentAreaId})
+        setAddingGateways(false);
+        setCurrentRoom(null);
+        setGateways(null);
+        setCurrentAreaId(null);
+    }
+
+    const showConfirm = () => {
+        confirm({
+            title: "¿Seguro que quieres regresar? Se borrará el edificio que está creando",
+            icon: <WarningOutlined />,
+            content: "Se borrará el edificio que está creando",
+            onOk() {
+                setFacilitySetupVisible(!facilitySetupVisible);
+                setRooms([]);
+                setCurrentRoom([]);
+                setCurrentPoint(null);
+                setPoints({});
+                setWalls([]);
+            }
+        });
     }
 
     return (
-    <>
-        
-        <AddFacility 
-            visible={addFacilityVisible}
-            createFacility={saveFacility}
-            onClose={() => setAddFacilityVisible(!addFacilityVisible)}
-            setFacilitySetupVisible={setFacilitySetupVisible}
-        />
-        {facilitySetupVisible ?
         <>
-            <PageHeader
-                    onBack={null}
-                    title="Crear"
-                    subTitle={createdFacility?.name} 
-                    onBack={() => setFacilitySetupVisible(!facilitySetupVisible)} //TODO: AGREGAR CONFIRMACIION
-                />
-            <AddRoom
-                rooms={rooms}
-                visible={addRoomVisible}
-                saveRoom={saveRoom}
-                onClose={() => setAddRoomVisible(!addRoomVisible)}
+
+            <AddFacility
+                visible={addFacilityVisible}
+                createFacility={saveFacility}
+                onClose={() => setAddFacilityVisible(!addFacilityVisible)}
+                setFacilitySetupVisible={setFacilitySetupVisible}
             />
-            <Row>
-                <Col span={18}>
-                    <div className="blueprint-container">
-                        <BluePrintMap
-                            points={points}
-                            walls={walls}
-                            rooms={rooms}
-                            range={range}
-                            setWalls={setWalls}
-                            setPoints={setPoints}
-                            setRooms={setRooms}
-                            setAddRoomVisible={setAddRoomVisible}
-                            currentRoom={currentRoom}
-                            setCurrentRoom={setCurrentRoom}
-                        />
-                    </div>
-                </Col>
-                
-                <Col span={6}>
-                <h2>Áreas</h2>
-                    <CurrentAreasList 
-                        names={names}
+            {facilitySetupVisible ?
+                <>
+                    <PageHeader
+                        onBack={null}
+                        title="Crear"
+                        subTitle={createdFacility?.name}
+                        onBack={showConfirm}
                     />
-                </Col>
-            </Row>
+                    <Row justify="end" style={{ padding: 10 }}>
+                        {addingGateways ?
+                            <Button
+                                type="primary"
+                                size="large"
+                                shape="round"
+                                onClick={saveGateways}
+                            >
+                                Terminar de agregar gateways
+                            </Button>
+                            :
+                            <Button
+                                type="primary"
+                                size="large"
+                                shape="round"
+                                onClick={cancelRoom}
+                                disabled={(!currentRoom)}
+                            >
+                                Borrar área actual
+                            </Button>
+                        }
+                    </Row>
+                    <AddRoom
+                        rooms={rooms}
+                        visible={addRoomVisible}
+                        saveRoom={saveRoom}
+                        onClose={() => setAddRoomVisible(false)}
+                        cancelRoom={cancelRoom}
+                        setAddingGateways={setAddingGateways}
+                    />
+                    <Row>
+                        <Col span={18}>
+                            <BluePrintMap
+                                points={points}
+                                walls={walls}
+                                rooms={rooms}
+                                setWalls={setWalls}
+                                setPoints={setPoints}
+                                setRooms={setRooms}
+                                setAddRoomVisible={setAddRoomVisible}
+                                currentRoom={currentRoom}
+                                setCurrentRoom={setCurrentRoom}
+                                sizeX={createdFacility?.sizeX}
+                                sizeY={createdFacility?.sizeY}
+                                point={point}
+                                setCurrentPoint={setCurrentPoint}
+                                addingGateways={addingGateways}
+                                gateways={gateways}
+                                setGateways={setGateways}
+                            />
+
+                        </Col>
+                        <Col span={6} style={{ padding: 10 }}>
+                            <h2>Áreas</h2>
+                            <CurrentAreasList
+                                names={names}
+                            />
+                        </Col>
+                    </Row>
+                </>
+                :
+                <>
+                    <PageHeader
+                        onBack={null}
+                        title="Configuración"
+                        subTitle="Edificios"
+                    />
+                    <Row justify="end">
+                        <Button
+                            type="primary"
+                            size="large"
+                            shape="round"
+                            onClick={() => setAddFacilityVisible(!addFacilityVisible)}
+                        >
+                            Agregar
+                        </Button>
+                    </Row>
+                    <FacilitiesList
+                        facilities={facilities}
+                        loading={loading}
+                    />
+                </>
+            }
         </>
-        :
-        <>
-            <PageHeader
-                onBack={null}
-                title="Configuración"
-                subTitle="Edificios" 
-            />
-            <Row justify="end">
-                <Button
-                    type="primary"
-                    size="large"
-                    shape="round"
-                    onClick={() => setAddFacilityVisible(!addFacilityVisible)}
-                    >
-                    Agregar
-                </Button>
-            </Row>
-            <FacilitiesList 
-                facilities={facilities}
-                loading={loading}
-            />
-        </>
-        }
-    </>
-  )
+    )
 }
 
 export default RegisterFacilityView

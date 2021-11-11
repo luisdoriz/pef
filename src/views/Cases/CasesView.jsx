@@ -10,7 +10,7 @@ import useEmployeesFacilities from '../../hooks/EmployeeFacility/useEmployeesFac
 const CasesView = ({ user }) => {
   const { idRole } = user;
 
-  const { activeCases, postActiveCase, loading, deleteActiveCase, loading: loadingActive } = useActiveCases();
+  const { activeCases, postActiveCase, deleteActiveCase, loading: loadingActive } = useActiveCases();
   const { recoveredCases, loading:loadingRecovered } = useRecoveredCases();
 
   const { facilities } = useEmployeesFacilities();

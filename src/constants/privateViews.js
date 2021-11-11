@@ -8,7 +8,6 @@ import {
 
 import Home from "../views/Home";
 import Visitors from "../views/Visitors";
-import VisitorBeacons from "../views/VisitorBeacons";
 import Employees from "../views/Employees";
 import Users from "../views/Users";
 import Cases from "../views/Cases";
@@ -36,14 +35,6 @@ const views = [
         route: "/facility",
       },
     ],
-  },
-  {
-    path: "/reports",
-    component: Home,
-    showSidebar: true,
-    text: "Reportes",
-    icon: <FileOutlined />,
-    access: [2, 3],
   },
   {
     path: "/",

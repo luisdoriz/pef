@@ -4,28 +4,11 @@ import { getCloseContactsColumns } from '../../../constants/tables';
 import {
   DeleteOutlined
 } from "@ant-design/icons";
-
+import useAtRiskPersons from '../../../hooks/AtRiskPersons/useAtRiskPersons';
 
 const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole }) => {
-  const contacts = [
-    {
-      name: "Juan Perez",
-      email: "juan.perez@mail.com"
-    },
-    {
-      name: "Jaime Lopez",
-      email: "jaime.lopez@mail.com"
-    },
-    {
-      name: "Luis Gonzalez",
-      email: "luis.gonzalez@mail.com"
-    },
-    {
-      name: "Juan 10x",
-      email: "juan.10x@mail.com"
-    },
-  ]
-  const loading = false; //TODO: HACER CLOSE CONTACTS
+  const { atRiskPersons: contacts, loading } = useAtRiskPersons(activeCase?.idCase);
+
   const columns = getCloseContactsColumns()
   const confirm = () => {
     deleteCase(activeCase)
