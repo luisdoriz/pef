@@ -10,7 +10,6 @@ import useUsers from "./Users";
 import { useFacilities, useFacility } from "./Facilities";
 import useBeacons from "./Beacons"
 import useVisitors from "./Visitors";
-import useVisitorBeacons from "./VisitorBeacons";
 import useGateways from "./Gateways";
 
 export {
@@ -25,7 +24,6 @@ export {
   useUsers,
   useFacilities,
   useVisitors,
-  useVisitorBeacons,
   useFacility,
   useBeacons,
   useGateways

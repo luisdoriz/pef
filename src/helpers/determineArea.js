@@ -34,8 +34,7 @@ function areEqual(obj1, obj2){
 // The function that returns true i
     // line segment 'p1q1' and 'p2q2' intersect.
 function intersect(p1,q1,p2,q2, isSameRoom, ia = false, vertices){
-        if(areEqual(p1,q2) && areEqual(q1,p2))
-            return true
+        
     // Find the four orientations needed for
         // general and special cases
         let o1 = orientation(p1, q1, p2); 
@@ -44,16 +43,29 @@ function intersect(p1,q1,p2,q2, isSameRoom, ia = false, vertices){
         let o4 = orientation(p2, q2, q1);
         if(!ia){
             if(isSameRoom){
+                if(areEqual(p1,q2) && areEqual(q1,p2))
+                    return true
                 if(areEqual(p2, q1)){
                     return (o3 === 0 && o2 === 0 && onSegment(p1, q2, q1))
                 }
             }
-            else {
-                if((o2 === 0 && onSegment(p1, q2, q1))){
-                    return false;
-                }
+            else {  
                 if(o1 === 0 && onSegment(p1, p2, q1)){
-                    return insideArea(vertices, q2);
+                    if((o2 === 0 && onSegment(p1, q2, q1))){
+                        return false;
+                    }
+                    else{
+                        return insideArea(vertices, q2, true);
+                    }
+                }
+                if((o2 === 0 && onSegment(p1, q2, q1))){
+                    if(areEqual(p1, q2) || areEqual(q1, q2)){
+                        return false;
+                    }
+                    else{
+                        return insideArea(vertices, p2)
+                    }
+                    
                 }
             }
         }
@@ -97,7 +109,7 @@ function intersect(p1,q1,p2,q2, isSameRoom, ia = false, vertices){
         return false;
 }
 
-function  insideArea(vertices, p)
+function  insideArea(vertices, p, allowBorder = false)
 {
     // There must be at least 3 vertices in polygon[]
         if (vertices.length < 3)
@@ -125,8 +137,14 @@ function  insideArea(vertices, p)
                 // on segment. If it lies, return true, otherwise false
                 if (orientation(vertices[i], p, vertices[next]) == 0)
                 {
-                    return onSegment(vertices[i], p,
-                        vertices[next]);
+                    if(allowBorder){
+                        return !(onSegment(vertices[i], p,
+                            vertices[next]));
+                    }
+                    else{
+                        return onSegment(vertices[i], p,
+                            vertices[next]);
+                    }
                 }
   
                 count++;
@@ -134,6 +152,7 @@ function  insideArea(vertices, p)
             i = next;
         } while (i != 0);
         // Return true if count is odd, false otherwise
+        
         return (count % 2 == 1); // Same as (count%2 == 1)
 }
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAvailableBeacons, deleteBeacon, postBeacon } from "../../data/beacons";
+import { getBeacons, deleteBeacon, postBeacon } from "../../data/beacons";
 
 export const useBeacons = (idFacility) => {
   const [beacons, setBeacons] = useState([]);
@@ -7,7 +7,7 @@ export const useBeacons = (idFacility) => {
 
   useEffect(() => {
     const fetchBeacons = async () => {
-      const response = await getAvailableBeacons();
+      const response = await getBeacons();
       setBeacons(response.data);
       setLoading(false)
     };

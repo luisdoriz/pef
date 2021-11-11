@@ -8,6 +8,7 @@ import useGateways from '../../hooks/Gateways';
 
 const { confirm } = Modal
 const RegisterFacilityView = () => {
+    
     const { facilities, createArea, loading, createFacility } = useFacilities();
     const { createGateway } = useGateways();
     const [points, setPoints] = useState({});
@@ -23,7 +24,7 @@ const RegisterFacilityView = () => {
     const [addingGateways, setAddingGateways] = useState(false);
     const [gateways, setGateways] = useState([]);
     const [currentAreaId, setCurrentAreaId] = useState(null)
-
+    
     const saveRoom = (values) => {
         //const idArea = createArea({...values, vertices: currentRoom.vertices}) 
         //setCurrentAreaId(idArea);
@@ -32,12 +33,10 @@ const RegisterFacilityView = () => {
         let newRooms = rooms;
         newRooms[rooms.length - 2] = newRoom;
         setRooms(newRooms)
-        let newNames = names;
-        newRooms.map((room, i) => (
-            newNames.push({ name: room.name, key: i })
-        ))
-        setNames(newNames)
         setAddingGateways(true);
+        let newNames = [...names];
+        newNames.push({name: values.name, key: rooms.length - 2})
+        setNames(newNames);
     }
 
     const deleteArea = (prop) => {
@@ -60,7 +59,9 @@ const RegisterFacilityView = () => {
     }
 
     const saveGateways = () => {
-        //createGateway({...gateways, idArea: currentAreaId})
+        // if(gateways){
+        //     createGateway({...gateways, idArea: currentAreaId})
+        // }
         setAddingGateways(false);
         setCurrentRoom(null);
         setGateways(null);
@@ -79,6 +80,7 @@ const RegisterFacilityView = () => {
                 setCurrentPoint(null);
                 setPoints({});
                 setWalls([]);
+                //TODO: agregar delete facility
             }
         });
     }
@@ -108,7 +110,7 @@ const RegisterFacilityView = () => {
                                 shape="round"
                                 onClick={saveGateways}
                             >
-                                Terminar de agregar gateways
+                                Terminar de agregar gateways de área
                             </Button>
                             :
                             <Button
@@ -153,7 +155,7 @@ const RegisterFacilityView = () => {
 
                         </Col>
                         <Col span={6} style={{ padding: 10 }}>
-                            <h2>Áreas</h2>
+                            <h2>Áreas terminadas</h2>
                             <CurrentAreasList
                                 names={names}
                             />

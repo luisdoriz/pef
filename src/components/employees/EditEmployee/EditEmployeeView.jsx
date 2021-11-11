@@ -112,7 +112,6 @@ class EditEmployeeView extends Component {
   render() {
     const { visible, facilities, privilegeLevels, employee, beacons } = this.props;
     const { newMacAddress, selectedFacility } = this.state
-    console.log(selectedFacility)
     return (
       <Modal footer={null} title="Editar Empleado" visible={visible} onCancel={this.onCancel}>
         <Row justify="end">

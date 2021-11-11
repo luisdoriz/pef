@@ -109,7 +109,7 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
         }
         if (matchingIndex === 0 && points_array.length >= 3) {
           let newRooms = rooms;
-          newRooms.push({ name: "Área actual", vertices: [], edges: [] });
+          newRooms.push({ vertices: [], edges: [] });
           setRooms(newRooms);
           setPoints({});
           setWalls([]);
@@ -140,19 +140,25 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
     }
     else {
       const coords = { x: decimalX, y: decimalY }
-      const matchingIndex = gateways.findIndex((c) => c.x === coords.x & c.y === coords.y)
+      const matchingIndex = gateways?.findIndex((c) => c.x === coords.x & c.y === coords.y)
       if (insideArea(Object.values(currentRoom.vertices), coords) && matchingIndex === -1) {
         let newGateways = [...gateways];
         newGateways.push(coords);
         setGateways(newGateways);
       }
-      else{
-        openNotification(
-          "error",
-          "Punto no válido",
-          "El punto que ingresó no está dentro del área actual"
-        );
-        
+      else {
+        if (!gateways) {
+          let newGateways = [];
+          newGateways.push(coords);
+          setGateways(newGateways);
+        }
+        else{
+          openNotification(
+            "error",
+            "Punto no válido",
+            "El punto que ingresó no está dentro del área actual"
+          );
+        }
       }
     }
   }
@@ -173,8 +179,8 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
             ))}
           </>
         ))}
-        {gateways.map((gateway) =>(
-          <circle className="bluePoint" cx={`${(gateway.x * (100 / sizeX))}%`} cy={`${(100 - (gateway.y * (100 / sizeY)))}%`} r="2"/>
+        {gateways?.map((gateway) => (
+          <circle className="bluePoint" cx={`${(gateway.x * (100 / sizeX))}%`} cy={`${(100 - (gateway.y * (100 / sizeY)))}%`} r="2" />
         ))}
         <defs>
           <pattern id="grid" width={`${400 / sizeX}`} height={`${400 / sizeY}`} patternUnits="userSpaceOnUse">
