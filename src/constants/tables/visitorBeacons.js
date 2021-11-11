@@ -1,5 +1,4 @@
 import { Popconfirm, Button } from "antd";
-import { sorter, sortDirections } from "./index";
 import { DeleteOutlined } from "@ant-design/icons";
 
 const getVisitorBeaconsColumns = (deleteVisitorBeacon) => [

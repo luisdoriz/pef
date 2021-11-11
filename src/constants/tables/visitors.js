@@ -1,6 +1,5 @@
 import moment from "moment";
 import { Button } from "antd";
-import { sorter, sortDirections } from "./index";
 import { EditOutlined } from "@ant-design/icons";
 import "moment/locale/es";
 

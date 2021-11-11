@@ -8,7 +8,6 @@ import useFacilities from '../../hooks/Facilities';
 
 const EmployeesView = () => {
   const { facilities } = useFacilities();
-  const [selectedFacility, setSelectedFacility] = useState(null)
   const { employees, privilegeLevels, postNewEmployee, editEmployee, removeEmployee, loading:loadingEmployees } = useEmployees();
   const { beacons } = useBeacons()
   const [addEmployeeVisible, setAddEmployeeVisible] = useState(false)
@@ -46,8 +45,6 @@ const EmployeesView = () => {
         onClose={() => setAddEmployeeVisible(!addEmployeeVisible)}
         privilegeLevels={privilegeLevels}
         beacons={beacons}
-        setSelectedFacility={setSelectedFacility}
-        selectedFacility={selectedFacility}
       />
       <EditEmployee
         employee={employee}
@@ -59,7 +56,6 @@ const EmployeesView = () => {
         removeEmployee={removeEmployee}
         setEditEmployeeVisible={setEditEmployeeVisible}
         beacons={beacons}
-        setSelectedFacility={setSelectedFacility}
       />
       <Row justify="end">
         <Button
