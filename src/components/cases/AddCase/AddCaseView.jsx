@@ -17,16 +17,16 @@ class AddCaseView extends Component {
   formRef = React.createRef();
   constructor(props) {
     super(props)
-  
+
     this.state = {
-       selectedFacility: null
+      selectedFacility: null
     }
   }
 
-  setSelectedFacility = (value) =>{
-    this.setState({selectedFacility: value})
+  setSelectedFacility = (value) => {
+    this.setState({ selectedFacility: value })
   }
-  
+
   onReset = () => {
     const { onClose } = this.props;
     onClose()
@@ -40,13 +40,13 @@ class AddCaseView extends Component {
   onFinish = (values) => {
     const { addCase } = this.props;
     const date = values.date.format('YYYY/MM/DD');
-    const body = { idEmployee: values.idEmployee, date: date}
+    const body = { idEmployee: values.idEmployee, date: date }
     addCase(body);
     this.onReset()
   };
 
   disabledDate = (current) => {
-    return  current > moment().endOf('day');
+    return current > moment().endOf('day');
   }
 
   render() {
@@ -57,23 +57,23 @@ class AddCaseView extends Component {
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
             <Col span={24}>
-            <Form.Item name="idEmployee" label="Empleado" rules={[{ required: true, }]}>
+              <Form.Item name="idEmployee" label="Empleado" rules={[{ required: true, }]}>
                 <Select
                   showSearch
                   placeholder="Selecciona el empleado"
                   allowClear
                   optionFilterProp="children"
-                  filterOption={(input, option) =>{
-                    if(option.children){
+                  filterOption={(input, option) => {
+                    if (option.children) {
                       return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 ? true : false;
-                    }else if(option.label){
+                    } else if (option.label) {
                       return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0 ? true : false;
                     }
-                    }}
+                  }}
                 >
-                  {facilities.map(({facilityName, employees}) => (
+                  {facilities.map(({ facilityName, employees }) => (
                     <OptGroup label={facilityName}>
-                      {employees.map(({name, idEmployee }) => (
+                      {employees.map(({ name, idEmployee }) => (
                         <Option value={idEmployee}>{name}</Option>
                       ))}
                     </OptGroup>
@@ -86,14 +86,16 @@ class AddCaseView extends Component {
                 name="date"
                 label="Fecha de prueba positiva"
                 rules={[
-                  { type: 'date',
-                    required: true }
+                  {
+                    type: 'date',
+                    required: true
+                  }
                 ]}
               >
-                <DatePicker 
-                  placeholder = "Seleccionar fecha"
-                  format = {dateFormat}
-                  disabledDate = {this.disabledDate}
+                <DatePicker
+                  placeholder="Seleccionar fecha"
+                  format={dateFormat}
+                  disabledDate={this.disabledDate}
                 />
               </Form.Item>
             </Col>

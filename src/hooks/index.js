@@ -10,6 +10,7 @@ import useUsers from "./Users";
 import useFacilities from "./Facilities/useFacilities";
 import useVisitors from "./Visitors";
 import useVisitorBeacons from "./VisitorBeacons";
+import useReports from "./Reports";
 
 export {
   useLogin,
@@ -24,6 +25,7 @@ export {
   useFacilities,
   useVisitors,
   useVisitorBeacons,
+  useReports,
 };
 
 export default useLogin;

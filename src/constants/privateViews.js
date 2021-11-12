@@ -1,6 +1,7 @@
 import {
   BankOutlined,
   FileOutlined,
+  PieChartOutlined,
   BellOutlined,
   SettingOutlined,
   MedicineBoxOutlined,
@@ -8,11 +9,11 @@ import {
 
 import Home from "../views/Home";
 import Visitors from "../views/Visitors";
-import VisitorBeacons from "../views/VisitorBeacons";
 import Employees from "../views/Employees";
 import Users from "../views/Users";
 import Cases from "../views/Cases";
 import Alerts from "../views/Alerts";
+import Reports from "../views/Reports";
 
 const views = [
   {
@@ -37,10 +38,10 @@ const views = [
   },
   {
     path: "/reports",
-    component: Home,
+    component: Reports,
     showSidebar: true,
     text: "Reportes",
-    icon: <FileOutlined />,
+    icon: <PieChartOutlined />,
     access: [2, 3],
   },
   {
@@ -50,14 +51,6 @@ const views = [
     text: "Visitantes",
     icon: <FileOutlined />,
     access: [4],
-  },
-  {
-    path: "/reports",
-    component: Home,
-    showSidebar: true,
-    text: "Reportes",
-    icon: <FileOutlined />,
-    access: [2, 3],
   },
   {
     path: "/alerts",

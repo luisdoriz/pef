@@ -1,0 +1,26 @@
+.reports-container {
+  margin: 20px;
+  padding-bottom: 100px;
+  &__traffic {
+    padding: 20px;
+
+    border-radius: 30px;
+    background: #f8f8ff;
+    box-shadow: 5px 5px 10px #eeeef5, -5px -5px 10px #ffffff;
+  }
+  .chart-container {
+    height: 380px;
+  }
+  .ant-spin-spinning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+  }
+  .ant-empty {
+    // display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+  }
+}

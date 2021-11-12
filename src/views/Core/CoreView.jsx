@@ -17,7 +17,7 @@ const CoreView = ({ user }) => {
   return (
     <Layout>
       <Sidebar user={user} />
-      <Layout>
+      <Layout style={{ overflowY: "auto" }}>
         <Content style={{ marginLeft: 200, padding: 24 }}>
           <Switch>
             {views.map(({ path, component }) => (
