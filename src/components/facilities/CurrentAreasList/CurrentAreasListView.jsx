@@ -2,7 +2,7 @@ import React from 'react'
 import { Table } from 'antd';
 import { getCurrentAreasColumns } from '../../../constants/tables';
 
-const CurrentAreasListView = ({ names }) => {
+const CurrentAreasListView = ( {names  }) => {
   const columns = getCurrentAreasColumns();
   return (
     <div >

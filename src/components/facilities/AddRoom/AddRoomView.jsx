@@ -11,14 +11,14 @@ class AddRoomView extends Component {
   formRef = React.createRef();
   constructor(props) {
     super(props)
-  
+
     this.state = {
-       selectedFacility: null
+      selectedFacility: null
     }
   }
 
   onReset = () => {
-    const { onClose } = this.props; 
+    const { onClose } = this.props;
     onClose()
     this.formRef.current.resetFields();
   };
@@ -29,17 +29,27 @@ class AddRoomView extends Component {
   }
 
   onFinish = (values) => {
-    const { saveRoom, setAddingGateways } = this.props;
+    const { saveRoom, setAddingGateways, names, printError } = this.props;
     let name = values.name.trim();
     name = name.split(' ');
-    
-    for(var i = 0; i<name.length; i++){
+
+    for (var i = 0; i < name.length; i++) {
       name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
     }
     values.name = name.join(' ')
-    saveRoom(values);
-    setAddingGateways(true);
-    this.onReset()
+    let notValid = false;
+    names.map((indName) => {
+      if (indName.name === values.name)
+        notValid = true
+    })
+    if (notValid) {
+      printError();
+    }
+    else {
+      saveRoom(values);
+      setAddingGateways(true);
+      this.onReset()
+    }
   };
 
   render() {
@@ -48,7 +58,7 @@ class AddRoomView extends Component {
       <Modal footer={null} title="Agregar área" visible={visible} onCancel={this.onCancel}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
-          <Col span={12}>
+            <Col span={12}>
               <Form.Item
                 name="name"
                 label="Nombre"
@@ -71,7 +81,7 @@ class AddRoomView extends Component {
                   },
                 ]}
               >
-                <InputNumber min={1} max={720}/>
+                <InputNumber min={1} max={720} />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -84,7 +94,7 @@ class AddRoomView extends Component {
                   },
                 ]}
               >
-                <InputNumber min={1} max={720}/>
+                <InputNumber min={1} max={720} />
               </Form.Item>
             </Col>
             <Col span={24} style={{

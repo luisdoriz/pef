@@ -1,8 +1,8 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Input, Button, Row, Col } from 'antd';
+import { Modal, Form, Select, Button, Row, Col } from 'antd';
 import MaskedInput from 'antd-mask-input'
-
+const { Option } = Select;
 const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
@@ -23,15 +23,17 @@ class AddGatewayView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { addGateway } = this.props
-    addGateway(values)
+    const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea } = this.props
+    defineArea(values.idArea)
+    setAddGatewayVisible(false);
+    setAddGatewaysPositionsVisible(true)
+    setNewGateway(values);
+    
     this.onReset();
-    // const { editUser, user } = this.props;
-    // editUser({idUser:user.idUser, ...values});
   };
   
   render() {
-    const { visible, onClose } = this.props;
+    const { visible, onClose, areas } = this.props;
     return (
       <Modal footer={null} title="Añadir gateway" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{paddingTop:16}}>
@@ -46,31 +48,22 @@ class AddGatewayView extends Component {
               >
                 <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>
               </Form.Item>
-            </Col>  
+            </Col> 
             <Col span={12}>
-              <Form.Item
-                name="x"
-                label="Coordenada x"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="y"
-                label="Coordenada y"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
+            <Form.Item name="idArea" label="Área" rules={[{ required: true, }]}>
+                <Select
+                  showSearch
+                  placeholder="Selecciona el área"
+                  allowClear
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {areas.map(({idArea, name}) => (
+                    <Option value={idArea}>{name}</Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={24} style={{
@@ -86,7 +79,7 @@ class AddGatewayView extends Component {
                   Cancelar
                 </Button>
                 <Button type="primary" htmlType="submit">
-                  Guardar
+                  Continuar a selección de ubicación
                 </Button>
               </Form.Item>
             </Col>

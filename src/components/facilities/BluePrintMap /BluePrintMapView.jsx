@@ -16,7 +16,6 @@ const areEqual = (obj1, obj2) => {
 }
 
 const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, setWalls, rooms, setAddRoomVisible, setRooms, currentRoom, setCurrentRoom, sizeX, sizeY, addingGateways, gateways, setGateways }) => {
-
   const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
   // if (points.length === 0) {
   //   return null
@@ -117,10 +116,9 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
           setAddRoomVisible(true);
         }
         else {
-          let newRoom = currentRoom;
-          newRoom = { vertices: points, edges: walls };
+          let newRoom = { vertices: points, edges: walls };
           setCurrentRoom(newRoom);
-          let newRooms = rooms;
+          let newRooms = [...rooms];
           if (rooms.length > 0) {
             newRooms[rooms.length - 1] = newRoom;
           }
@@ -141,17 +139,18 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
     else {
       const coords = { x: decimalX, y: decimalY }
       const matchingIndex = gateways?.findIndex((c) => c.x === coords.x & c.y === coords.y)
-      if (insideArea(Object.values(currentRoom.vertices), coords) && matchingIndex === -1) {
-        let newGateways = [...gateways];
-        newGateways.push(coords);
-        setGateways(newGateways);
-      }
-      else {
+      if (insideArea(Object.values(currentRoom.vertices), coords) && (!gateways || matchingIndex === -1)) {
         if (!gateways) {
           let newGateways = [];
           newGateways.push(coords);
           setGateways(newGateways);
         }
+        else{
+          let newGateways = [...gateways];
+          newGateways.push(coords);
+          setGateways(newGateways);
+        }
+      }
         else{
           openNotification(
             "error",
@@ -159,7 +158,6 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
             "El punto que ingresó no está dentro del área actual"
           );
         }
-      }
     }
   }
   return (

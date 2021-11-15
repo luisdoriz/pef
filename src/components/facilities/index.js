@@ -12,6 +12,7 @@ import RolesList from "./RolesList"
 import EditRole from "./EditRole"
 import AddRole from "./AddRole"
 import AddFacility from "./AddFacility"
+import GatewaysMap from "./GatewaysMap";
 
 export {
   AddRoom,
@@ -27,7 +28,8 @@ export {
   RolesList,
   EditRole,
   AddRole,
-  AddFacility
+  AddFacility,
+  GatewaysMap
 };
 
 

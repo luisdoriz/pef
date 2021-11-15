@@ -46,8 +46,8 @@ class EditGatewayView extends Component {
 
   deleteGateway = (gateway) => {
     const { setEditGatewayVisible, removeGateway } = this.props;
-    // const idGateway = gateway.idGateway;
-    // removeGateway(idGateway);
+    const idGateway = gateway.idGateway;
+    removeGateway(idGateway);
     setEditGatewayVisible(false);
   }
   

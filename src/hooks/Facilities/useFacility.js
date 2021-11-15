@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { getAreas, putArea, deleteArea, postGateway, putGateway, deleteGateway } from "../../data/facilities";
+import { getAreas, putArea, deleteArea} from "../../data/facilities";
 
 export const useFacility = (idFacility) => {
   const [areas, setAreas] = useState([]);
-  const [gateways, setGateways] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAreas = async () => {
         const response = await getAreas(idFacility);
-        setAreas(response.areas);
-        setGateways(response.gateways);
+        setAreas(response);
         setLoading(false);
       };
     if (areas.length === 0 && loading){
@@ -33,8 +31,6 @@ export const useFacility = (idFacility) => {
     areas,
     setAreas,
     editArea,
-    gateways,
-    setGateways,
     loading,
     removeArea
   };

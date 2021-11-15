@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { PageHeader, Row, Button, Col, Modal } from 'antd';
+import { PageHeader, Row, Button, Col, Modal, notification } from 'antd';
 import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList, AddFacility } from "../../components/facilities";
 import useFacilities from '../../hooks/Facilities';
 import { WarningOutlined } from '@ant-design/icons';
@@ -8,7 +8,7 @@ import useGateways from '../../hooks/Gateways';
 
 const { confirm } = Modal
 const RegisterFacilityView = () => {
-    
+    const colors = [{ name: "Rojo", color: "#FF0000" }, { name: "Rosa", color: "#FF00FB" }, { name: "Azul oscuro", color: "#1B00FF" }, { name: "Azul claro", color: "#00E0FF" }, { name: "Naranja", color: "#FF9700" }, { name: "Verde", color: "#008C0D" }]
     const { facilities, createArea, loading, createFacility } = useFacilities();
     const { createGateway } = useGateways();
     const [points, setPoints] = useState({});
@@ -24,7 +24,11 @@ const RegisterFacilityView = () => {
     const [addingGateways, setAddingGateways] = useState(false);
     const [gateways, setGateways] = useState([]);
     const [currentAreaId, setCurrentAreaId] = useState(null)
-    
+    const openNotification = (type, title, message) =>
+        notification[type]({
+            message: title,
+            description: message,
+        });
     const saveRoom = (values) => {
         //const idArea = createArea({...values, vertices: currentRoom.vertices}) 
         //setCurrentAreaId(idArea);
@@ -35,7 +39,7 @@ const RegisterFacilityView = () => {
         setRooms(newRooms)
         setAddingGateways(true);
         let newNames = [...names];
-        newNames.push({name: values.name, key: rooms.length - 2})
+        newNames.push({ name: values.name, key: rooms.length - 2, color: colors[(rooms.length - 2) % colors.length].color })
         setNames(newNames);
     }
 
@@ -44,10 +48,26 @@ const RegisterFacilityView = () => {
     }
 
     const cancelRoom = () => {
-        const newRooms = rooms.filter((room) => !(room.vertices === currentRoom.vertices && room.edges === currentRoom.edges))
+        let newRooms = [...rooms]
+        newRooms.pop();
+        newRooms.push({ vertices: [], edges: [] });
         setRooms(newRooms);
         setAddRoomVisible(false);
-        setCurrentRoom([]);
+        setCurrentRoom(null);
+        setCurrentPoint(null);
+        setPoints({});
+        setWalls([]);
+    }
+
+    const cancelAddRoom = () => {
+        let newRooms = [...rooms]
+        newRooms.pop();
+        newRooms.pop();
+        if(rooms.length > 0 )
+            newRooms.push({ vertices: [], edges: [] });
+        setRooms(newRooms);
+        setAddRoomVisible(false);
+        setCurrentRoom(null);
         setCurrentPoint(null);
         setPoints({});
         setWalls([]);
@@ -64,13 +84,12 @@ const RegisterFacilityView = () => {
         // }
         setAddingGateways(false);
         setCurrentRoom(null);
-        setGateways(null);
         setCurrentAreaId(null);
     }
 
     const showConfirm = () => {
         confirm({
-            title: "¿Seguro que quieres regresar? Se borrará el edificio que está creando",
+            title: "¿Seguro que quieres regresar?",
             icon: <WarningOutlined />,
             content: "Se borrará el edificio que está creando",
             onOk() {
@@ -83,6 +102,30 @@ const RegisterFacilityView = () => {
                 //TODO: agregar delete facility
             }
         });
+    }
+
+    const confirmFinish = () => {
+        confirm({
+            title: "¿Seguro que ya terminó?",
+            icon: <WarningOutlined />,
+            content: "El edificio creado ya no podrá ser modificado",
+            onOk() {
+                setFacilitySetupVisible(false);
+                setRooms([]);
+                setCurrentRoom([]);
+                setCurrentPoint(null);
+                setPoints({});
+                setWalls([]);
+            }
+        });
+    }
+
+    const printError = () => {
+        openNotification(
+            "error",
+            "Nombre no válido",
+            "El nombre que ingresó ya existe"
+          );
     }
 
     return (
@@ -113,15 +156,26 @@ const RegisterFacilityView = () => {
                                 Terminar de agregar gateways de área
                             </Button>
                             :
-                            <Button
-                                type="primary"
-                                size="large"
-                                shape="round"
-                                onClick={cancelRoom}
-                                disabled={(!currentRoom)}
-                            >
-                                Borrar área actual
-                            </Button>
+                            <>
+                                <Button
+                                    type="primary"
+                                    size="large"
+                                    shape="round"
+                                    onClick={cancelRoom}
+                                    disabled={(currentRoom === null)}
+                                >
+                                    Borrar área actual
+                                </Button>
+                                <Button
+                                    type="primary"
+                                    size="large"
+                                    shape="round"
+                                    onClick={confirmFinish}
+                                    disabled={(!(currentRoom === null) || gateways.length === 0 || rooms.length === 0)}
+                                >
+                                    Terminar de agregar edificio
+                                </Button>
+                            </>
                         }
                     </Row>
                     <AddRoom
@@ -129,8 +183,10 @@ const RegisterFacilityView = () => {
                         visible={addRoomVisible}
                         saveRoom={saveRoom}
                         onClose={() => setAddRoomVisible(false)}
-                        cancelRoom={cancelRoom}
+                        cancelRoom={cancelAddRoom}
                         setAddingGateways={setAddingGateways}
+                        names={names}
+                        printError={printError}
                     />
                     <Row>
                         <Col span={18}>
@@ -152,12 +208,12 @@ const RegisterFacilityView = () => {
                                 gateways={gateways}
                                 setGateways={setGateways}
                             />
-
                         </Col>
                         <Col span={6} style={{ padding: 10 }}>
                             <h2>Áreas terminadas</h2>
                             <CurrentAreasList
                                 names={names}
+                                colors={colors}
                             />
                         </Col>
                     </Row>
