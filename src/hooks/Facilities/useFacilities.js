@@ -11,10 +11,10 @@ export const useFacilities = () => {
       setFacilities(response.data);
       setLoading(false)
     };
-    if (facilities.length === 0 && loading){
+    if (facilities.length === 0 && loading) {
       fetchFacilities();
     }
-  },[facilities, loading]);
+  }, [facilities, loading]);
 
   const createArea = async (body) => {
     const status = await postAreas(body);
@@ -24,9 +24,9 @@ export const useFacilities = () => {
 
   const createFacility = async (body) => {
     const { response } = await postFacility(body);
-    return response;
     setLoading(true);
     setFacilities([])
+    return response;
   }
 
   return {

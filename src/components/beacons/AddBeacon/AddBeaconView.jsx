@@ -15,7 +15,7 @@ class AddBeaconView extends Component {
   formRef = React.createRef();
   constructor(props) {
     super(props)
- 
+
   }
 
   onReset = () => {
@@ -36,22 +36,21 @@ class AddBeaconView extends Component {
 
   render() {
     const { visible, onClose } = this.props;
-    const dateFormat = 'YYYY/MM/DD'
     return (
       <Modal footer={null} title="Registrar beacon" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
-          <Col span={24}>
+            <Col span={24}>
               <Form.Item
                 name="macAddress"
                 label="Dirección MAC (Beacon)"
                 rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
+                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
                 ]}
               >
-                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>
+                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00" />
               </Form.Item>
-            </Col>  
+            </Col>
             <Col span={24} style={{
               textAlign: 'right',
             }}

@@ -23,34 +23,44 @@ class AddGatewayView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea } = this.props
-    defineArea(values.idArea)
-    setAddGatewayVisible(false);
-    setAddGatewaysPositionsVisible(true)
-    setNewGateway(values);
-    
-    this.onReset();
+    const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea, gateways, printError } = this.props
+    let notValid = false;
+    gateways.map((gateway) => {
+      if (gateway.macAddress === values.macAddress) {
+        notValid = true;
+      }
+    })
+    if (notValid) {
+      printError();
+    }
+    else {
+      defineArea(values.idArea)
+      setAddGatewayVisible(false);
+      setAddGatewaysPositionsVisible(true)
+      setNewGateway(values);
+      this.onReset();
+    }
   };
-  
+
   render() {
     const { visible, onClose, areas } = this.props;
     return (
       <Modal footer={null} title="Añadir gateway" visible={visible} onCancel={onClose}>
-        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{paddingTop:16}}>
+        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item
                 name="macAddress"
                 label="Dirección MAC (Beacon)"
                 rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
+                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
                 ]}
               >
-                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>
+                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00" />
               </Form.Item>
-            </Col> 
+            </Col>
             <Col span={12}>
-            <Form.Item name="idArea" label="Área" rules={[{ required: true, }]}>
+              <Form.Item name="idArea" label="Área" rules={[{ required: true, }]}>
                 <Select
                   showSearch
                   placeholder="Selecciona el área"
@@ -60,7 +70,7 @@ class AddGatewayView extends Component {
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {areas.map(({idArea, name}) => (
+                  {areas.map(({ idArea, name }) => (
                     <Option value={idArea}>{name}</Option>
                   ))}
                 </Select>

@@ -9,7 +9,7 @@ const openNotification = (type, title, message) =>
   });
 
 
-const GatewaysMapView = ({ sizeX, sizeY, area, gatewayPosition, setGatewayPosition }) => {
+const GatewaysMapView = ({ sizeX, sizeY, area, gatewayPosition, setGatewayPosition, gateways }) => {
   const printCoordinates = (e) => {
     const { clientX: x, clientY: y } = e
     const rect = e.target.getBoundingClientRect()
@@ -19,11 +19,12 @@ const GatewaysMapView = ({ sizeX, sizeY, area, gatewayPosition, setGatewayPositi
     const decimalX = Math.round(preX * 10) / 10
     const decimalY = Math.round(preY * 10) / 10
     const coords = { x: decimalX, y: decimalY }
+    const matchingIndex = gateways?.findIndex((c) => c.x === coords.x & c.y === coords.y)
     let objectVertices = [];
     area.vertices.forEach((vertex) => {
-      objectVertices.push({x: vertex[0], y: vertex[1]});
+      objectVertices.push({ x: vertex[0], y: vertex[1] });
     })
-    if (insideArea(objectVertices, coords) && !gatewayPosition) {
+    if (insideArea(objectVertices, coords) && (!gatewayPosition || matchingIndex === -1)) {
       setGatewayPosition(coords);
     }
     else {
@@ -51,6 +52,9 @@ const GatewaysMapView = ({ sizeX, sizeY, area, gatewayPosition, setGatewayPositi
         {gatewayPosition &&
           <circle className="bluePoint" cx={`${(gatewayPosition.x * (100 / sizeX))}%`} cy={`${(100 - (gatewayPosition.y * (100 / sizeY)))}%`} r="2" />
         }
+        {gateways?.map((gateway) => (
+          <circle className="orangePoint" cx={`${(gateway.x * (100 / sizeX))}%`} cy={`${(100 - (gateway.y * (100 / sizeY)))}%`} r="2" />
+        ))}
         <defs>
           <pattern id="grid" width={`${400 / sizeX}`} height={`${400 / sizeY}`} patternUnits="userSpaceOnUse">
             <rect width="40" height="40" fill="none" />

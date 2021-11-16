@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react'
 import { PageHeader, Row, Button, Col, Modal, notification } from 'antd';
 import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList, AddFacility } from "../../components/facilities";
 import useFacilities from '../../hooks/Facilities';
@@ -24,11 +23,13 @@ const RegisterFacilityView = () => {
     const [addingGateways, setAddingGateways] = useState(false);
     const [gateways, setGateways] = useState([]);
     const [currentAreaId, setCurrentAreaId] = useState(null)
+
     const openNotification = (type, title, message) =>
         notification[type]({
             message: title,
             description: message,
         });
+
     const saveRoom = (values) => {
         //const idArea = createArea({...values, vertices: currentRoom.vertices}) 
         //setCurrentAreaId(idArea);
@@ -63,7 +64,7 @@ const RegisterFacilityView = () => {
         let newRooms = [...rooms]
         newRooms.pop();
         newRooms.pop();
-        if(rooms.length > 0 )
+        if (rooms.length > 0)
             newRooms.push({ vertices: [], edges: [] });
         setRooms(newRooms);
         setAddRoomVisible(false);
@@ -125,7 +126,7 @@ const RegisterFacilityView = () => {
             "error",
             "Nombre no válido",
             "El nombre que ingresó ya existe"
-          );
+        );
     }
 
     return (

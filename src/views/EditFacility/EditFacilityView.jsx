@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { PageHeader, Row, Button, Col, Modal } from 'antd';
+import { PageHeader, Row, Button, Col, Modal, notification } from 'antd';
 import { AreasList, EditArea, GatewaysList, EditGateway, AddGateway, RolesList, EditRole, AddRole, GatewaysMap } from "../../components/facilities";
 import useFacility from '../../hooks/Facilities/useFacility';
 import useGateways from '../../hooks/Gateways';
@@ -32,6 +32,13 @@ const EditFacilityView = () => {
     const [addRoleVisible, setAddRoleVisible] = useState(false)
     const [addGatewaysPositionsVisible, setAddGatewaysPositionsVisible] = useState(false)
     const [areaPoints, setAreaPoints] = useState(null)
+    const [editing, setEditing] = useState(false)
+
+    const openNotification = (type, title, message) =>
+        notification[type]({
+            message: title,
+            description: message,
+        });
 
     const setEditArea = (prop) => {
         setArea(prop)
@@ -74,12 +81,28 @@ const EditFacilityView = () => {
             title: "Confirmar posición de gateway",
             icon: <WarningOutlined />,
             onOk() {
-                addGateway();
+                if (editing) {
+                    editGateway({ ...gateway, ...gatewayPosition });
+                }
+                else {
+                    addGateway();
+                }
                 setAddGatewaysPositionsVisible(false);
                 setAreaPoints(null);
                 setNewGateway(null);
+                setEditing(false);
+                setGateway(null)
+                setGatewayPosition(null);
             }
         });
+    }
+
+    const printError = () => {
+        openNotification(
+            "error",
+            "Dirección MAC no válida",
+            "La dirección MAC que ingresó ya existe"
+        );
     }
 
     return (
@@ -88,10 +111,12 @@ const EditFacilityView = () => {
                 <>
                     <PageHeader
                         onBack={null}
-                        title="Agregar gateway"
+                        title={editing ? "Editar posición de gateway" : "Agregar gateway"}
                         onBack={() => {
                             setAddGatewaysPositionsVisible(false)
                             setNewGateway(null)
+                            setGateway(null)
+                            setGatewayPosition(null)
                         }}
                     />
                     <Row justify="end">
@@ -113,6 +138,8 @@ const EditFacilityView = () => {
                                 sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
                                 gatewayPosition={gatewayPosition}
                                 setGatewayPosition={setGatewayPosition}
+                                gateways={gateways}
+                                editing={editing}
                             />
                         </Col>
                     </Row>
@@ -134,12 +161,16 @@ const EditFacilityView = () => {
                         setEditAreaVisible={setEditAreaVisible}
                     />
                     <EditGateway
-                        gateway={gateway}
                         visible={editGatewayVisible}
-                        onClose={() => setEditGatewayVisible(!editGatewayVisible)}
-                        removeGateway={removeGateway}
-                        editGateway={editGateway}
+                        onClose={() => setEditGatewayVisible(false)}
+                        areas={areas}
+                        setGateway={setGateway}
                         setEditGatewayVisible={setEditGatewayVisible}
+                        setAddGatewaysPositionsVisible={setAddGatewaysPositionsVisible}
+                        defineArea={defineArea}
+                        gateway={gateway}
+                        removeGateway={removeGateway}
+                        setEditing={setEditing}
                     />
                     <EditRole
                         areas={areas}
@@ -158,6 +189,8 @@ const EditFacilityView = () => {
                         setAddGatewayVisible={setAddGatewayVisible}
                         setAddGatewaysPositionsVisible={setAddGatewaysPositionsVisible}
                         defineArea={defineArea}
+                        gateways={gateways}
+                        printError={printError}
                     />
                     <AddBeacon
                         addBeacon={addBeacon}
