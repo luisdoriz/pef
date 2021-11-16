@@ -1,6 +1,7 @@
 import {
   BankOutlined,
   FileOutlined,
+  PieChartOutlined,
   BellOutlined,
   SettingOutlined,
   MedicineBoxOutlined,
@@ -14,6 +15,7 @@ import Cases from "../views/Cases";
 import Alerts from "../views/Alerts";
 import RegisterFacility from "../views/RegisterFacility";
 import EditFacility from "../views/EditFacility";
+import Reports from "../views/Reports";
 
 const views = [
   {
@@ -37,20 +39,20 @@ const views = [
     ],
   },
   {
+    path: "/reports",
+    component: Reports,
+    showSidebar: true,
+    text: "Reportes",
+    icon: <PieChartOutlined />,
+    access: [2, 3],
+  },
+  {
     path: "/",
     component: Visitors,
     showSidebar: true,
     text: "Visitantes",
     icon: <FileOutlined />,
     access: [4],
-  },
-  {
-    path: "/reports",
-    component: Home,
-    showSidebar: true,
-    text: "Reportes",
-    icon: <FileOutlined />,
-    access: [2, 3],
   },
   {
     path: "/alerts",
