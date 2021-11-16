@@ -1,5 +1,4 @@
 import { Popconfirm, Button } from "antd";
-import { sorter, sortDirections } from "./index";
 import { DeleteOutlined } from "@ant-design/icons";
 
 const getVisitorBeaconsColumns = (deleteVisitorBeacon) => [
@@ -7,22 +6,16 @@ const getVisitorBeaconsColumns = (deleteVisitorBeacon) => [
     title: "ID",
     dataIndex: "idBeacon",
     key: "idBeacon",
-    sorter,
-    sortDirections,
   },
   {
     title: "Direccion MAC",
     dataIndex: "macAddress",
     key: "macAddress",
-    sorter,
-    sortDirections,
   },
   {
     title: "Privilege",
     dataIndex: "idPrivilegeLevel",
     key: "idPrivilegeLevel",
-    sorter,
-    sortDirections,
   },
   {
     title: "Borrar",

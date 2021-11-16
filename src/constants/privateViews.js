@@ -13,6 +13,8 @@ import Employees from "../views/Employees";
 import Users from "../views/Users";
 import Cases from "../views/Cases";
 import Alerts from "../views/Alerts";
+import RegisterFacility from "../views/RegisterFacility";
+import EditFacility from "../views/EditFacility";
 import Reports from "../views/Reports";
 
 const views = [
@@ -70,7 +72,7 @@ const views = [
   },
   {
     showSidebar: true,
-    text: "Configuracion",
+    text: "Configuración",
     icon: <SettingOutlined />,
     access: [2],
     subMenuItems: [
@@ -78,6 +80,8 @@ const views = [
         subItemText: "Edificios",
         id: "facilities",
         route: "/settings",
+        path: "/settings/facilities",
+        component: RegisterFacility,
       },
       {
         subItemText: "Empleados",
@@ -94,6 +98,12 @@ const views = [
         component: Users,
       },
     ],
+  },
+  {
+    path: "/settings/facility/:idFacility",
+    component: EditFacility,
+    showSidebar: false,
+    access: [2],
   },
 ];
 export const getRoutes = (idRole) => {

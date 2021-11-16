@@ -23,7 +23,7 @@ export const useAlerts = () => {
   }
 
   return {
-    alerts, removeAlert
+    alerts, removeAlert, loading
   };
 };
 

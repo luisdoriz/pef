@@ -7,9 +7,10 @@ import useAlerts from "./Alerts";
 import useEmployeeFacility from "./EmployeeFacility";
 import useRecoveredCases from "./RecoveredCases";
 import useUsers from "./Users";
-import useFacilities from "./Facilities/useFacilities";
+import { useFacilities, useFacility } from "./Facilities";
+import useBeacons from "./Beacons"
 import useVisitors from "./Visitors";
-import useVisitorBeacons from "./VisitorBeacons";
+import useGateways from "./Gateways";
 import useReports from "./Reports";
 
 export {
@@ -24,7 +25,9 @@ export {
   useUsers,
   useFacilities,
   useVisitors,
-  useVisitorBeacons,
+  useFacility,
+  useBeacons,
+  useGateways,
   useReports,
 };
 

@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const { REACT_APP_API_URL } = process.env;
 
-const getAvailableBeacons = async () => {
+const getBeacons = async () => {
   try {
     const url = REACT_APP_API_URL + "/beacons/available";
     const { data } = await axios.get(url);
@@ -13,6 +13,28 @@ const getAvailableBeacons = async () => {
   }
 };
 
-export { getAvailableBeacons };
+const deleteBeacon = async ({idBeacon}) => {
+  try {
+    const url = REACT_APP_API_URL + `/beacons/${idBeacon}`;
+    const { data: { data } } = await axios.delete(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
 
-export default getAvailableBeacons;
+const postBeacon = async (body) => {
+  try {
+    const url = REACT_APP_API_URL + "/beacons";
+    const {
+      data: { data },
+    } = await axios.post(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+export { getBeacons, deleteBeacon, postBeacon};
+
+export default getBeacons;

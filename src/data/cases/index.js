@@ -13,6 +13,16 @@ const getActiveCases = async () => {
   }
 };
 
+const getAtRiskPersons = async (idCase) => {
+  try {
+    const url = REACT_APP_API_URL + `/cases/${idCase}/atRisk`;
+    const { data } = await axios.get(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
 const getRecoveredCases = async () => {
   try {
     const url = REACT_APP_API_URL + "/cases/recovered";
@@ -54,6 +64,6 @@ const deleteCase = async ({idCase}) => {
   }
 };
 
-export { getActiveCases, getRecoveredCases, getEmployeesFacilities, postCase, deleteCase };
+export { getActiveCases, getRecoveredCases, getEmployeesFacilities, postCase, deleteCase, getAtRiskPersons };
 
 export default getActiveCases;

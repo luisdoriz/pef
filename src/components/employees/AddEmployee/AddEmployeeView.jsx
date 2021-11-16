@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Input, Button, Select, Row, Col } from 'antd';
+import { Modal, Form, Input, Button, Select, Row, Col, Switch } from 'antd';
 import MaskedInput from 'antd-mask-input'
 
 const { Option } = Select;
@@ -13,13 +13,24 @@ const validateMessages = {
   },
 };
 
+const initialState = {
+  newMacAddress: true,
+  selectedFacility: null,
+}
 class AddEmployeeView extends Component {
   formRef = React.createRef();
   onReset = () => {
     const { onClose } = this.props;
     onClose()
+    this.setState(initialState)
     this.formRef.current.resetFields();
   };
+
+  constructor(props) {
+    super(props)
+
+    this.state = initialState
+  }
 
   onCancel = () => {
     this.onReset()
@@ -27,19 +38,22 @@ class AddEmployeeView extends Component {
   onFinish = (values) => {
     const { addEmployee } = this.props;
 
-    const fName = values.name.split(' ');
+    let fName = values.name.trim();
+    fName = fName.split(' ');
     for (var i = 0; i < fName.length; i++) {
       fName[i] = fName[i].charAt(0).toUpperCase() + fName[i].slice(1);
     }
     const ucName = fName.join(' ');
 
-    const fLName = values.firstLastName.split(' ');
+    let fLName = values.firstLastName.trim();
+    fLName = fLName.split(' ');
     for (var index = 0; index < fLName.length; index++) {
       fLName[index] = fLName[index].charAt(0).toUpperCase() + fLName[index].slice(1);
     }
     const uc1LName = fLName.join(' ');
 
-    const sLName = values.secondLastName.split(' ');
+    let sLName = values.secondLastName.trim();
+    sLName = sLName.split(' ');
     for (var slNameIndex = 0; slNameIndex < sLName.length; slNameIndex++) {
       sLName[slNameIndex] = sLName[slNameIndex].charAt(0).toUpperCase() + sLName[slNameIndex].slice(1);
     }
@@ -52,8 +66,19 @@ class AddEmployeeView extends Component {
     this.onReset()
   };
 
+  changeMacAddress = () => {
+    const { newMacAddress } = this.state
+    this.formRef.current.setFieldsValue({ macAddress: "" })
+    this.setState({ newMacAddress: !newMacAddress })
+  }
+
+  changePrivilegeLevels = (selectedFacility) => {
+    this.formRef.current.setFieldsValue({ idPrivilegeLevel: null })
+    this.setState({ selectedFacility })
+  }
   render() {
-    const { visible, onClose, facilities, roles } = this.props;
+    const { visible, onClose, facilities, privilegeLevels, beacons } = this.props;
+    const { newMacAddress, selectedFacility } = this.state
     return (
       <Modal footer={null} title="Añadir empleado" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
@@ -104,50 +129,80 @@ class AddEmployeeView extends Component {
                 rules={[
                   {
                     type: 'email',
-                    required: true,
+                    required: false,
                   },
                 ]}
               >
                 <Input placeholder="ejemplo@correo.com" />
               </Form.Item>
             </Col>
-            
+            <Row gutter={0} justify="end">
+              <Switch
+                onChange={this.changeMacAddress}
+                size="small"
+              />
+              <h5 style={{ paddingLeft: 10 }}>Cambiar entre beacon nuevo o beacon ya registrado</h5>
+            </Row>
+            {(!newMacAddress) ? (
+              <Col span={24}>
+                <Form.Item name="macAddress" label="Beacons ya registrados" rules={[{ required: true, }]}>
+                  <Select
+                    showSearch
+                    placeholder="Selecciona el beacon"
+                    allowClear
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {beacons.map(({ idBeacon, macAddress }) => (
+                      <Option value={idBeacon}>{macAddress}</Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            )
+              : (
+                <Col span={24}>
+                  <Form.Item
+                    name="macAddress"
+                    label="Dirección MAC (Beacon)"
+                    rules={[
+                      { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
+                    ]}
+                  >
+                    <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00" />
+                  </Form.Item>
+                </Col>
+
+              )}
             <Col span={12}>
-              <Form.Item
-                name="macAddress"
-                label="Dirección MAC (Beacon)"
-                rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/}
-                ]}
-              >
-                <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00"/>
+              <Form.Item name="idFacility" label="Edificio" rules={[{ required: true, }]}>
+                <Select
+                  placeholder="Selecciona el edificio del empleado"
+                  allowClear
+                  onChange={this.changePrivilegeLevels}
+                >
+                  {facilities.map(({ idFacility, name }) => (
+                    <Option value={idFacility}>{name}</Option>
+                  ))}
+                </Select>
               </Form.Item>
-            </Col>  
+            </Col>
             <Col span={12}>
               <Form.Item name="idPrivilegeLevel" label="Rol" rules={[{ required: true, }]}>
                 <Select
                   showSearch
                   placeholder="Selecciona el rol"
                   allowClear
+                  disabled={!selectedFacility}
                   optionFilterProp="children"
                   filterOption={(input, option) =>
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {roles.map(({idPrivilegeLevel, name}) => (
+                  {privilegeLevels.filter((level) => level.idFacility === selectedFacility).map(({ idPrivilegeLevel, name }) => (
                     <Option value={idPrivilegeLevel}>{name}</Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="idFacility" label="Edificio" rules={[{ required: true, }]}>
-                <Select
-                  placeholder="Selecciona el edificio del empleado"
-                  allowClear
-                >
-                  {facilities.map(({ idFacility, name }) => (
-                    <Option value={idFacility}>{name}</Option>
                   ))}
                 </Select>
               </Form.Item>

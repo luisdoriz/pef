@@ -1,3 +1,8 @@
-import Hook from "./useFacilities"
+import useFacilities from "./useFacilities"
+import useFacility from "./useFacility"
 
-export default Hook
+export {
+    useFacilities,
+    useFacility
+}
+export default useFacilities

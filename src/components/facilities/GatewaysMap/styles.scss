@@ -1,0 +1,11 @@
+@import "styles/_colors.scss";
+.blueprint-container {
+    padding: 20px;
+    .bluePoint{
+      fill: $regular-blue
+    }
+    .orangePoint{
+      fill: orange
+    }
+  }
+
