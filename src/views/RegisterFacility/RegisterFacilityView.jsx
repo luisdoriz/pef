@@ -8,7 +8,7 @@ import useGateways from '../../hooks/Gateways';
 const { confirm } = Modal
 const RegisterFacilityView = () => {
     const colors = [{ name: "Rojo", color: "#FF0000" }, { name: "Rosa", color: "#FF00FB" }, { name: "Azul oscuro", color: "#1B00FF" }, { name: "Azul claro", color: "#00E0FF" }, { name: "Naranja", color: "#FF9700" }, { name: "Verde", color: "#008C0D" }]
-    const { facilities, createArea, loading, createFacility } = useFacilities();
+    const { facilities, createArea, loading, createFacility, removeFacility } = useFacilities();
     const { createGateway } = useGateways();
     const [points, setPoints] = useState({});
     const [walls, setWalls] = useState([]);
@@ -31,8 +31,8 @@ const RegisterFacilityView = () => {
         });
 
     const saveRoom = (values) => {
-        //const idArea = createArea({...values, vertices: currentRoom.vertices}) 
-        //setCurrentAreaId(idArea);
+        const idArea = createArea({ ...values, vertices: currentRoom.vertices })
+        setCurrentAreaId(idArea);
         let newRoom = rooms[rooms.length - 2];
         newRoom = { name: values.name, ...newRoom };
         let newRooms = rooms;
@@ -42,10 +42,6 @@ const RegisterFacilityView = () => {
         let newNames = [...names];
         newNames.push({ name: values.name, key: rooms.length - 2, color: colors[(rooms.length - 2) % colors.length].color })
         setNames(newNames);
-    }
-
-    const deleteArea = (prop) => {
-
     }
 
     const cancelRoom = () => {
@@ -75,14 +71,16 @@ const RegisterFacilityView = () => {
     }
 
     const saveFacility = (prop) => {
-        // const id = createFacility(prop)
-        setCreatedFacility({ name: prop.name, idFacility: prop.idFacility, sizeX: prop.sizeX, sizeY: prop.sizeY }); //TODO: CAMBIAR A ID
+        const id = createFacility(prop)
+        setCreatedFacility({ name: prop.name, idFacility: id, sizeX: prop.sizeX, sizeY: prop.sizeY }); //TODO: CAMBIAR A ID
     }
 
     const saveGateways = () => {
-        // if(gateways){
-        //     createGateway({...gateways, idArea: currentAreaId})
-        // }
+        if (gateways) {
+            gateways.map((gateway) =>
+                createGateway({ ...gateway, idArea: currentAreaId })
+            )
+        }
         setAddingGateways(false);
         setCurrentRoom(null);
         setCurrentAreaId(null);
@@ -100,7 +98,7 @@ const RegisterFacilityView = () => {
                 setCurrentPoint(null);
                 setPoints({});
                 setWalls([]);
-                //TODO: agregar delete facility
+                removeFacility(createdFacility.idFacility)
             }
         });
     }

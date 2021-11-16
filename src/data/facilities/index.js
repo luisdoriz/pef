@@ -67,6 +67,16 @@ const deleteArea = async ({ idArea }) => {
   }
 };
 
-export { getFacilities, getAreas, putArea, deleteArea, postAreas, postFacility };
+const deleteFacility = async ({ idFacility }) => {
+  try {
+    const url = REACT_APP_API_URL + `/facilities/${idFacility}`;
+    const { data: { data } } = await axios.delete(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+export { getFacilities, getAreas, putArea, deleteArea, postAreas, postFacility, deleteFacility };
 
 export default getFacilities;
