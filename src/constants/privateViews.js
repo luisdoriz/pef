@@ -7,19 +7,20 @@ import {
   MedicineBoxOutlined,
 } from "@ant-design/icons";
 
-import Home from "../views/Home";
 import Visitors from "../views/Visitors";
 import Employees from "../views/Employees";
 import Users from "../views/Users";
 import Cases from "../views/Cases";
 import Alerts from "../views/Alerts";
 import Reports from "../views/Reports";
+import Facility from "../views/Facility";
 
 const views = [
   {
-    path: "/facility/:facilityId",
-    component: Home,
+    path: "/facility/:idFacility",
+    component: Facility,
     showSidebar: true,
+    sameComponent: true,
     text: "Edificios",
     icon: <BankOutlined />,
     access: [2, 3],
@@ -99,10 +100,10 @@ const views = [
 export const getRoutes = (idRole) => {
   const routes = [];
   views.forEach((viewItem) => {
-    const { subMenuItems, access } = viewItem;
+    const { subMenuItems, access, sameComponent } = viewItem;
     if (access.includes(idRole)) {
       const hasNestedRoutes = typeof subMenuItems !== "undefined";
-      if (hasNestedRoutes) {
+      if (hasNestedRoutes && !sameComponent) {
         subMenuItems.forEach((subMenuItem) => {
           const { component } = subMenuItem;
           if (typeof component !== "undefined") {

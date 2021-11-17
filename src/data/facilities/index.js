@@ -12,6 +12,16 @@ const getFacilities = async () => {
   }
 };
 
-export { getFacilities };
+const getFacility = async (idFacility) => {
+  try {
+    const url = REACT_APP_API_URL + `/facilities/areas/${idFacility}`;
+    const { data: {data} } = await axios.get(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+export { getFacilities, getFacility };
 
 export default getFacilities;

@@ -53,7 +53,6 @@ export const useEmployees = () => {
   }
 
   const editEmployee = async (body) => {
-    console.log(body);
     const status  = await putEmployee(body);
     setLoading(true);
     setEmployees([]);

@@ -24,7 +24,6 @@ export const useVisitorBeacons = () => {
   // }
 
   const deleteBeacon = async ({ idBeacon }) => {
-    console.log(idBeacon);
     setLoading(true);
     setBeacons([]);
   };
