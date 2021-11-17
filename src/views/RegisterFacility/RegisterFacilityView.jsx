@@ -4,6 +4,7 @@ import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList, AddFacility } 
 import useFacilities from '../../hooks/Facilities';
 import { WarningOutlined } from '@ant-design/icons';
 import useGateways from '../../hooks/Gateways';
+import { mergeVertices } from "../../helpers/mergeVertices"
 
 const { confirm } = Modal
 const RegisterFacilityView = () => {
@@ -30,9 +31,69 @@ const RegisterFacilityView = () => {
             description: message,
         });
 
+    const areEqual = (obj1, obj2) => {
+        if (obj1 === null) {
+            return false;
+        }
+        return (obj1.x === obj2.x && obj1.y === obj2.y)
+    }
+
     const saveRoom = (values) => {
-        const idArea = createArea({ ...values, vertices: currentRoom.vertices })
-        setCurrentAreaId(idArea);
+        let finalVertices = Object.values(currentRoom.vertices)
+        let changed = true;
+        while (changed) {
+            let newVertices = [];
+            let secondCounter = finalVertices.length - 1;
+            let newLine;
+            changed = false;
+            for (let i = 0; i < (finalVertices.length); i++) {
+                if (i < (finalVertices.length - 2)) {
+                    newLine = mergeVertices([finalVertices[i], finalVertices[i + 1]], [finalVertices[i + 1], finalVertices[i + 2]])
+                }
+                else {
+                    if (secondCounter === finalVertices.length) {
+                        secondCounter = 0;
+                    }
+                    newLine = mergeVertices([finalVertices[i], finalVertices[secondCounter]], [finalVertices[secondCounter], finalVertices[(secondCounter === (finalVertices.length - 1)) ? 0 : secondCounter + 1]])
+                    if (newLine) {
+                        const matchingIndex = newVertices.findIndex((c) => c.x === newLine[1].x & c.y === newLine[1].y)
+                        newVertices.splice(matchingIndex, 1);
+                    }
+                    secondCounter++;
+                }
+                if (newLine) {
+                    const matchingIndex0 = newVertices.findIndex((c) => c.x === newLine[0].x & c.y === newLine[0].y)
+                    const matchingIndex1 = newVertices.findIndex((c) => c.x === newLine[1].x & c.y === newLine[1].y)
+                    if (areEqual(newLine[0], finalVertices[i])) {
+                        if (matchingIndex0 === -1) {
+                            newVertices.push(newLine[0]);
+                        }
+                        if (matchingIndex1 === -1) {
+                            newVertices.push(newLine[1]);
+                        }
+                    }
+                    else {
+                        if (matchingIndex1 === -1) {
+                            newVertices.push(newLine[1]);
+                        }
+                        if (matchingIndex0 === -1) {
+                            newVertices.push(newLine[0]);
+                        }
+                    }
+                    i++;
+                    changed= true;
+                }
+                else {
+                    const matchingIndex = newVertices.findIndex((c) => c.x === finalVertices[i].x & c.y === finalVertices[i].y)
+                    if (matchingIndex === -1) {
+                        newVertices.push(finalVertices[i])
+                    }
+                }
+            }
+            finalVertices = newVertices
+        }
+        // const idArea = createArea({ ...values, vertices: currentRoom.vertices })
+        // setCurrentAreaId(idArea);
         let newRoom = rooms[rooms.length - 2];
         newRoom = { name: values.name, ...newRoom };
         let newRooms = rooms;
@@ -71,8 +132,8 @@ const RegisterFacilityView = () => {
     }
 
     const saveFacility = (prop) => {
-        const id = createFacility(prop)
-        setCreatedFacility({ name: prop.name, idFacility: id, sizeX: prop.sizeX, sizeY: prop.sizeY }); //TODO: CAMBIAR A ID
+        // const id = createFacility(prop)
+        setCreatedFacility({ name: prop.name, idFacility: '1', sizeX: prop.sizeX, sizeY: prop.sizeY }); //TODO: CAMBIAR A ID
     }
 
     const saveGateways = () => {
