@@ -18,7 +18,7 @@ const CoreView = ({ user, facilities }) => {
     <Layout>
       <Sidebar user={user} facilities={facilities} />
       <Layout style={{ overflowY: "auto" }}>
-        <Content style={{ marginLeft: 200, padding: 24 }}>
+        <Content style={{ marginLeft: 200, padding: 24, overflow: "auto" }}>
           <Switch>
             {views.map(({ path, component }) => (
               <Route path={path} component={() => component({ user })} />

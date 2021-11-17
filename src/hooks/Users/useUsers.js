@@ -48,7 +48,8 @@ export const useUsers = () => {
     postUser,
     roles,
     removeUser,
-    editUser
+    editUser,
+    loading
   };
 };
 

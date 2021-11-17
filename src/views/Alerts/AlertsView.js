@@ -5,7 +5,7 @@ import { AlertsList } from "../../components/alerts";
 
 const AlertsView = ({ user }) => {
   const { idRole } = user;
-  const { alerts, removeAlert } = useAlerts();
+  const { alerts, removeAlert, loading } = useAlerts();
   const deleteAlert = (prop) => {
     removeAlert({ idAlert: prop.idAlert });
   };
@@ -13,7 +13,7 @@ const AlertsView = ({ user }) => {
   return (
     <>
       <PageHeader onBack={null} title="Alertas" />
-      <AlertsList idRole={idRole} alerts={alerts} deleteAlert={deleteAlert} />
+      <AlertsList idRole={idRole} alerts={alerts} deleteAlert={deleteAlert} loading={loading} />
     </>
   );
 };

@@ -4,15 +4,16 @@ import { getCasesColumns } from "./cases";
 import { getRecoveredCasesColumns } from "./recoveredCases";
 import { getCloseContactsColumns } from "./closeContacts";
 import { getAlertsColumns } from "./alerts";
+import { getFacilitiesColumns } from "./facilities"
+import { getAreasColumns } from "./areas"
+import { getGatewaysColumns } from "./gateways"
+import { getCurrentAreasColumns } from "./currentAreas"
+import { getBeaconsColumns } from "./beacons"
+import { getPrivilegeLevelColumns } from "./privilegeLevels"
 import { getVisitorColumns } from "./visitors";
 import { getVisitorBeaconsColumns } from "./visitorBeacons";
 
-const sorter = (a, b) => a.name.length - b.name.length;
-const sortDirections = ["descend"];
-
 export {
-  sorter,
-  sortDirections,
   getEmployeesColumns,
   getUserColumns,
   getCasesColumns,
@@ -21,6 +22,7 @@ export {
   getAlertsColumns,
   getVisitorColumns,
   getVisitorBeaconsColumns,
+  getFacilitiesColumns, getAreasColumns, getGatewaysColumns, getCurrentAreasColumns, getBeaconsColumns, getPrivilegeLevelColumns
 };
 
-export default sorter;
+export default getEmployeesColumns;

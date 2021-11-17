@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Input, Button, Select, Row, Col, Popconfirm } from 'antd';
+import { Modal, Form, Input, Button, Select, Row, Col, Popconfirm, Switch } from 'antd';
+import MaskedInput from 'antd-mask-input'
 import {
   DeleteOutlined
 } from "@ant-design/icons";
@@ -14,6 +15,11 @@ const validateMessages = {
   },
 };
 
+const initialState = {
+  newMacAddress: true,
+  selectedFacility: null
+}
+
 class EditEmployeeView extends Component {
   formRef = React.createRef();
   onReset = () => {
@@ -22,9 +28,15 @@ class EditEmployeeView extends Component {
     this.formRef.current.resetFields();
   };
 
-  componentDidUpdate = () => {
+  constructor(props) {
+    super(props)
+
+    this.state = initialState
+  }
+
+  componentDidUpdate = (prevProps) => {
     const { visible } = this.props;
-    if (visible) {
+    if (visible && prevProps.visible !== visible) {
       this.setFormState()
     }
   }
@@ -32,13 +44,16 @@ class EditEmployeeView extends Component {
   setFormState = () => {
     const { employee } = this.props
     const lastNames = employee?.lastNames.split(' ');
-    if(lastNames.length === 2){
-      const values = {firstLastName: lastNames[0], secondLastName: lastNames[1] ,...employee};
+    if (lastNames && lastNames.length === 2) {
+      const values = { firstLastName: lastNames[0], secondLastName: lastNames[1], ...employee };
       delete values.lastNames;
       this.formRef.current.setFieldsValue(values);
     }
     else
       this.formRef.current.setFieldsValue(employee);
+
+    const { idFacility } = employee;
+    this.setState({ selectedFacility: idFacility })
 
   }
 
@@ -47,7 +62,31 @@ class EditEmployeeView extends Component {
   }
   onFinish = (values) => {
     const { employee, modifyEmployee } = this.props;
-    modifyEmployee({idEmployee:employee.idEmployee, ...values});
+    let fName = values.name.trim();
+    fName = fName.split(' ');
+    for (var i = 0; i < fName.length; i++) {
+      fName[i] = fName[i].charAt(0).toUpperCase() + fName[i].slice(1);
+    }
+    const ucName = fName.join(' ');
+
+    let fLName = values.firstLastName.trim();
+    fLName = fLName.split(' ');
+    for (var index = 0; index < fLName.length; index++) {
+      fLName[index] = fLName[index].charAt(0).toUpperCase() + fLName[index].slice(1);
+    }
+    const uc1LName = fLName.join(' ');
+
+    let sLName = values.secondLastName.trim();
+    sLName = sLName.split(' ');
+    for (var slNameIndex = 0; slNameIndex < sLName.length; slNameIndex++) {
+      sLName[slNameIndex] = sLName[slNameIndex].charAt(0).toUpperCase() + sLName[slNameIndex].slice(1);
+    }
+    const uc2LName = sLName.join(' ');
+
+    values.name = ucName;
+    values.firstLastName = uc1LName;
+    values.secondLastName = uc2LName;
+    modifyEmployee({ idEmployee: employee.idEmployee, ...values });
     this.onReset()
   };
 
@@ -59,23 +98,35 @@ class EditEmployeeView extends Component {
     setEditEmployeeVisible(false);
   }
 
+  changeMacAddress = () => {
+    const { newMacAddress } = this.state
+    this.setState({ newMacAddress: !newMacAddress })
+  }
+
+  changePrivilegeLevels = (prop) => {
+    this.setState({ selectedFacility: prop })
+    this.formRef.current.setFieldsValue({ idPrivilegeLevel: null })
+
+  }
+
   render() {
-    const { visible, onClose, facilities, roles, employee } = this.props;
+    const { visible, facilities, privilegeLevels, employee, beacons } = this.props;
+    const { newMacAddress, selectedFacility } = this.state
     return (
-      <Modal footer={null} title="Editar Empleado" visible={visible} onCancel={onClose}>
+      <Modal footer={null} title="Editar Empleado" visible={visible} onCancel={this.onCancel}>
         <Row justify="end">
           <Popconfirm
-              title="¿Seguro que quieres borrar este empleado?"
-              onConfirm={() => this.deleteEmployee(employee)}
-              okText="Confirmar"
-              cancelText="Cancelar"
-              >
-              <Button
-                type="danger"
-                shape="round"
-                icon={<DeleteOutlined />}
+            title="¿Seguro que quieres borrar este empleado?"
+            onConfirm={() => this.deleteEmployee(employee)}
+            okText="Confirmar"
+            cancelText="Cancelar"
+          >
+            <Button
+              type="danger"
+              shape="round"
+              icon={<DeleteOutlined />}
             />
-            </Popconfirm>
+          </Popconfirm>
         </Row>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
@@ -132,42 +183,68 @@ class EditEmployeeView extends Component {
                 <Input placeholder="ejemplo@correo.com" />
               </Form.Item>
             </Col>
+            <Row gutter={0} justify="end">
+              <Switch
+                onChange={this.changeMacAddress}
+                size="small"
+              />
+              <h5 style={{ paddingLeft: 10 }}>Cambiar entre beacon nuevo o beacon ya registrado</h5>
+            </Row>
+            {(!newMacAddress) ? (
+              <Col span={24}>
+                <Form.Item name="macAddress" label="Beacons ya registrados" rules={[{ required: true, }]}>
+                  <Select
+                    showSearch
+                    placeholder="Selecciona el beacon"
+                    allowClear
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {beacons.map(({ idBeacon, macAddress }) => (
+                      <Option value={idBeacon}>{macAddress}</Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            )
+              : (
+                <Col span={24}>
+                  <Form.Item
+                    name="macAddress"
+                    label="Dirección MAC (Beacon)"
+                    rules={[
+                      { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
+                    ]}
+                  >
+                    <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00" />
+                  </Form.Item>
+                </Col>
+
+              )}
             <Col span={12}>
-              <Form.Item
-                name="macAddress"
-                label="Direccion MAC (Beacon)"
-                rules={[
-                  { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
-                ]}
-              >
-                <Input placeholder="00:00:00:00:00:00" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="idPrivilegeLevel" label="Rol" rules={[{ required: true, }]}>
+              <Form.Item name="idFacility" label="Edificio" rules={[{ required: true, }]} >
                 <Select
-                  showSearch
-                  placeholder="Selecciona el rol"
+                  placeholder="Selecciona el edificio del empleado"
                   allowClear
-                  optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
+                  onChange={this.changePrivilegeLevels}
                 >
-                  {roles.map(({idPrivilegeLevel, name}) => (
-                    <Option value={idPrivilegeLevel}>{name}</Option>
+                  {facilities.map(({ idFacility, name }) => (
+                    <Option key={idFacility} value={idFacility}>{name}</Option>
                   ))}
                 </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item name="idFacility" label="Edificio" rules={[{ required: true, }]}>
+              <Form.Item name="idPrivilegeLevel" label="Rol" rules={[{ required: true, }]}>
                 <Select
-                  placeholder="Selecciona el edificio del empleado"
+                  placeholder="Selecciona el rol"
                   allowClear
+                  disabled={!selectedFacility}
                 >
-                  {facilities.map(({ idFacility, name }) => (
-                    <Option value={idFacility}>{name}</Option>
+                  {privilegeLevels.filter((privilegeLevel) => privilegeLevel.idFacility === selectedFacility).map(({ idPrivilegeLevel, name }) => (
+                    <Option value={idPrivilegeLevel}>{name}</Option>
                   ))}
                 </Select>
               </Form.Item>
