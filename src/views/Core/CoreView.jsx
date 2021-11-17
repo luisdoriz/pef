@@ -11,12 +11,12 @@ import Sidebar from '../../components/core/Sidebar';
 const { Content } = Layout;
 
 
-const CoreView = ({ user }) => {
+const CoreView = ({ user, facilities }) => {
   const { idRole } = user;
-  const views = getRoutes(idRole)
+  const views = getRoutes(idRole, facilities)
   return (
     <Layout>
-      <Sidebar user={user} />
+      <Sidebar user={user} facilities={facilities} />
       <Layout style={{ overflowY: "auto" }}>
         <Content style={{ marginLeft: 200, padding: 24 }}>
           <Switch>

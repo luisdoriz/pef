@@ -1,4 +1,4 @@
-export const mainInitialState = { auth: false, user: {} };
+export const mainInitialState = { auth: false, user: {}, facilities: [] };
 
 export const mainReducer = (state, action) => {
   let updatedState = { ...state };
@@ -13,7 +13,9 @@ export const mainReducer = (state, action) => {
       break;
     case "CHECK_AUTH":
       updatedState.auth = true;
-      updatedState.user = action.payload;
+      const { user, facilities } = action.payload;
+      updatedState.user = user;
+      updatedState.facilities = facilities;
       break;
     default:
       break;

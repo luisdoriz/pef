@@ -10,10 +10,10 @@ import './styles.css';
 const { Sider } = Layout;
 const { SubMenu, Item } = Menu;
 
-const SidebarView = ({ user }) => {
+const SidebarView = ({ user, facilities }) => {
   const { mainDispatch } = useContext(Context.Consumer)
   const { idRole } = user;
-  const views = getSidebarContent(idRole);
+  const views = getSidebarContent(idRole, facilities);
   const renderMenuItems = () => {
     const items = []
     views.forEach((item, index) => {

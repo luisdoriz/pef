@@ -9,7 +9,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import useAuth from '../../../hooks/Auth';
 
 const PrivateRoute = ({ component, ...props }) => {
-  const { loading, checkAuth, auth, user } = useAuth()
+  const { loading, checkAuth, auth, user, facilities } = useAuth()
   useEffect(() => {
     const init = async () => checkAuth()
     if (loading) {
@@ -26,7 +26,7 @@ const PrivateRoute = ({ component, ...props }) => {
     <Route
       {...props}
       render={({ location }) =>
-        auth ? component({ user }) : (
+        auth ? component({ user, facilities }) : (
           <Redirect
             to={{
               pathname: "/login",

@@ -14,8 +14,9 @@ import Cases from "../views/Cases";
 import Alerts from "../views/Alerts";
 import Reports from "../views/Reports";
 import Facility from "../views/Facility";
+import getFacilities from "../data/facilities";
 
-const views = [
+const getViews = (facilities) => [
   {
     path: "/facility/:idFacility",
     component: Facility,
@@ -24,18 +25,11 @@ const views = [
     text: "Edificios",
     icon: <BankOutlined />,
     access: [2, 3],
-    subMenuItems: [
-      {
-        subItemText: "Edificio 1",
-        id: 1,
-        route: "/facility",
-      },
-      {
-        subItemText: "Edificio 2",
-        id: 2,
-        route: "/facility",
-      },
-    ],
+    subMenuItems: facilities.map(({ name, idFacility }) => ({
+      subItemText: name,
+      id: idFacility,
+      route: "/facility",
+    })),
   },
   {
     path: "/reports",
@@ -97,8 +91,10 @@ const views = [
     ],
   },
 ];
-export const getRoutes = (idRole) => {
+export const getRoutes = (idRole, facilities) => {
   const routes = [];
+  console.log(facilities)
+  const views = getViews(facilities)
   views.forEach((viewItem) => {
     const { subMenuItems, access, sameComponent } = viewItem;
     if (access.includes(idRole)) {
@@ -118,8 +114,10 @@ export const getRoutes = (idRole) => {
   return routes;
 };
 
-export const getSidebarContent = (idRole) => {
+export const getSidebarContent = (idRole, facilities) => {
   const content = [];
+  console.log(facilities)
+  const views = getViews(facilities)
   views.forEach((viewItem) => {
     const { access } = viewItem;
     if (access.includes(idRole)) {
