@@ -20,7 +20,12 @@ const FacilityView = () => {
         onBack={null}
         title="Facility"
       />
-      <FacilityMap areas={areas} positions={positions}/>
+      <FacilityMap
+        areas={areas}
+        positions={positions}
+        sizeX={areas && areas.length > 0 ? areas[0].facilitySizeX : 0}
+        sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
+      />
     </>
   )
 }

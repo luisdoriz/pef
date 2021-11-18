@@ -16,7 +16,8 @@ import RegisterFacility from "../views/RegisterFacility";
 import EditFacility from "../views/EditFacility";
 import Reports from "../views/Reports";
 import Facility from "../views/Facility";
-import getFacilities from "../data/facilities";
+import Organizations from "../views/Organizations"
+import Admins from "../views/Admins"
 
 const getViews = (facilities) => [
   {
@@ -100,10 +101,21 @@ const getViews = (facilities) => [
     showSidebar: false,
     access: [2],
   },
+  {
+    path: "/organizations",
+    component: Organizations,
+    showSidebar: false,
+    access: [1],
+  },
+  {
+    path: "/organization/:idOrganization",
+    component: Admins,
+    showSidebar: false,
+    access: [1],
+  },
 ];
 export const getRoutes = (idRole, facilities) => {
   const routes = [];
-  console.log(facilities)
   const views = getViews(facilities)
   views.forEach((viewItem) => {
     const { subMenuItems, access, sameComponent } = viewItem;
@@ -126,7 +138,6 @@ export const getRoutes = (idRole, facilities) => {
 
 export const getSidebarContent = (idRole, facilities) => {
   const content = [];
-  console.log(facilities)
   const views = getViews(facilities)
   views.forEach((viewItem) => {
     const { access } = viewItem;

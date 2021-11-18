@@ -12,6 +12,8 @@ import { getBeaconsColumns } from "./beacons"
 import { getPrivilegeLevelColumns } from "./privilegeLevels"
 import { getVisitorColumns } from "./visitors";
 import { getVisitorBeaconsColumns } from "./visitorBeacons";
+import { getOrganizationsColumns } from "./organizations"
+import { getAdminColumns } from "./admins"
 
 export {
   getEmployeesColumns,
@@ -22,7 +24,14 @@ export {
   getAlertsColumns,
   getVisitorColumns,
   getVisitorBeaconsColumns,
-  getFacilitiesColumns, getAreasColumns, getGatewaysColumns, getCurrentAreasColumns, getBeaconsColumns, getPrivilegeLevelColumns
+  getFacilitiesColumns,
+  getAreasColumns,
+  getGatewaysColumns,
+  getCurrentAreasColumns,
+  getBeaconsColumns,
+  getPrivilegeLevelColumns,
+  getOrganizationsColumns,
+  getAdminColumns
 };
 
 export default getEmployeesColumns;

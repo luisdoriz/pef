@@ -8,6 +8,8 @@ const FacilityMapView = ({
   loading,
   areas,
   positions,
+  sizeX,
+  sizeY
 }) => {
   if (loading) {
     const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
@@ -15,11 +17,10 @@ const FacilityMapView = ({
       <Spin indicator={antIcon} />
     )
   }
-  const { facilitySizeX: sizeX, facilitySizeY: sizeY } = areas[0]
   const renderContent = (from, to) => (
     <div>
-      <p> Desde:{moment(from).format("HH:MM a")}</p>
-      <p> Hasta: {moment(to).format("HH:MM a")}</p>
+      <p> Desde: {moment(from).format("HH:MMa")}</p>
+      <p> Hasta: {moment(to).format("HH:MMa")}</p>
     </div>
   )
   const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
@@ -78,7 +79,7 @@ const FacilityMapView = ({
                 cx={`${(x * (100 / sizeX))}%`}
                 cy={`${(100 - (y * (100 / sizeY)))}%`}
                 r="3"
-                fill="red"
+                fill="black"
               />
             </Popover>
           ))
