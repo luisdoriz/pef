@@ -213,6 +213,8 @@ const RegisterFacilityView = () => {
                 createFacility={saveFacility}
                 onClose={() => setAddFacilityVisible(!addFacilityVisible)}
                 setFacilitySetupVisible={setFacilitySetupVisible}
+                facilities={facilities}
+                printError={printError}
             />
             {facilitySetupVisible ?
                 <>

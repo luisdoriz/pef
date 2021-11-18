@@ -38,9 +38,26 @@ class EditAreaView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    this.onReset();
-    const { editArea, area } = this.props;
-    editArea({idArea:area.idArea, ...values});
+    const { editArea, area, areas, printError } = this.props;
+    let name = values.name.trim();
+    name = name.split(' ');
+
+    for (var i = 0; i < name.length; i++) {
+      name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
+    }
+    values.name = name.join(' ')
+    let notValid = false;
+    areas.map((indArea) => {
+      if (indArea.name === values.name && values.name !== area.name)
+        notValid = true
+    })
+    if (notValid) {
+      printError();
+    }
+    else {
+      editArea({ idArea: area.idArea, ...values });
+      this.onReset();
+    }
   };
 
   deleteArea = (area) => {
@@ -49,26 +66,26 @@ class EditAreaView extends Component {
     removeArea(idArea);
     setEditAreaVisible(false);
   }
-  
+
   render() {
     const { visible, onClose, area } = this.props;
     return (
       <Modal footer={null} title="Editar área" visible={visible} onCancel={onClose}>
-       <Row justify="end">
-        <Popconfirm
-          title="¿Seguro que quieres borrar esta área?"
-          onConfirm={() => this.deleteArea(area)}
-          okText="Confirmar"
-          cancelText="Cancelar"
+        <Row justify="end">
+          <Popconfirm
+            title="¿Seguro que quieres borrar esta área?"
+            onConfirm={() => this.deleteArea(area)}
+            okText="Confirmar"
+            cancelText="Cancelar"
           >
-          <Button
-            type="danger"
-            shape="round"
-            icon={<DeleteOutlined />}
-        />
-        </Popconfirm>
+            <Button
+              type="danger"
+              shape="round"
+              icon={<DeleteOutlined />}
+            />
+          </Popconfirm>
         </Row>
-        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{paddingTop:16}}>
+        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item
@@ -93,7 +110,7 @@ class EditAreaView extends Component {
                   },
                 ]}
               >
-                <InputNumber min={1} max={720}/>
+                <InputNumber min={1} max={720} />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -106,7 +123,7 @@ class EditAreaView extends Component {
                   },
                 ]}
               >
-                <InputNumber min={1}/>
+                <InputNumber min={1} />
               </Form.Item>
             </Col>
             <Col span={24} style={{
