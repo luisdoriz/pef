@@ -15,7 +15,7 @@ const areEqual = (obj1, obj2) => {
   return (obj1.x === obj2.x && obj1.y === obj2.y)
 }
 
-const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, setWalls, rooms, setAddRoomVisible, setRooms, currentRoom, setCurrentRoom, sizeX, sizeY, addingGateways, gateways, setGateways }) => {
+const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, setWalls, rooms, setAddRoomVisible, setRooms, currentRoom, setCurrentRoom, sizeX, sizeY, addingGateways, gateways, setGateways, setAddGatewayVisible }) => {
   const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
   // if (points.length === 0) {
   //   return null
@@ -140,24 +140,25 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
       const coords = { x: decimalX, y: decimalY }
       const matchingIndex = gateways?.findIndex((c) => c.x === coords.x & c.y === coords.y)
       if (insideArea(Object.values(currentRoom.vertices), coords) && (!gateways || matchingIndex === -1)) {
+        setAddGatewayVisible(true);
         if (!gateways) {
           let newGateways = [];
           newGateways.push(coords);
           setGateways(newGateways);
         }
-        else{
+        else {
           let newGateways = [...gateways];
           newGateways.push(coords);
           setGateways(newGateways);
         }
       }
-        else{
-          openNotification(
-            "error",
-            "Punto no válido",
-            "El punto que ingresó no está dentro del área actual"
-          );
-        }
+      else {
+        openNotification(
+          "error",
+          "Punto no válido",
+          "El punto que ingresó no está dentro del área actual"
+        );
+      }
     }
   }
   return (

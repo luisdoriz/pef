@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getActiveCases, postCase, deleteCase } from "../../data/cases";
+import { getActiveCases, postCase, deleteCase, putInactiveCase } from "../../data/cases";
 import { notification } from "antd";
 
 const openNotification = (type, title, message) =>
@@ -42,8 +42,6 @@ export const useCases = (idCase) => {
     }
   }
 
-  
-
   const deleteActiveCase = async (body) => {
     const { status } = await deleteCase(body);
     setLoading(true);
@@ -62,6 +60,12 @@ export const useCases = (idCase) => {
       );
     }
   }
+
+  const setInactiveCase = async (body) => {
+    const status  = await putInactiveCase(body);
+    setLoading(true);
+    setCases([]);
+  }
   
   return {
     activeCases,
@@ -69,6 +73,7 @@ export const useCases = (idCase) => {
     postActiveCase,
     deleteActiveCase,
     loading,
+    setInactiveCase
   };
 };
 

@@ -10,8 +10,8 @@ import useEmployeesFacilities from '../../hooks/EmployeeFacility/useEmployeesFac
 const CasesView = ({ user }) => {
   const { idRole } = user;
 
-  const { activeCases, postActiveCase, deleteActiveCase, loading: loadingActive } = useActiveCases();
-  const { recoveredCases, loading:loadingRecovered } = useRecoveredCases();
+  const { activeCases, postActiveCase, deleteActiveCase, loading: loadingActive, setInactiveCase } = useActiveCases();
+  const { recoveredCases, loading: loadingRecovered } = useRecoveredCases();
 
   const { facilities } = useEmployeesFacilities();
   const [addCaseVisible, setAddCaseVisible] = useState(false)
@@ -56,6 +56,7 @@ const CasesView = ({ user }) => {
         onClose={() => onCloseCaseDetail()}
         deleteCase={deleteCase}
         idRole={idRole}
+        setInactiveCase={setInactiveCase}
       />
       {idRole === 2 && (<Row justify="end">
         <Button

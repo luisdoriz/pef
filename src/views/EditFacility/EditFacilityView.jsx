@@ -191,6 +191,7 @@ const EditFacilityView = () => {
                         defineArea={defineArea}
                         gateways={gateways}
                         printError={printError}
+                        registering={false}
                     />
                     <AddBeacon
                         addBeacon={addBeacon}

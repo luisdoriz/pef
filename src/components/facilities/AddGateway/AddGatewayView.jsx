@@ -20,6 +20,10 @@ class AddGatewayView extends Component {
   };
 
   onCancel = () => {
+    const { registering, cancelGateway } = this.props;
+    if (registering) {
+      cancelGateway()
+    }
     this.onReset()
   }
   onFinish = (values) => {
@@ -43,9 +47,9 @@ class AddGatewayView extends Component {
   };
 
   render() {
-    const { visible, onClose, areas } = this.props;
+    const { visible, onClose, areas, registering } = this.props;
     return (
-      <Modal footer={null} title="Añadir gateway" visible={visible} onCancel={onClose}>
+      <Modal footer={null} title="Añadir gateway" visible={visible} onCancel={this.onCancel}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
           <Row gutter={24}>
             <Col span={12}>
@@ -59,23 +63,25 @@ class AddGatewayView extends Component {
                 <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00" />
               </Form.Item>
             </Col>
-            <Col span={12}>
-              <Form.Item name="idArea" label="Área" rules={[{ required: true, }]}>
-                <Select
-                  showSearch
-                  placeholder="Selecciona el área"
-                  allowClear
-                  optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {areas.map(({ idArea, name }) => (
-                    <Option value={idArea}>{name}</Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
+            {!registering &&
+              <Col span={12}>
+                <Form.Item name="idArea" label="Área" rules={[{ required: true, }]}>
+                  <Select
+                    showSearch
+                    placeholder="Selecciona el área"
+                    allowClear
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {areas.map(({ idArea, name }) => (
+                      <Option value={idArea}>{name}</Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            }
             <Col span={24} style={{
               textAlign: 'right',
             }}
@@ -85,7 +91,7 @@ class AddGatewayView extends Component {
                   style={{
                     margin: '0 8px',
                   }}
-                  type="button" onClick={this.onReset}>
+                  type="button" onClick={this.onCancel}>
                   Cancelar
                 </Button>
                 <Button type="primary" htmlType="submit">

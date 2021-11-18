@@ -12,17 +12,6 @@ const getFacilities = async () => {
   }
 };
 
-const getFacility = async (idFacility) => {
-  try {
-    const url = REACT_APP_API_URL + `/facilities/areas/${idFacility}`;
-    const {
-      data: { data },
-    } = await axios.get(url);
-    return data;
-  } catch ({ response }) {
-    return response;
-  }
-};
 const getAreas = async (raw_body) => {
   try {
     const url = REACT_APP_API_URL + `/facilities/areas/${raw_body}`;
@@ -98,7 +87,6 @@ const deleteFacility = async ({ idFacility }) => {
 
 export {
   getFacilities,
-  getFacility,
   getAreas,
   putArea,
   deleteArea,
