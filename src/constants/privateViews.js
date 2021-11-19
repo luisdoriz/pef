@@ -104,13 +104,13 @@ const getViews = (facilities) => [
   {
     path: "/organizations",
     component: Organizations,
-    showSidebar: false,
+    showSidebar: true,
     access: [1],
   },
   {
     path: "/organization/:idOrganization",
     component: Admins,
-    showSidebar: false,
+    showSidebar: true,
     access: [1],
   },
 ];

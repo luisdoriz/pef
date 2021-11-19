@@ -25,7 +25,7 @@ const FacilityMapView = ({
   )
   const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
   return (
-    <div className="blueprint-container" style={{ height: "80%" }}>
+    <div className="blueprint-container" >
       <svg height="100%" width="100%" viewBox="0 0 401 401">
         {areas.map(({ vertices }, i) => vertices
           .map(({ vertices }) => {
@@ -85,7 +85,7 @@ const FacilityMapView = ({
           ))
         }
       </svg>
-    </div >
+    </div>
   )
 }
 

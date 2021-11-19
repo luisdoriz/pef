@@ -70,7 +70,7 @@ const AdminsView = () => {
     <>
       <PageHeader
         title="Administradores"
-        subTitle={'1'}
+        subTitle={'1'} //TODO: CAMBIAR A ORGANIZATION NAME
         onBack={() => history.goBack()}
       />
       <AddAdmin

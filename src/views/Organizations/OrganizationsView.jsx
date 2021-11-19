@@ -69,7 +69,7 @@ const OrganizationsView = () => {
       <EditOrganization
         editOrganization={editOrganization}
         visible={editOrganizationVisible}
-        onClose={() => setAddOrganizationVisible(false)}
+        onClose={() => setEditOrganizationVisible(false)}
         organizations={organizations}
         printError={printError}
         removeOrganization={removeOrganization}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { PageHeader, Spin } from 'antd'
+import { PageHeader, Spin, Row, Col, Button } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
 import { useFacility } from '../../hooks';
 import { useParams } from 'react-router';
@@ -18,14 +18,30 @@ const FacilityView = () => {
     <>
       <PageHeader
         onBack={null}
-        title="Facility"
+        title="En vivo"
+        subTitle={areas && areas.length > 0 ? areas[0].facilityName : ''}
       />
-      <FacilityMap
-        areas={areas}
-        positions={positions}
-        sizeX={areas && areas.length > 0 ? areas[0].facilitySizeX : 0}
-        sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
-      />
+      <Row justify="end">
+        <Button
+          type="primary"
+          size="large"
+          shape="round"
+          onClick={() => console.log('actualizar')}
+        >
+          Actualizar posiciones
+        </Button>
+      </Row>
+      <Row>
+        <Col span={18}>
+          <FacilityMap
+            areas={areas}
+            positions={positions}
+            sizeX={areas && areas.length > 0 ? areas[0].facilitySizeX : 0}
+            sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
+          />
+        </Col>
+      </Row>
+
     </>
   )
 }
