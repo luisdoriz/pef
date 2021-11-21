@@ -62,10 +62,38 @@ const getCheckInReportsColumns = () => [
   },
 ];
 
+const getCasesReportColumns = () => [
+  {
+    title: "Persona",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Apellidos",
+    dataIndex: "",
+    key: "x",
+    render: ({ firstLastName, secondLastName }) =>
+      `${firstLastName} ${secondLastName}`,
+  },
+  {
+    title: "Desde",
+    dataIndex: "from",
+    key: "from",
+    render: (date) => moment(date).format("MMMM D YYYY, h:mm a"),
+  },
+  {
+    title: "Hasta",
+    dataIndex: "to",
+    key: "to",
+    render: (date) => date ? moment(date).format("MMMM D YYYY, h:mm a") : "Indeterminado",
+  },
+];
+
 export {
   getAreasTrafficReportsColumns,
   getHeatMapReportsColumns,
   getCheckInReportsColumns,
+  getCasesReportColumns,
 };
 
 export default getAreasTrafficReportsColumns;

@@ -103,8 +103,7 @@ const getViews = (facilities) => [
 ];
 export const getRoutes = (idRole, facilities) => {
   const routes = [];
-  console.log(facilities)
-  const views = getViews(facilities)
+  const views = getViews(facilities);
   views.forEach((viewItem) => {
     const { subMenuItems, access, sameComponent } = viewItem;
     if (access.includes(idRole)) {
@@ -126,8 +125,7 @@ export const getRoutes = (idRole, facilities) => {
 
 export const getSidebarContent = (idRole, facilities) => {
   const content = [];
-  console.log(facilities)
-  const views = getViews(facilities)
+  const views = getViews(facilities);
   views.forEach((viewItem) => {
     const { access } = viewItem;
     if (access.includes(idRole)) {

@@ -18,10 +18,18 @@ export const useReports = (idFacility) => {
     fetchInfo();
   }, [idFacility]);
 
+  const fetchPositions = async () => {
+    setLoading(true);
+    const positionsData = await getActualPositions(idFacility)
+    setPositions(positionsData)
+    setLoading(false);
+};
+
   return {
     loading,
     areas,
     positions,
+    fetchPositions,
   };
 };
 

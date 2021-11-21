@@ -8,6 +8,8 @@ export const useReports = () => {
   const [traffic, setTraffic] = useState([]);
   const [heatMap, setHeatMap] = useState([]);
   const [checkIn, setCheckIn] = useState([]);
+  const [casesReport, setCasesReport] = useState([]);
+  const [casesReportData, setCasesReportData] = useState([]);
   const [facilites, setFacilites] = useState([]);
   const [idFacility, setIdFacility] = useState(null);
   const [from, setFrom] = useState(moment("2021-09-02"));
@@ -34,10 +36,17 @@ export const useReports = () => {
         const {
           areaTraffic,
           areaOcurrencies,
+          cases: {
+            casesReport: casesReportLocal,
+            casesReportData: casesReportDataLocal,
+          },
           checkIn: checkInData,
         } = await getFacilityReport(body);
         setTraffic(areaTraffic);
         setHeatMap(areaOcurrencies);
+        setCheckIn(checkInData);
+        setCasesReport(casesReportLocal);
+        setCasesReportData(casesReportDataLocal);
         setCheckIn(checkInData);
         setLoading(false);
       }
@@ -57,6 +66,8 @@ export const useReports = () => {
     facilites,
     idFacility,
     setIdFacility,
+    casesReport,
+    casesReportData,
   };
 };
 
