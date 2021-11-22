@@ -10,7 +10,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -87,7 +87,7 @@ class EditEmployeeView extends Component {
             <Col span={12}>
               <Form.Item
                 name="email"
-                label="Direccion de correo electronico"
+                label="Dirección de correo electrónico"
                 rules={[
                   {
                     type: 'email',

@@ -1,5 +1,4 @@
 import useLogin from "./Login";
-import useSignUp from "./SignUp";
 import useEmployees from "./Employees";
 import useAuth from "./Auth";
 import useCases from "./ActiveCases";
@@ -12,10 +11,10 @@ import useBeacons from "./Beacons"
 import useVisitors from "./Visitors";
 import useGateways from "./Gateways";
 import useReports from "./Reports";
+import useOrganizations from "./Organizations"
 
 export {
   useLogin,
-  useSignUp,
   useEmployees,
   useAuth,
   useCases,
@@ -29,6 +28,7 @@ export {
   useBeacons,
   useGateways,
   useReports,
+  useOrganizations,
 };
 
 export default useLogin;

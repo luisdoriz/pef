@@ -48,7 +48,7 @@ export const useEmployees = (idFacility) => {
       openNotification(
         "error",
         "Error",
-        "Error interno favor de intentar mas tarde."
+        "Error interno favor de intentar más tarde."
       );
     }
   }

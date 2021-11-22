@@ -9,7 +9,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import useAuth from '../../../hooks/Auth';
 
 const PublicRoute = ({ children, ...props }) => {
-  const { loading, checkAuth, auth } = useAuth()
+  const { loading, checkAuth, auth, user } = useAuth()
   useEffect(() => {
     const init = async () => checkAuth()
     if (loading) {
@@ -19,7 +19,14 @@ const PublicRoute = ({ children, ...props }) => {
   if (loading) {
     const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
     return (
-      <Spin indicator={antIcon} />
+      <Spin 
+      style={{
+        justifyContent: "center",
+        width: "100%",
+        height: "80%",
+        marginTop: "20%",
+      }}
+      indicator={antIcon} />
     )
   }
   return (

@@ -6,7 +6,7 @@ const BeaconsListView = ({ beacons, deleteBeacon, loading }) => {
   const columns = getBeaconsColumns(deleteBeacon);
   return (
     <div >
-      <Table columns={columns} dataSource={beacons} loading={loading}/>
+      <Table columns={columns} dataSource={beacons} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}} />
     </div>
   )
 }

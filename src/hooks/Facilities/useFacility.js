@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { getAreas, putArea, deleteArea} from "../../data/facilities";
+import getActualPositions from "../../data/positions";
 
 export const useFacility = (idFacility) => {
   const [areas, setAreas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [positions, setPositions] = useState([])
 
   useEffect(() => {
     const fetchAreas = async () => {
@@ -15,6 +17,15 @@ export const useFacility = (idFacility) => {
       fetchAreas();
     }
   },[areas, loading]);
+
+  useEffect(() => {
+    const fetchPositions = async () => {
+        const positionsData = await getActualPositions(idFacility)
+        setPositions(positionsData)
+        setLoading(false);
+    };
+    fetchPositions();
+  }, [idFacility]);
 
   const editArea = async (body) => {
     const status = await putArea(body);
@@ -32,7 +43,8 @@ export const useFacility = (idFacility) => {
     setAreas,
     editArea,
     loading,
-    removeArea
+    removeArea,
+    positions
   };
 };
 

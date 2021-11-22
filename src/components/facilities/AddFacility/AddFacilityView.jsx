@@ -6,7 +6,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -22,31 +22,41 @@ class AddFacilityView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { setFacilitySetupVisible, createFacility } = this.props;
+    const { setFacilitySetupVisible, createFacility, facilities, printError } = this.props;
     let name = values.name.trim();
     name = name.split(' ');
-    
-    for(var i = 0; i<name.length; i++){
+
+    for (var i = 0; i < name.length; i++) {
       name[i] = name[i].charAt(0).toUpperCase() + name[i].slice(1);
     }
     values.name = name.join(' ')
-    createFacility(values);
-    this.onReset();
-    setFacilitySetupVisible(true);
+    let notValid = false;
+    facilities.map((facility) => {
+      if (facility.name === values.name)
+        notValid = true
+    })
+    if (notValid) {
+      printError();
+    }
+    else {
+      createFacility(values);
+      setFacilitySetupVisible(true);
+      this.onReset();
+    }
   };
-  
+
   render() {
     const { visible, onClose } = this.props;
     return (
       <Modal footer={null} title="Crear edificio" visible={visible} onCancel={onClose}>
-        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{paddingTop:16}}>
+        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
           <Row gutter={24}>
             <Col span={24}>
               <Form.Item
                 name="name"
                 label="Nombre"
                 rules={[
-                  { required: true,}
+                  { required: true, }
                 ]}
               >
                 <Input />
@@ -57,23 +67,23 @@ class AddFacilityView extends Component {
                 name="sizeX"
                 label="Tamaño en x"
                 rules={[
-                  { required: true,}
+                  { required: true, }
                 ]}
               >
                 <InputNumber min={1} />
               </Form.Item>
-            </Col> 
+            </Col>
             <Col span={12}>
               <Form.Item
                 name="sizeY"
                 label="Tamaño en y"
                 rules={[
-                  { required: true,}
+                  { required: true, }
                 ]}
               >
                 <InputNumber min={1} />
               </Form.Item>
-            </Col>  
+            </Col>
             <Col span={24} style={{
               textAlign: 'right',
             }}

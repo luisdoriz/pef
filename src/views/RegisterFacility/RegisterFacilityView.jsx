@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { PageHeader, Row, Button, Col, Modal, notification } from 'antd';
-import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList, AddFacility } from "../../components/facilities";
+import { BluePrintMap, AddRoom, FacilitiesList, CurrentAreasList, AddFacility, AddGateway } from "../../components/facilities";
 import useFacilities from '../../hooks/Facilities';
 import { WarningOutlined } from '@ant-design/icons';
 import useGateways from '../../hooks/Gateways';
@@ -10,7 +10,7 @@ const { confirm } = Modal
 const RegisterFacilityView = () => {
     const colors = [{ name: "Rojo", color: "#FF0000" }, { name: "Rosa", color: "#FF00FB" }, { name: "Azul oscuro", color: "#1B00FF" }, { name: "Azul claro", color: "#00E0FF" }, { name: "Naranja", color: "#FF9700" }, { name: "Verde", color: "#008C0D" }]
     const { facilities, createArea, loading, createFacility, removeFacility } = useFacilities();
-    const { createGateway } = useGateways();
+    const { createGateway, gateways: existingGateways } = useGateways();
     const [points, setPoints] = useState({});
     const [walls, setWalls] = useState([]);
     const [createdFacility, setCreatedFacility] = useState({});
@@ -18,6 +18,7 @@ const RegisterFacilityView = () => {
     const [currentRoom, setCurrentRoom] = useState([]);
     const [addRoomVisible, setAddRoomVisible] = useState(false);
     const [addFacilityVisible, setAddFacilityVisible] = useState(false);
+    const [addGatewayVisible, setAddGatewayVisible] = useState(false);
     const [facilitySetupVisible, setFacilitySetupVisible] = useState(false);
     const [names, setNames] = useState([]);
     const [point, setCurrentPoint] = useState(null);
@@ -81,7 +82,7 @@ const RegisterFacilityView = () => {
                         }
                     }
                     i++;
-                    changed= true;
+                    changed = true;
                 }
                 else {
                     const matchingIndex = newVertices.findIndex((c) => c.x === finalVertices[i].x & c.y === finalVertices[i].y)
@@ -137,11 +138,11 @@ const RegisterFacilityView = () => {
     }
 
     const saveGateways = () => {
-        if (gateways) {
-            gateways.map((gateway) =>
-                createGateway({ ...gateway, idArea: currentAreaId })
-            )
-        }
+        // if (gateways) {
+        //     gateways.map((gateway) =>
+        //         createGateway({ ...gateway, idArea: currentAreaId })
+        //     )
+        // }
         setAddingGateways(false);
         setCurrentRoom(null);
         setCurrentAreaId(null);
@@ -188,6 +189,21 @@ const RegisterFacilityView = () => {
         );
     }
 
+    const printGatewayError = () => {
+        openNotification(
+            "error",
+            "Dirección MAC no válida",
+            "La dirección MAC que ingresó ya existe"
+        );
+    }
+
+    const cancelGateway = () => {
+        let newGateways = [...gateways]
+        newGateways.pop();
+        setGateways(newGateways);
+        setAddGatewayVisible(false);
+    }
+
     return (
         <>
 
@@ -196,6 +212,8 @@ const RegisterFacilityView = () => {
                 createFacility={saveFacility}
                 onClose={() => setAddFacilityVisible(!addFacilityVisible)}
                 setFacilitySetupVisible={setFacilitySetupVisible}
+                facilities={facilities}
+                printError={printError}
             />
             {facilitySetupVisible ?
                 <>
@@ -204,6 +222,16 @@ const RegisterFacilityView = () => {
                         title="Crear"
                         subTitle={createdFacility?.name}
                         onBack={showConfirm}
+                    />
+                    <AddGateway
+                        visible={addGatewayVisible}
+                        onClose={() => setAddGatewayVisible(false)}
+                        setAddGatewayVisible={setAddGatewayVisible}
+                        gateways={existingGateways}
+                        printError={printGatewayError}
+                        gatewaysList={gateways}
+                        registering={true}
+                        cancelGateway={cancelGateway}
                     />
                     <Row justify="end" style={{ padding: 10 }}>
                         {addingGateways ?
@@ -267,6 +295,7 @@ const RegisterFacilityView = () => {
                                 addingGateways={addingGateways}
                                 gateways={gateways}
                                 setGateways={setGateways}
+                                setAddGatewayVisible={setAddGatewayVisible}
                             />
                         </Col>
                         <Col span={6} style={{ padding: 10 }}>

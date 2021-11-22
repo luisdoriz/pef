@@ -19,27 +19,27 @@ const getVisitorColumns = (editVisitor) => [
       `${firstLastName} ${secondLastName}`,
   },
   {
-    title: "Direccion de correo",
+    title: "Dirección de correo",
     dataIndex: "email",
     key: "email",
   },
   {
-    title: "Permiso",
+    title: "Rol",
     dataIndex: "privilegeLevel",
     key: "privilegeLevel",
   },
   {
-    title: "Id del beacon",
+    title: "ID del beacon",
     dataIndex: "idBeacon",
     key: "idBeacon",
   },
   {
-    title: "Mac address del beacon",
+    title: "Dirección MAC del beacon",
     dataIndex: "macAddress",
     key: "macAddress",
   },
   {
-    title: "Fecha limite",
+    title: "Fecha límite",
     dataIndex: "expirationDate",
     key: "expirationDate",
     render: (date) => {

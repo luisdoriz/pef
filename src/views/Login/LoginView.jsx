@@ -18,9 +18,6 @@ const LoginView = () => {
           <LoginForm postLogin={postLogin} loading={loading} />
         </Col>
       </Row>
-      <Row justify="center">
-        <Link to="/signup"><h4>Crear Cuenta</h4></Link>
-      </Row>
     </Col>
   )
 }

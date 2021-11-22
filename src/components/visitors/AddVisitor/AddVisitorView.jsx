@@ -156,13 +156,13 @@ class AddVisitorView extends Component {
       this.onReset()
       fetchVisitors()
       notification.success({
-        message: "Exito",
-        description: "Se registro la salida de la visita con exito.",
+        message: "Éxito",
+        description: "Se registró la salida de la visita con éxito.",
       })
     } else {
       notification.error({
         message: "Error",
-        description: "Error interno, favor de intentarlo mas tarde."
+        description: "Error interno, favor de intentarlo más tarde."
       })
     }
   }
@@ -179,7 +179,7 @@ class AddVisitorView extends Component {
     if (type === "add" && !registerAgain) {
       const { status } = await postVisitor(values)
       responseStatus = status
-      description = "La visita fue creada con exito."
+      description = "La visita fue creada con éxito."
     } else if (type === "edit" || registerAgain) {
       const { status } = await editVisitor({
         ...values,
@@ -187,19 +187,19 @@ class AddVisitorView extends Component {
         idVisitor: visitor.idVisitor,
       })
       responseStatus = status
-      description = "La visita fue editada con exito."
+      description = "La visita fue editada con éxito."
     }
     if (responseStatus === "success") {
       this.onReset()
       fetchVisitors()
       notification.success({
-        message: "Exito",
+        message: "Éxito",
         description,
       })
     } else {
       notification.error({
         message: "Error",
-        description: "Error interno, favor de intentarlo mas tarde."
+        description: "Error interno, favor de intentarlo más tarde."
       })
     }
   };
@@ -279,11 +279,11 @@ class AddVisitorView extends Component {
           </Col>
           {registerAgain ? (
             <Col span={12}>
-              <Form.Item label="Eliga visita">
+              <Form.Item label="Selecciona visita">
                 <Select
                   showSearch
                   // disabled={!registerAgain}
-                  placeholder="Selecciona el Beacon"
+                  placeholder="Selecciona la visita"
                   allowClear
                   onChange={this.setCurrentVisitor}
                   optionFilterProp="children"
@@ -313,10 +313,10 @@ class AddVisitorView extends Component {
       currentFacility,
       privilegeLevels,
     } = this.state;
-    let title = "Registrar Visita"
+    let title = "Registrar visita"
     let beacons = [...beaconsData]
     if (type === "edit") {
-      title = "Editar Visita"
+      title = "Editar visita"
       if (visitorBeacon !== null) {
         beacons.push(visitorBeacon)
       }
@@ -353,7 +353,7 @@ class AddVisitorView extends Component {
               <Form.Item name="idBeacon" label="Beacon" rules={[{ required: true, }]}>
                 <Select
                   showSearch
-                  placeholder="Selecciona el Beacon"
+                  placeholder="Selecciona el beacon"
                   allowClear
                   optionFilterProp="children"
                   filterOption={(input, option) =>
@@ -383,7 +383,7 @@ class AddVisitorView extends Component {
               <Form.Item name="idPrivilegeLevel" label="Rol" rules={[{ required: true, }]}>
                 <Select
                   showSearch
-                  placeholder="Selecciona el Beacon"
+                  placeholder="Selecciona el rol"
                   allowClear
                   optionFilterProp="children"
                   filterOption={(input, option) =>
@@ -413,7 +413,7 @@ class AddVisitorView extends Component {
             <Col span={12}>
               <Form.Item
                 name="expirationDate"
-                label="Fecha limite"
+                label="Fecha límite"
                 rules={[
                   {
                     required: true,

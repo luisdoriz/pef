@@ -74,7 +74,7 @@ const AreaTrafficView = ({ data, loading }) => {
     <Col span={10} className="reports-container__traffic">
       <Row justify="space-between">
         <Col>
-          <h3>Trafico de personas por area</h3>
+          <h3>Tráfico de personas por área</h3>
         </Col>
         <Col>
           <Switch checked={showTable} onChange={setShowTable} />

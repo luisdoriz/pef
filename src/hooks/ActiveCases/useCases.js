@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getActiveCases, postCase, deleteCase } from "../../data/cases";
+import { getActiveCases, postCase, deleteCase, putInactiveCase } from "../../data/cases";
 import { notification } from "antd";
 
 const openNotification = (type, title, message) =>
@@ -37,12 +37,10 @@ export const useCases = (idCase) => {
       openNotification(
         "error",
         "Error",
-        "Error interno favor de intentar mas tarde."
+        "Error interno favor de intentar más tarde."
       );
     }
   }
-
-  
 
   const deleteActiveCase = async (body) => {
     const { status } = await deleteCase(body);
@@ -58,9 +56,15 @@ export const useCases = (idCase) => {
       openNotification(
         "error",
         "Error",
-        "Error interno favor de intentar mas tarde."
+        "Error interno favor de intentar más tarde."
       );
     }
+  }
+
+  const setInactiveCase = async (body) => {
+    const status  = await putInactiveCase(body);
+    setLoading(true);
+    setCases([]);
   }
   
   return {
@@ -69,6 +73,7 @@ export const useCases = (idCase) => {
     postActiveCase,
     deleteActiveCase,
     loading,
+    setInactiveCase
   };
 };
 

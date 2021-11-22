@@ -1,13 +1,13 @@
 import { Popconfirm, Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-const getAlertsColumns = (alerts, deleteAlert, idRole) => {
+const getAlertsColumns = (deleteAlert, idRole, types, facilities) => {
   const columns = [
     {
       title: "Tipo",
       dataIndex: "type",
       key: "type",
-      filters: alerts.map(({ type }) => ({ text: type, value: type })),
+      filters: types.map(({ name }) => ({ text: name, value: name })),
       onFilter: (value, record) => record.type === value,
     },
     {
@@ -15,7 +15,7 @@ const getAlertsColumns = (alerts, deleteAlert, idRole) => {
       dataIndex: "date",
       key: "date",
       sorter: (a, b) => a.date.localeCompare(b.date),
-      sortDirections: ['descend','ascend','descend'],
+      sortDirections: ['descend', 'ascend', 'descend'],
       defaultSortOrder: 'descend',
       render: (row) => row.substring(0, 10),
     },
@@ -28,7 +28,7 @@ const getAlertsColumns = (alerts, deleteAlert, idRole) => {
       title: "Edificio",
       dataIndex: "facilityName",
       key: "facilityName",
-      filters: alerts.map(({ facilityName }) => ({ text: facilityName, value: facilityName })),
+      filters: facilities.map(({ name }) => ({ text: name, value: name })),
       onFilter: (value, record) => record.facilityName === value,
     },
     {
