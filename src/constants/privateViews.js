@@ -140,7 +140,9 @@ export const getRoutes = (idRole, facilities) => {
           }
         });
       } else {
-        routes.push(viewItem);
+        if (!(facilities.length === 0 && viewItem.text === "Edificios")) {
+          routes.push(viewItem);
+        }
       }
     }
   });
@@ -150,10 +152,10 @@ export const getRoutes = (idRole, facilities) => {
 export const getSidebarContent = (idRole, facilities) => {
   const content = [];
   let views = getViews(facilities)
-  views.sort((a,b) => a.order > b.order)
+  views.sort((a, b) => a.order > b.order)
   views.forEach((viewItem) => {
     const { access } = viewItem;
-    if (access.includes(idRole)) {
+    if (access.includes(idRole) && !(facilities.length === 0 && viewItem.text === "Edificios")) {
       content.push(viewItem);
     }
   });

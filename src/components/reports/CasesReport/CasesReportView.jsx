@@ -10,7 +10,6 @@ const CasesReportView = ({
   loading,
 }) => {
   const [showTable, setShowTable] = useState(false)
-  console.log(casesReport)
   const renderChart = () => (<ResponsiveBar
     data={casesReport
       .map(({ CreationDate, count }) => ({
