@@ -1,47 +1,40 @@
 import React from 'react'
-import { PageHeader, Spin, Row, Col, Button } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons';
-import { useFacility } from '../../hooks';
+import { PageHeader, Row, Button } from 'antd'
+import useFacility from '../../hooks/Facility';
 import { useParams } from 'react-router';
 import FacilityMap from '../../components/facility/FacilityMap';
 
 const FacilityView = () => {
   let { idFacility } = useParams();
-  const { loading, areas, positions } = useFacility(idFacility)
-  if (loading) {
-    const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
-    return (
-      <Spin indicator={antIcon} />
-    )
+  const { loading, areas, positions, fetchPositions } = useFacility(idFacility)
+  let facilityName = "Edificio";
+  if (areas.length > 0) {
+    const { facilityName: name } = areas[0]
+    facilityName = name
   }
   return (
     <>
       <PageHeader
         onBack={null}
-        title="En vivo"
-        subTitle={areas && areas.length > 0 ? areas[0].facilityName : ''}
+        title={facilityName}
       />
       <Row justify="end">
         <Button
           type="primary"
           size="large"
-          shape="round"
-          onClick={() => console.log('actualizar')}
+          // shape="round"
+          onClick={fetchPositions}
         >
-          Actualizar posiciones
+          Actualizar
         </Button>
       </Row>
-      <Row>
-        <Col span={18}>
-          <FacilityMap
-            areas={areas}
-            positions={positions}
-            sizeX={areas && areas.length > 0 ? areas[0].facilitySizeX : 0}
-            sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
-          />
-        </Col>
-      </Row>
-
+      <FacilityMap
+        loading={loading}
+        areas={areas}
+        positions={positions}
+        sizeX={areas && areas.length > 0 ? areas[0].facilitySizeX : 0}
+        sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
+      />
     </>
   )
 }

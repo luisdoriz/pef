@@ -11,10 +11,18 @@ const FacilityMapView = ({
   sizeX,
   sizeY
 }) => {
-  if (loading) {
+  if (loading || areas.length === 0) {
     const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
     return (
-      <Spin indicator={antIcon} />
+      <Spin
+        style={{
+          justifyContent: "center",
+          width: "100%",
+          height: "50%",
+          marginTop: "20%",
+        }}
+        indicator={antIcon}
+      />
     )
   }
   const renderContent = (from, to) => (
@@ -23,7 +31,7 @@ const FacilityMapView = ({
       <p> Hasta: {moment(to).format("HH:MMa")}</p>
     </div>
   )
-  const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
+  const colors = ["#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
   return (
     <div className="blueprint-container" >
       <svg height="100%" width="100%" viewBox="0 0 401 401">
@@ -76,10 +84,11 @@ const FacilityMapView = ({
               content={() => renderContent(from, to)}
             >
               <circle
+                style={{ cursor: "pointer" }}
                 cx={`${(x * (100 / sizeX))}%`}
                 cy={`${(100 - (y * (100 / sizeY)))}%`}
-                r="3"
-                fill="black"
+                r="5"
+                fill="#31327A"
               />
             </Popover>
           ))
