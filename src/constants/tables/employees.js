@@ -25,7 +25,7 @@ const getEmployeesColumns = (facilities, editEmployee, privilegeLevels) => [
     onFilter: (value, record) => record.privilegeLevel === value,
   },
   {
-    title: "Beacon MAC Address",
+    title: "Beacon dirección MAC",
     dataIndex: "macAddress",
     key: "macAddress",
   },

@@ -13,6 +13,27 @@ const getAlerts = async () => {
   }
 };
 
+const getAlertsTypes = async () => {
+  try {
+    const url = REACT_APP_API_URL + "/alerts/types";
+    const { data } = await axios.get(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+const postForgottenBeaconAlert = async (raw_body) => {
+  try {
+      const url = REACT_APP_API_URL + "/alerts";
+      const body = { ...raw_body };
+      const { data: { data } } = await axios.post(url, body);
+      return data;
+  } catch ({ response }) {
+      return response;
+  }
+};
+
 const deleteAlert = async ({idAlert}) => {
   try {
     const url = REACT_APP_API_URL + `/alerts/${idAlert}`;
@@ -23,6 +44,6 @@ const deleteAlert = async ({idAlert}) => {
   }
 };
 
-export { getAlerts, deleteAlert };
+export { getAlerts, deleteAlert, postForgottenBeaconAlert, getAlertsTypes };
 
 export default getAlerts;

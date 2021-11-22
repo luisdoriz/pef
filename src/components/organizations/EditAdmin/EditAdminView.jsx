@@ -8,7 +8,7 @@ const validateMessages = {
     required: '¡${label} es requerido!',
     pattern: '${label} no tiene el formato correcto.',
     types: {
-        email: '¡${label} no es un correo valido!',
+        email: '¡${label} no es un correo válido!',
     },
 };
 
@@ -54,16 +54,16 @@ class EditAdminView extends Component {
         }
         else {
             setEditAdminVisible(false)
-            editAdmin(values);
+            editAdmin({...values, idUser: selectedAdmin.idUser});
             this.onReset()
         }
     };
 
     deleteAdmin = (selectedAdmin) => {
         const { setEditAdminVisible, removeAdmin } = this.props;
-        const idAdmin = selectedAdmin.idAdmin;
-        removeAdmin(idAdmin);
+        const idUser = selectedAdmin.idUser;
         setEditAdminVisible(false);
+        removeAdmin(idUser);
     }
 
     render() {
@@ -102,7 +102,7 @@ class EditAdminView extends Component {
                         <Col span={12}>
                             <Form.Item
                                 name="email"
-                                label="Direccion de correo electronico"
+                                label="Dirección de correo electrónico"
                                 rules={[
                                     {
                                         type: 'email',

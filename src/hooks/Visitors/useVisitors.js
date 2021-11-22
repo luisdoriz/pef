@@ -21,8 +21,8 @@ export const useVisitors = () => {
   const deleteVisitor = async ({ idVisitor }) => {
     const status = await removeVisitor(idVisitor);
     notification.success({
-      message: "Exito",
-      description: "Se elimino la visita con exito."
+      message: "Éxito",
+      description: "Se eliminó la visita con éxito."
     })
     setLoading(true);
     setVisitors([]);

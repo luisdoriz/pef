@@ -200,7 +200,6 @@ const RegisterFacilityView = () => {
     const cancelGateway = () => {
         let newGateways = [...gateways]
         newGateways.pop();
-        console.log(newGateways)
         setGateways(newGateways);
         setAddGatewayVisible(false);
     }

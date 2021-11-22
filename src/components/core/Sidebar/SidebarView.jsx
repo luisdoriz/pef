@@ -62,7 +62,7 @@ const SidebarView = ({ user, facilities }) => {
       <Menu defaultSelectedKeys={['1']} mode="inline">
         {renderMenuItems()}
         <Item onClick={() => mainDispatch({ type: "LOGOUT" })} icon={<LogoutOutlined />}>
-          Cerrar Sesion
+          Cerrar sesión
         </Item>
       </Menu>
     </Sider>

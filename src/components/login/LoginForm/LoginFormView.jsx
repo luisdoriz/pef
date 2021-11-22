@@ -6,7 +6,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -51,7 +51,7 @@ class LoginForm extends Component {
         <Row justify="center">
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading}>
-              Iniciar Sesion
+              Iniciar sesión
             </Button>
           </Form.Item>
         </Row>

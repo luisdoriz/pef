@@ -11,7 +11,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -59,6 +59,8 @@ class EditRoleView extends Component {
       printError();
     }
     else {
+      const formattedTime = values.entryTime.format('HH:MM');
+      values.entryTime = formattedTime
       editRole({ idPrivilegeLevel: role.idPrivilegeLevel, idFacility: role.idFacility, ...values });
       this.onReset();
     }

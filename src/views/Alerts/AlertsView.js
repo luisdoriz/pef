@@ -1,11 +1,13 @@
 import React from "react";
 import { PageHeader } from "antd";
-import useAlerts from "../../hooks/Alerts/useAlerts";
+import { useAlerts } from "../../hooks";
+import useFacilities from '../../hooks/Facilities';
 import { AlertsList } from "../../components/alerts";
 
 const AlertsView = ({ user }) => {
   const { idRole } = user;
-  const { alerts, removeAlert, loading } = useAlerts();
+  const { alerts, removeAlert, loading, types } = useAlerts();
+  const { facilities } = useFacilities();
   const deleteAlert = (prop) => {
     removeAlert({ idAlert: prop.idAlert });
   };
@@ -13,7 +15,7 @@ const AlertsView = ({ user }) => {
   return (
     <>
       <PageHeader onBack={null} title="Alertas" />
-      <AlertsList idRole={idRole} alerts={alerts} deleteAlert={deleteAlert} loading={loading} />
+      <AlertsList idRole={idRole} alerts={alerts} facilities={facilities} deleteAlert={deleteAlert} types={types} loading={loading} />
     </>
   );
 };

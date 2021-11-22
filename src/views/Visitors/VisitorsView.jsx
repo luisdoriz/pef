@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { PageHeader, Row, Col, Button } from 'antd';
 import { AddVisitor, ReassignBeacon, VisitorsList } from '../../components/visitors';
 import { useVisitors } from '../../hooks';
+import { useAlerts } from "../../hooks";
 
 const VisitorsViews = ({ user }) => {
   const [addVisitorVisible, setAddVisitor] = useState(false)
@@ -9,14 +10,18 @@ const VisitorsViews = ({ user }) => {
   const [currentVisitor, setCurrentVisitor] = useState(null)
   const [reassignBeacon, setReassignBeacon] = useState(false)
   const { visitors, loading, deleteVisitor, fetchVisitors } = useVisitors()
+  const { createAlert } = useAlerts();
+
   const editVisitor = (visitor) => {
     setCurrentVisitor(visitor)
     setEditVisitor(true)
   }
+
   const onCloseEdit = () => {
     setCurrentVisitor(null)
     setEditVisitor(false)
   }
+
   return (
     <>
       <PageHeader
@@ -40,6 +45,7 @@ const VisitorsViews = ({ user }) => {
       <ReassignBeacon
         visible={reassignBeacon}
         onClose={() => setReassignBeacon(false)}
+        createAlert={createAlert}
       />
       <Row justify="end" gutter={8}>
         <Col>

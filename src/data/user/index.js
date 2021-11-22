@@ -75,6 +75,15 @@ const getUsers = async () => {
   }
 };
 
+const getAdmins = async (idOrganization) => {
+  try {
+    const url = REACT_APP_API_URL + `/users/admins/${idOrganization}`;
+    const { data } = await axios.get(url);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
 
 const getRoles = async () => {
   try {
@@ -96,6 +105,6 @@ const deleteUser = async (idUser) => {
   }
 };
 
-export { createAdmin, createUser, sendLogin, getUsers, getRoles, deleteUser, getUser, putUser };
+export { createAdmin, createUser, sendLogin, getUsers, getRoles, deleteUser, getUser, putUser, getAdmins };
 
 export default createUser;

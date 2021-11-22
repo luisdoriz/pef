@@ -23,9 +23,6 @@ const CoreView = ({ user, facilities }) => {
             {views.map(({ path, component }) => (
               <Route path={path} component={() => component({ user })} />
             ))}
-            <Route exact path={"/"}>
-              <h3>Please select a topic.</h3>
-            </Route>
             <Route path="*">
               <h1>404 NOT FOUND</h1>
             </Route>

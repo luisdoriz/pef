@@ -19,7 +19,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setI
     setInactiveCase({ idCase: activeCase.idCase, toDate: date })
   }
   return (
-    <Modal width={"80%"} footer={null} title="Detalle Caso" visible={visible} onCancel={onClose}>
+    <Modal width={"80%"} footer={null} title="Detalle caso" visible={visible} onCancel={onClose}>
       <Col>
         <Col>
           {idRole === 2 && (<Row justify="end">
@@ -69,7 +69,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setI
         </Col>
         <Col style={{ paddingTop: 30 }}>
           <h2>Contactos cercanos a caso positivo</h2>
-          <Table columns={columns} dataSource={contacts} loading={loading} />
+          <Table columns={columns} dataSource={contacts} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}}/>
         </Col>
       </Col>
     </Modal>

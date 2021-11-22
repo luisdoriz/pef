@@ -5,7 +5,7 @@ moment.locale("es");
 
 const getAreasTrafficReportsColumns = () => [
   {
-    title: "Area",
+    title: "Área",
     dataIndex: "label",
     key: "label",
   },
@@ -30,7 +30,7 @@ const getHeatMapReportsColumns = () => [
       `${firstLastName} ${secondLastName}`,
   },
   {
-    title: "Area",
+    title: "Área",
     dataIndex: "name",
     key: "name",
   },

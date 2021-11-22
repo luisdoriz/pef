@@ -10,7 +10,7 @@ const UsersView = () => {
   const [addUserVisible, setAddUserVisible] = useState(false)
   const [editUserVisible, setEditUserVisible] = useState(false)
   const [user, setCurrentUser] = useState(null)
-
+  console.log(users);
   const setEditUser = (prop) => {
     setCurrentUser(prop)
     setEditUserVisible(true)

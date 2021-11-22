@@ -3,28 +3,15 @@ import { useState } from 'react';
 import { Button, PageHeader, Row, notification } from 'antd';
 import { AdminsList, AddAdmin, EditAdmin } from "../../components/organizations";
 import { useHistory, useParams } from "react-router-dom";
+import { useUsers } from '../../hooks';
 
 const AdminsView = () => {
   let history = useHistory();
-  let { idOrganization } = useParams();
-  const organizations = [
-    {
-      name: "Org 1",
-      address: "Su casa",
-      phoneNumber: "8120001227",
-      idOrganization: 1
-    },
-    {
-      name: "Org 2",
-      address: "Tu casa",
-      phoneNumber: "8101231627",
-      idOrganization: 2
-    }
-  ]
+  const { idOrganization } = useParams();
+  const { admins, loading, postUser, removeUser, editUser } = useUsers(idOrganization);
   const [addAdminVisible, setAddAdminVisible] = useState(false)
   const [editAdminVisible, setEditAdminVisible] = useState(false)
   const [selectedAdmin, setSelectedAdmin] = useState(null)
-
   const openNotification = (type, title, message) =>
     notification[type]({
       message: title,
@@ -37,13 +24,11 @@ const AdminsView = () => {
   }
 
   const addAdmin = (prop) => {
-    console.log(prop) //TODO PONER RUTAS
+    postUser({ ...prop, idRole: 2, idOrganization: idOrganization })
   }
-  const editAdmin = (prop) => {
-    console.log(prop) //TODO PONER RUTAS
-  }
+
   const removeAdmin = (prop) => {
-    console.log(prop) //TODO PONER RUTAS
+    removeUser(prop);
   }
 
   const printError = () => {
@@ -53,24 +38,11 @@ const AdminsView = () => {
       "El nombre o email que ingresó ya existe"
     );
   }
-  const loading = false
-  const admins = [
-    {
-      idAdmin: 1,
-      name: "Admin 1",
-      email: "correo1@correo.com",
-    },
-    {
-      idAdmin: 2,
-      name: "Admin 2",
-      email: "correo2@correo.com",
-    },
-  ]
+
   return (
     <>
       <PageHeader
         title="Administradores"
-        subTitle={'1'} //TODO: CAMBIAR A ORGANIZATION NAME
         onBack={() => history.goBack()}
       />
       <AddAdmin
@@ -81,14 +53,14 @@ const AdminsView = () => {
         printError={printError}
       />
       <EditAdmin
-        editAdmin={editAdmin}
+        editAdmin={editUser}
         visible={editAdminVisible}
         onClose={() => setEditAdminVisible(false)}
         admins={admins}
         printError={printError}
         removeAdmin={removeAdmin}
         selectedAdmin={selectedAdmin}
-        setEditAdminVisible={setEditAdmin}
+        setEditAdminVisible={setEditAdminVisible}
       />
       <Row justify="end">
         <Button

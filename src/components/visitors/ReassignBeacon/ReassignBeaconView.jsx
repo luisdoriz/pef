@@ -4,6 +4,7 @@ import { Modal, Form, Button, Select, Row, Col, notification } from 'antd';
 import getFacilities from '../../../data/facilities';
 import getAvailableBeacons from '../../../data/beacons';
 import { getEmployees, putEmployeeBeacon } from '../../../data/employees';
+import moment from 'moment';
 
 const { Option } = Select;
 
@@ -93,20 +94,24 @@ class ReassginBeacon extends Component {
   }
 
   onFinish = async ({ idBeacon }) => {
-    const { employee: { idPerson } } = this.state
+    const { employee: { idPerson, name, lastNames } } = this.state
     const data = { idPerson, isActive: 1, idBeacon }
+    const { createAlert } = this.props;
     try {
-
       await putEmployeeBeacon(data)
+      const date = moment().format("YYYY-MM-DD");
+      const fullName = name + ' ' + lastNames
+      const payload = `${fullName} olvidó su credencial el día ${date}`
+      createAlert({ idPerson: data.idPerson, payload: payload, date: date })
       this.onReset()
       notification.success({
-        message: "Exito",
-        description: "Se reasigno el beacon al empleado de forma correcta.",
+        message: "Éxito",
+        description: "Se reasignó el beacon al empleado de forma correcta.",
       })
     } catch {
       notification.error({
         message: "Error",
-        description: "Ocorrio un error, favor de intentarlo de nuevo.",
+        description: "Ocurrió un error, favor de intentarlo de nuevo.",
       })
     }
   };
@@ -127,7 +132,7 @@ class ReassginBeacon extends Component {
       beacons.push(employeeBeacon)
     }
     return (
-      <Modal footer={null} title="Reasignar Beacon" visible={visible} onCancel={this.onCancel}>
+      <Modal footer={null} title="Reasignar beacon" visible={visible} onCancel={this.onCancel}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
             <Col span={12}>
@@ -154,7 +159,7 @@ class ReassginBeacon extends Component {
                   showSearch
                   onChange={this.onChangeEmployee}
                   disabled={!currentFacility}
-                  placeholder="Selecciona el Empleado"
+                  placeholder="Selecciona el empleado"
                   allowClear
                   optionFilterProp="children"
                   filterOption={(input, option) =>
@@ -172,7 +177,7 @@ class ReassginBeacon extends Component {
                 <Select
                   showSearch
                   disabled={!employeeBeacon}
-                  placeholder="Selecciona el Beacon"
+                  placeholder="Selecciona el beacon"
                   allowClear
                   optionFilterProp="children"
                   filterOption={(input, option) =>

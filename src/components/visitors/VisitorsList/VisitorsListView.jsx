@@ -6,7 +6,7 @@ const VisitorsListView = ({ visitors, editVisitor, loading }) => {
   const columns = getVisitorColumns(editVisitor)
   return (
     <div style={{ paddingTop: 16 }}>
-      <Table columns={columns} dataSource={visitors} loading={loading} />
+      <Table columns={columns} dataSource={visitors} loading={loading} scroll={{ y: 400 }} pagination={{position:["none","none"]}}/>
     </div>
   )
 }

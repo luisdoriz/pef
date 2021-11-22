@@ -8,7 +8,7 @@ const validateMessages = {
     required: '¡${label} es requerido!',
     pattern: '${label} no tiene el formato correcto.',
     types: {
-        email: '¡${label} no es un correo valido!',
+        email: '¡${label} no es un correo válido!',
     },
 };
 
@@ -54,7 +54,7 @@ class EditOrganizationView extends Component {
         }
         else {
             setEditOrganizationVisible(false)
-            editOrganization(values);
+            editOrganization({...values, idOrganization: selectedOrganization.idOrganization});
             this.onReset()
         }
     };

@@ -2,22 +2,10 @@ import React from 'react'
 import { useState } from 'react';
 import { Button, PageHeader, Row, notification } from 'antd';
 import { AddOrganization, OrganizationsList, EditOrganization } from "../../components/organizations";
+import { useOrganizations } from '../../hooks';
 
 const OrganizationsView = () => {
-  const organizations = [
-    {
-      name: "Org 1",
-      address: "Su casa",
-      phoneNumber: "8120001227",
-      idOrganization: 1
-    },
-    {
-      name: "Org 2",
-      address: "Tu casa",
-      phoneNumber: "8101231627",
-      idOrganization: 2
-    }
-  ]
+  const { organizations, createOrganization, editOrganization, removeOrganization, loading } = useOrganizations();
   const [addOrganizationVisible, setAddOrganizationVisible] = useState(false)
   const [editOrganizationVisible, setEditOrganizationVisible] = useState(false)
   const [selectedOrganization, setSelectedOrganization] = useState(null)
@@ -29,18 +17,12 @@ const OrganizationsView = () => {
     });
 
   const setEditOrganization = (prop) => {
-    setSelectedOrganization(prop)
+    setSelectedOrganization(prop) 
     setEditOrganizationVisible(true)
   }
 
   const addOrganization = (prop) => {
-    console.log(prop) //TODO PONER RUTAS
-  }
-  const editOrganization = (prop) => {
-    console.log(prop) //TODO PONER RUTAS
-  }
-  const removeOrganization = (prop) => {
-    console.log(prop) //TODO PONER RUTAS
+    createOrganization(prop);
   }
 
   const printError = () => {
@@ -51,7 +33,6 @@ const OrganizationsView = () => {
     );
   }
 
-  const loadingOrganizations = false
 
   return (
     <>
@@ -88,7 +69,7 @@ const OrganizationsView = () => {
       </Row>
       <OrganizationsList
         organizations={organizations}
-        loading={loadingOrganizations}
+        loading={loading}
         editOrganization={setEditOrganization}
       />
     </>

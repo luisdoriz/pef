@@ -63,7 +63,7 @@ const putArea = async (raw_body) => {
 
 const deleteArea = async ({ idArea }) => {
   try {
-    const url = REACT_APP_API_URL + `/facilities/area/${idArea}`; //TODO: CHECAR ESTA RUTA
+    const url = REACT_APP_API_URL + `/facilities/area/${idArea}`;
     const {
       data: { data },
     } = await axios.delete(url);

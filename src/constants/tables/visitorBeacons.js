@@ -8,7 +8,7 @@ const getVisitorBeaconsColumns = (deleteVisitorBeacon) => [
     key: "idBeacon",
   },
   {
-    title: "Direccion MAC",
+    title: "Dirección MAC",
     dataIndex: "macAddress",
     key: "macAddress",
   },

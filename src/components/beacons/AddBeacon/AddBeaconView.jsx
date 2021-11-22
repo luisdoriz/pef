@@ -37,7 +37,6 @@ class AddBeaconView extends Component {
     })
     if (notValid) {
       printError();
-      console.log('nv')
     }
     else {
       addBeacon(values);

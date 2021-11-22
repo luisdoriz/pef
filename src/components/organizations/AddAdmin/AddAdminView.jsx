@@ -70,7 +70,7 @@ class AddAdminView extends Component {
             <Col span={12}>
               <Form.Item
                 name="email"
-                label="Direccion de correo electronico"
+                label="Dirección de correo electrónico"
                 rules={[
                   {
                     type: 'email',
@@ -91,7 +91,7 @@ class AddAdminView extends Component {
                   },
                   {
                     pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-                    message: '¡La contraseña debe de tener minimo 1 letra en mayuscula, 1 en minuscula, 1 digito y debe de contener al menos 8 caracteres!',
+                    message: '¡La contraseña debe de tener mínimo 1 letra en mayúscula, 1 en minúscula, 1 dígito y debe de contener al menos 8 caracteres!',
                   }
                 ]}
               >
@@ -113,7 +113,7 @@ class AddAdminView extends Component {
                       if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(new Error('La contraseña introducida no coincide con la definida anteriormente!'));
+                      return Promise.reject(new Error('¡Las contraseñas no coinciden!'));
                     },
                   }),
                 ]}

@@ -11,7 +11,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -113,7 +113,7 @@ class EditEmployeeView extends Component {
     const { visible, facilities, privilegeLevels, employee, beacons } = this.props;
     const { newMacAddress, selectedFacility } = this.state
     return (
-      <Modal footer={null} title="Editar Empleado" visible={visible} onCancel={this.onCancel}>
+      <Modal footer={null} title="Editar empleado" visible={visible} onCancel={this.onCancel}>
         <Row justify="end">
           <Popconfirm
             title="¿Seguro que quieres borrar este empleado?"
@@ -172,7 +172,7 @@ class EditEmployeeView extends Component {
             <Col span={12}>
               <Form.Item
                 name="email"
-                label="Direccion de correo electronico"
+                label="Dirección de correo electrónico"
                 rules={[
                   {
                     type: 'email',
