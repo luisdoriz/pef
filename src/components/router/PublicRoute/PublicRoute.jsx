@@ -19,7 +19,14 @@ const PublicRoute = ({ children, ...props }) => {
   if (loading) {
     const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
     return (
-      <Spin indicator={antIcon} />
+      <Spin 
+      style={{
+        justifyContent: "center",
+        width: "100%",
+        height: "80%",
+        marginTop: "20%",
+      }}
+      indicator={antIcon} />
     )
   }
   return (
