@@ -1,3 +1,5 @@
+import { subscribeUser } from "../subscription";
+
 export const mainInitialState = { auth: false, user: {}, facilities: [] };
 
 export const mainReducer = (state, action) => {
@@ -14,6 +16,7 @@ export const mainReducer = (state, action) => {
     case "CHECK_AUTH":
       updatedState.auth = true;
       const { user, facilities } = action.payload;
+      subscribeUser(user.idUser)
       updatedState.user = user;
       updatedState.facilities = facilities;
       break;
