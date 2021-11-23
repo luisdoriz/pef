@@ -85,7 +85,7 @@ const HeatMapView = ({ data, loading }) => {
     <Col span={13} className="reports-container__traffic">
       <Row justify="space-between">
         <Col>
-          <h3>Frecuencia de visitas a area por persona</h3>
+          <h3>Frecuencia de visitas a área por persona</h3>
         </Col>
         <Col>
           <Switch checked={showTable} onChange={setShowTable} />

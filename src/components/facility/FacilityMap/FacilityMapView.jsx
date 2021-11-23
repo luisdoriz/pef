@@ -8,6 +8,8 @@ const FacilityMapView = ({
   loading,
   areas,
   positions,
+  sizeX,
+  sizeY
 }) => {
   if (loading || areas.length === 0) {
     const antIcon = (<LoadingOutlined style={{ fontSize: 24 }} spin />);
@@ -23,16 +25,15 @@ const FacilityMapView = ({
       />
     )
   }
-  const { facilitySizeX: sizeX, facilitySizeY: sizeY } = areas[0]
   const renderContent = (from, to) => (
     <div>
-      <p> Desde:{moment(from).format("HH:MM a")}</p>
-      <p> Hasta: {moment(to).format("HH:MM a")}</p>
+      <p> Desde: {moment(from).format("HH:MMa")}</p>
+      <p> Hasta: {moment(to).format("HH:MMa")}</p>
     </div>
   )
   const colors = ["#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
   return (
-    <div className="blueprint-container" style={{ height: "80%" }}>
+    <div className="blueprint-container" >
       <svg height="100%" width="100%" viewBox="0 0 401 401">
         {areas.map(({ vertices }, i) => vertices
           .map(({ vertices }) => {
@@ -93,7 +94,7 @@ const FacilityMapView = ({
           ))
         }
       </svg>
-    </div >
+    </div>
   )
 }
 

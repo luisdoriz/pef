@@ -4,7 +4,6 @@ import "antd/dist/antd.css";
 import Context from "./contexts/mainContext";
 import Core from "./views/Core";
 import Login from "./views/Login";
-import SignUp from "./views/SignUp";
 import PrivateRoute from "./components/router/PrivateRoute";
 import PublicRoute from "./components/router/PublicRoute";
 
@@ -17,9 +16,6 @@ const App = () => {
         <Switch>
           <PublicRoute path="/login">
             <Login />
-          </PublicRoute>
-          <PublicRoute path="/signup">
-            <SignUp />
           </PublicRoute>
           <PrivateRoute path="/" component={Core} />
         </Switch>

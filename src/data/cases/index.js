@@ -64,6 +64,20 @@ const deleteCase = async ({idCase}) => {
   }
 };
 
-export { getActiveCases, getRecoveredCases, getEmployeesFacilities, postCase, deleteCase, getAtRiskPersons };
+const putInactiveCase = async (raw_body) => {
+  try {
+    const url = REACT_APP_API_URL + `/cases`;
+    const body = { ...raw_body, ongoing: false };
+    const {
+      data: { data },
+    } = await axios.put(url, body);
+    return data;
+  } catch ({ response }) {
+    return response;
+  }
+};
+
+
+export { getActiveCases, getRecoveredCases, getEmployeesFacilities, postCase, deleteCase, getAtRiskPersons, putInactiveCase };
 
 export default getActiveCases;

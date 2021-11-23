@@ -7,7 +7,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -36,7 +36,7 @@ class AddUserView extends Component {
   render() {
     const { visible, onClose, roles } = this.props;
     return (
-      <Modal footer={null} title="Añadir Usuario" visible={visible} onCancel={onClose}>
+      <Modal footer={null} title="Añadir usuario" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>
           <Row gutter={24}>
             <Col span={12}>
@@ -55,7 +55,7 @@ class AddUserView extends Component {
             <Col span={12}>
               <Form.Item
                 name="email"
-                label="Direccion de correo electronico"
+                label="Dirección de correo electrónico"
                 rules={[
                   {
                     type: 'email',
@@ -93,7 +93,7 @@ class AddUserView extends Component {
                   },
                   {
                     pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-                    message: '¡La contraseña debe de tener minimo 1 letra en mayuscula, 1 en minuscula, 1 digito y debe de contener al menos 8 caracteres!',
+                    message: '¡La contraseña debe de tener mínimo 1 letra en mayúscula, 1 en minúscula, 1 dígito y debe de contener al menos 8 caracteres!',
                   }
                 ]}
               >
@@ -115,7 +115,7 @@ class AddUserView extends Component {
                       if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(new Error('La contraseña introducida no coincide con la definida anteriormente!'));
+                      return Promise.reject(new Error('¡Las contraseñas no coinciden!'));
                     },
                   }),
                 ]}

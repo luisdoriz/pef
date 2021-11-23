@@ -6,26 +6,44 @@ import {
 } from "@ant-design/icons";
 import useAtRiskPersons from '../../../hooks/AtRiskPersons/useAtRiskPersons';
 
-const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole }) => {
+const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setInactiveCase }) => {
   const { atRiskPersons: contacts, loading } = useAtRiskPersons(activeCase?.idCase);
 
   const columns = getCloseContactsColumns()
-  const confirm = () => {
+  const confirmDelete = () => {
     deleteCase(activeCase)
   }
+  const confirmEdit = () => {
+    const today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    setInactiveCase({ idCase: activeCase.idCase, toDate: date })
+  }
   return (
-    <Modal width={"80%"} footer={null} title="Detalle Caso" visible={visible} onCancel={onClose}>
+    <Modal width={"80%"} footer={null} title="Detalle caso" visible={visible} onCancel={onClose}>
       <Col>
         <Col>
-          {idRole === 2 && (<Row>
+          {idRole === 2 && (<Row justify="end">
             <Popconfirm
-              title="¿Seguro que quieres borrar este caso?"
-              onConfirm={confirm}
+              title="¿Seguro que quieres registrar este caso como recuperado?"
+              onConfirm={confirmEdit}
               okText="Confirmar"
               cancelText="Cancelar"
             >
               <Button
-                style={{ position: 'absolute', right: "0px" }}
+                type="primary"
+                size="large"
+                shape="round"
+              >
+                Registrar caso recuperado
+              </Button>
+            </Popconfirm>
+            <Popconfirm
+              title="¿Seguro que quieres borrar este caso?"
+              onConfirm={confirmDelete}
+              okText="Confirmar"
+              cancelText="Cancelar"
+            >
+              <Button
                 type="danger"
                 shape="round"
                 icon={<DeleteOutlined />}
@@ -51,7 +69,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole }) =>
         </Col>
         <Col style={{ paddingTop: 30 }}>
           <h2>Contactos cercanos a caso positivo</h2>
-          <Table columns={columns} dataSource={contacts} loading={loading} />
+          <Table columns={columns} dataSource={contacts} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}}/>
         </Col>
       </Col>
     </Modal>

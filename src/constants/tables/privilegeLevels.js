@@ -25,6 +25,11 @@ const getPrivilegeLevelColumns = (editRole) => ([
             </>
           ),
       },
+      {
+        title: "Hora de llegada",
+        dataIndex: "entryTime",
+        key: "entryTime",
+      },
     {
         title: 'Editar',
         dataIndex: '',

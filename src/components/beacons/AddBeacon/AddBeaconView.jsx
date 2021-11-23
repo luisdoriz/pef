@@ -29,9 +29,19 @@ class AddBeaconView extends Component {
   }
 
   onFinish = (values) => {
-    const { addBeacon } = this.props;
-    addBeacon(values);
-    this.onReset()
+    const { addBeacon, beacons, printError } = this.props;
+    let notValid = false;
+    beacons.map((indBeacon) => {
+      if (indBeacon.macAddress === values.macAddress)
+        notValid = true
+    })
+    if (notValid) {
+      printError();
+    }
+    else {
+      addBeacon(values);
+      this.onReset()
+    }
   };
 
   render() {

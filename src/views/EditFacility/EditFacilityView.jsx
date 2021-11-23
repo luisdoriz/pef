@@ -97,6 +97,14 @@ const EditFacilityView = () => {
         });
     }
 
+    const printNameError = () => {
+        openNotification(
+            "error",
+            "Nombre no válido",
+            "El nombre que ingresó ya existe"
+        );
+    }
+
     const printError = () => {
         openNotification(
             "error",
@@ -159,6 +167,8 @@ const EditFacilityView = () => {
                         removeArea={removeArea}
                         editArea={editArea}
                         setEditAreaVisible={setEditAreaVisible}
+                        areas={areas}
+                        printError={printNameError}
                     />
                     <EditGateway
                         visible={editGatewayVisible}
@@ -180,6 +190,8 @@ const EditFacilityView = () => {
                         removeRole={removePrivilegelevel}
                         setEditRoleVisible={setEditRoleVisible}
                         editRole={editPrivilegeLevel}
+                        privilegeLevels={privilegeLevels}
+                        printError={printNameError}
                     />
                     <AddGateway
                         visible={addGatewayVisible}
@@ -191,17 +203,22 @@ const EditFacilityView = () => {
                         defineArea={defineArea}
                         gateways={gateways}
                         printError={printError}
+                        registering={false}
                     />
                     <AddBeacon
                         addBeacon={addBeacon}
                         visible={addBeaconVisible}
                         onClose={() => setAddBeaconVisible(!addBeaconVisible)}
+                        beacons={beacons}
+                        printError={printError}
                     />
                     <AddRole
                         addRole={addRole}
                         visible={addRoleVisible}
                         onClose={() => setAddRoleVisible(!addRoleVisible)}
                         areas={areas}
+                        privilegeLevels={privilegeLevels}
+                        printError={printNameError}
                     />
                     <Row gutter={8} justify="space-between">
                         <Col span={11}>

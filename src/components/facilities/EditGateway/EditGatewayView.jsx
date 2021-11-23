@@ -9,7 +9,7 @@ const validateMessages = {
   required: '¡${label} es requerido!',
   pattern: '${label} no tiene el formato correcto.',
   types: {
-    email: '¡${label} no es un correo valido!',
+    email: '¡${label} no es un correo válido!',
   },
 };
 
@@ -38,7 +38,7 @@ class EditGatewayView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { setAddGatewaysPositionsVisible, setGateway, setEditGatewayVisible, defineArea, setEditing, gateway } = this.props
+    const { setAddGatewaysPositionsVisible, setGateway, setEditGatewayVisible, defineArea, setEditing, gateway} = this.props
     defineArea(values.idArea)
     setEditGatewayVisible(false);
     setAddGatewaysPositionsVisible(true);
