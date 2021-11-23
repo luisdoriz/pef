@@ -16,7 +16,7 @@ const areEqual = (obj1, obj2) => {
 }
 
 const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, setWalls, rooms, setAddRoomVisible, setRooms, currentRoom, setCurrentRoom, sizeX, sizeY, addingGateways, gateways, setGateways, setAddGatewayVisible }) => {
-  const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
+  const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#826249", "#009999", "#6A0AAB"];
   // if (points.length === 0) {
   //   return null
   // }

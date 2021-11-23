@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { EditOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Link } from 'react-router-dom';
 
 const getOrganizationsColumns = (editOrganization) => ([
@@ -34,9 +34,8 @@ const getOrganizationsColumns = (editOrganization) => ([
         key: 'x',
         render: (row) =>  <Link to={`/organization/${row.idOrganization}`}>
             <Button
-                type="primary"
                 shape="round"
-                icon={<ArrowRightOutlined />}
+                icon={<EyeOutlined />}
         /></Link>,
       },
 ]

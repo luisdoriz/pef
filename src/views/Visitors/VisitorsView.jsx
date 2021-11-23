@@ -68,6 +68,7 @@ const VisitorsViews = ({ user }) => {
           </Button>
         </Col>
       </Row>
+      <h3>Visitantes activos</h3>
       <VisitorsList
         loading={loading}
         visitors={visitors}

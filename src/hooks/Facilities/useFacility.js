@@ -27,6 +27,12 @@ export const useFacility = (idFacility) => {
     fetchPositions();
   }, [idFacility]);
 
+  const getPositions = async () => {
+    const positionsData = await getActualPositions(idFacility)
+    setPositions(positionsData)
+    setLoading(false);
+};
+
   const editArea = async (body) => {
     const status = await putArea(body);
     setLoading(true);
@@ -44,7 +50,8 @@ export const useFacility = (idFacility) => {
     editArea,
     loading,
     removeArea,
-    positions
+    positions,
+    getPositions
   };
 };
 

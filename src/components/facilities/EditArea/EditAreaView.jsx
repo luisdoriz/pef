@@ -105,7 +105,7 @@ class EditAreaView extends Component {
             <Col span={12}>
               <Form.Item
                 name="timeLimit"
-                label="Tiempo límite"
+                label="Tiempo límite (minutos)"
                 rules={[
                   {
                     required: false,

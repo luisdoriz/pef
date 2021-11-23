@@ -150,6 +150,21 @@ const EditFacilityView = () => {
                                 editing={editing}
                             />
                         </Col>
+                        <Col span={6}>
+                            <div style={{ paddingTop: 20 }}>
+                                <h4>Da click en el punto donde desee colocar el gateway.</h4>
+                                <div style={{ display: 'flex', alignItems: "center" }}>
+                                    <span style={{ height: "15px", width: "15px", backgroundColor: "#31327A", borderRadius: "50%", display: 'inline-block' }}>
+                                    </span>
+                                    <h4 style={{ paddingLeft: 10 }}>Gateways existentes</h4>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: "center" }}>
+                                    <span style={{ height: "15px", width: "15px", backgroundColor: "#2A96C1", borderRadius: "50%", display: 'inline-block' }}>
+                                    </span>
+                                    <h4 style={{ paddingLeft: 10 }}>Gateway nuevo</h4>
+                                </div>
+                            </div>
+                        </Col>
                     </Row>
                 </>
                 :
@@ -245,6 +260,7 @@ const EditFacilityView = () => {
                                 roles={privilegeLevels}
                                 loading={loadingRoles}
                                 editRole={setEditRole}
+                                idFacility={idFacility}
                             />
                         </Col>
                     </Row>
@@ -268,7 +284,7 @@ const EditFacilityView = () => {
                             />
                         </Col>
                         <Col span={11}>
-                            <h3>Beacons</h3>
+                            <h3>Beacons disponibles</h3>
                             <Row justify="end">
                                 <Button
                                     type="primary"

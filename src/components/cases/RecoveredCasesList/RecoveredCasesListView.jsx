@@ -6,7 +6,7 @@ const RecoveredCasesListView = ({ cases, facilities, loading}) => {
   const columns = getRecoveredCasesColumns(facilities)
   return (
     <div style={{ paddingTop: 16}}>
-      <Table columns={columns} dataSource={cases} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}}/>
+      <Table columns={columns} dataSource={cases} loading={loading} scroll={{ y: 300 }}  />
     </div>
   )
 }

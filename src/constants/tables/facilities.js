@@ -1,10 +1,11 @@
-import { Button } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import {
   EditOutlined
 } from "@ant-design/icons";
 import { Link } from 'react-router-dom';
+import { DeleteOutlined } from "@ant-design/icons";
 
-const getFacilitiesColumns = ( ) => ([
+const getFacilitiesColumns = ( removeFacility) => ([
     {
       title: 'Nombre',
       dataIndex: 'name',
@@ -22,6 +23,23 @@ const getFacilitiesColumns = ( ) => ([
               icon={<EditOutlined />}
       /></Link>,
     },
+    {
+      title: "Borrar",
+      dataIndex: "",
+      key: "x",
+      render: (row) => (
+        <Popconfirm
+          title="¿Seguro que quieres borrar este edificio?"
+          onConfirm={() => removeFacility(row.idFacility)}
+          okText="Confirmar"
+          cancelText="Cancelar"
+          okButtonProps={{shape:"round"}}
+          cancelButtonProps={{shape:"round"}}
+        >
+          <Button type="danger" shape="round" icon={<DeleteOutlined />} />
+        </Popconfirm>
+      ),
+    }
   ]);
 
 export {

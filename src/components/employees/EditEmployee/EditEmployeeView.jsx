@@ -16,7 +16,6 @@ const validateMessages = {
 };
 
 const initialState = {
-  newMacAddress: true,
   selectedFacility: null
 }
 
@@ -98,11 +97,6 @@ class EditEmployeeView extends Component {
     setEditEmployeeVisible(false);
   }
 
-  changeMacAddress = () => {
-    const { newMacAddress } = this.state
-    this.setState({ newMacAddress: !newMacAddress })
-  }
-
   changePrivilegeLevels = (prop) => {
     this.setState({ selectedFacility: prop })
     this.formRef.current.setFieldsValue({ idPrivilegeLevel: null })
@@ -111,7 +105,7 @@ class EditEmployeeView extends Component {
 
   render() {
     const { visible, facilities, privilegeLevels, employee, beacons } = this.props;
-    const { newMacAddress, selectedFacility } = this.state
+    const { selectedFacility } = this.state
     return (
       <Modal footer={null} title="Editar empleado" visible={visible} onCancel={this.onCancel}>
         <Row justify="end">
@@ -185,46 +179,24 @@ class EditEmployeeView extends Component {
                 <Input placeholder="ejemplo@correo.com" />
               </Form.Item>
             </Col>
-            <Row gutter={0} justify="end">
-              <Switch
-                onChange={this.changeMacAddress}
-                size="small"
-              />
-              <h5 style={{ paddingLeft: 10 }}>Cambiar entre beacon nuevo o beacon ya registrado</h5>
-            </Row>
-            {(!newMacAddress) ? (
-              <Col span={24}>
-                <Form.Item name="macAddress" label="Beacons ya registrados" rules={[{ required: true, }]}>
-                  <Select
-                    showSearch
-                    placeholder="Selecciona el beacon"
-                    allowClear
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    }
-                  >
-                    {beacons.map(({ idBeacon, macAddress }) => (
-                      <Option value={idBeacon}>{macAddress}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            )
-              : (
-                <Col span={24}>
-                  <Form.Item
-                    name="macAddress"
-                    label="Dirección MAC (Beacon)"
-                    rules={[
-                      { required: true, pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/ }
-                    ]}
-                  >
-                    <MaskedInput mask="##:##:##:##:##:##" placeholder="00:00:00:00:00:00" />
-                  </Form.Item>
-                </Col>
+            <Col span={24}>
+              <Form.Item name="idBeacon" label="Beacons ya registrados" rules={[{ required: true, }]}>
+                <Select
+                  showSearch
+                  placeholder="Selecciona el beacon"
+                  allowClear
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {beacons.map(({ idBeacon, macAddress }) => (
+                    <Option value={idBeacon}>{macAddress}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
 
-              )}
             <Col span={12}>
               <Form.Item name="idFacility" label="Edificio" rules={[{ required: true, }]} >
                 <Select

@@ -50,10 +50,10 @@ const GatewaysMapView = ({ sizeX, sizeY, area, gatewayPosition, setGatewayPositi
           />
         ))}
         {gatewayPosition &&
-          <circle className="bluePoint" cx={`${(gatewayPosition.x * (100 / sizeX))}%`} cy={`${(100 - (gatewayPosition.y * (100 / sizeY)))}%`} r="2" />
+          <circle className="bluePoint" cx={`${(gatewayPosition.x * (100 / sizeX))}%`} cy={`${(100 - (gatewayPosition.y * (100 / sizeY)))}%`} r="3" />
         }
         {gateways?.map((gateway) => (
-          <circle className="orangePoint" cx={`${(gateway.x * (100 / sizeX))}%`} cy={`${(100 - (gateway.y * (100 / sizeY)))}%`} r="2" />
+          <circle className="darkBluePoint" cx={`${(gateway.x * (100 / sizeX))}%`} cy={`${(100 - (gateway.y * (100 / sizeY)))}%`} r="2" />
         ))}
         <defs>
           <pattern id="grid" width={`${400 / sizeX}`} height={`${400 / sizeY}`} patternUnits="userSpaceOnUse">

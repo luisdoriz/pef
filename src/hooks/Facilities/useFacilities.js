@@ -17,13 +17,14 @@ export const useFacilities = () => {
   }, [facilities, loading]);
 
   const createArea = async (body) => {
-    const status = await postAreas(body);
+    const response = await postAreas(body);
     setLoading(true);
     setFacilities([])
+    return response;
   }
 
   const createFacility = async (body) => {
-    const { response } = await postFacility(body);
+    const response = await postFacility(body);
     setLoading(true);
     setFacilities([])
     return response;

@@ -13,6 +13,11 @@ const getEmployeesColumns = (facilities, editEmployee, privilegeLevels) => [
     key: "lastNames",
   },
   {
+    title: "Correo electrónico",
+    dataIndex: "email",
+    key: "email",
+  },
+  {
     title: "Matricula",
     dataIndex: "internalId",
     key: "internalId",

@@ -6,7 +6,7 @@ const AlertsListView = ({ alerts, deleteAlert, idRole, loading, types, facilitie
   const columns = getAlertsColumns(deleteAlert, idRole, types, facilities)
   return (
     <div style={{ paddingTop: 16 }}>
-      <Table scroll={{ y: 450 }} pagination={{position:["none","none"]}} columns={columns} dataSource={alerts} loading={loading} />
+      <Table columns={columns} dataSource={alerts} loading={loading} scroll={{ y: 450 }}/>
     </div>
   )
 }

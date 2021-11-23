@@ -73,7 +73,7 @@ const deleteArea = async ({ idArea }) => {
   }
 };
 
-const deleteFacility = async ({ idFacility }) => {
+const deleteFacility = async ( idFacility ) => {
   try {
     const url = REACT_APP_API_URL + `/facilities/${idFacility}`;
     const {

@@ -6,7 +6,7 @@ const AdminsListView = ({ admins, loading, editAdmin }) => {
   const columns = getAdminColumns(editAdmin)
   return (
     <div style={{ paddingTop: 16 }}>
-      <Table columns={columns} dataSource={admins} loading={loading} scroll={{ y: 400 }} pagination={{position:["none","none"]}}/>
+      <Table columns={columns} dataSource={admins} loading={loading} scroll={{ y: 400 }}  />
     </div>
   )
 }

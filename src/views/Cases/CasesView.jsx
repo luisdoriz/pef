@@ -35,7 +35,6 @@ const CasesView = ({ user }) => {
   const deleteCase = (prop) => {
     deleteActiveCase({ idCase: prop.idCase });
     setCaseDetailVisible(false);
-
   }
 
   return (

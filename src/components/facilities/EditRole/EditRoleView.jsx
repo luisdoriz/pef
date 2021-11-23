@@ -59,7 +59,7 @@ class EditRoleView extends Component {
       printError();
     }
     else {
-      const formattedTime = values.entryTime.format('HH:MM');
+      const formattedTime = values.entryTime.format('HH:mm');
       values.entryTime = formattedTime
       editRole({ idPrivilegeLevel: role.idPrivilegeLevel, idFacility: role.idFacility, ...values });
       this.onReset();

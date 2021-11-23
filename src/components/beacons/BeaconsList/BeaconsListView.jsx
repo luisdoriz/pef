@@ -5,8 +5,8 @@ import { getBeaconsColumns } from '../../../constants/tables';
 const BeaconsListView = ({ beacons, deleteBeacon, loading }) => {
   const columns = getBeaconsColumns(deleteBeacon);
   return (
-    <div >
-      <Table columns={columns} dataSource={beacons} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}} />
+    <div style={{ paddingTop: 16}}>
+      <Table columns={columns} dataSource={beacons} loading={loading} scroll={{ y: 300 }}   />
     </div>
   )
 }

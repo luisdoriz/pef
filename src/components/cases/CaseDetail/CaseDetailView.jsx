@@ -17,6 +17,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setI
     const today = new Date();
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     setInactiveCase({ idCase: activeCase.idCase, toDate: date })
+    onClose();
   }
   return (
     <Modal width={"80%"} footer={null} title="Detalle caso" visible={visible} onCancel={onClose}>
@@ -73,7 +74,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setI
         </Col>
         <Col style={{ paddingTop: 30 }}>
           <h2>Contactos cercanos a caso positivo</h2>
-          <Table columns={columns} dataSource={contacts} loading={loading} scroll={{ y: 300 }} pagination={{ position: ["none", "none"] }} />
+          <Table columns={columns} dataSource={contacts} loading={loading} scroll={{ y: 300 }} />
         </Col>
       </Col>
     </Modal>

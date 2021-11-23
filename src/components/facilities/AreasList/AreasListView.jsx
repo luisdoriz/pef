@@ -6,7 +6,7 @@ const AreasListView = ({ areas, editArea, loading }) => {
   const columns = getAreasColumns(editArea);
   return (
     <div style={{ paddingTop: 16}}>
-      <Table columns={columns} dataSource={areas} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}}/>
+      <Table columns={columns} dataSource={areas} loading={loading} scroll={{ y: 300 }}  />
     </div>
   )
 }

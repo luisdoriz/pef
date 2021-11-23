@@ -47,6 +47,8 @@ class AddRoleView extends Component {
       printError();
     }
     else {
+      const formattedTime = values.entryTime.format('HH:mm');
+      values.entryTime = formattedTime
       addRole(values);
       this.onReset()
     }

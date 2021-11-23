@@ -6,7 +6,7 @@ const UserListView = ({ users, editUser, roles, loading }) => {
   const columns = getUserColumns(editUser, roles)
   return (
     <div style={{ paddingTop: 16 }}>
-      <Table columns={columns} dataSource={users} loading={loading} scroll={{ y: 400 }} pagination={{position:["none","none"]}}/>
+      <Table columns={columns} dataSource={users} loading={loading} scroll={{ y: 400 }}  />
     </div>
   )
 }

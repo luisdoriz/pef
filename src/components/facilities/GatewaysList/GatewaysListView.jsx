@@ -6,7 +6,7 @@ const GatewaysListView = ({ gateways, editGateway, loading }) => {
   const columns = getGatewaysColumns(editGateway);
   return (
     <div style={{ paddingTop: 16}}>
-      <Table columns={columns} dataSource={gateways} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}}/>
+      <Table columns={columns} dataSource={gateways} loading={loading} scroll={{ y: 300 }}  />
     </div>
   )
 }

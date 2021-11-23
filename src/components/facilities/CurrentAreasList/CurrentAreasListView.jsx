@@ -6,7 +6,7 @@ const CurrentAreasListView = ( {names  }) => {
   const columns = getCurrentAreasColumns();
   return (
     <div >
-      <Table columns={columns} dataSource={names} scroll={{ y: 300 }} pagination={{position:["none","none"]}}/>
+      <Table columns={columns} dataSource={names} scroll={{ y: 300 }}  />
     </div>
   )
 }

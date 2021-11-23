@@ -58,7 +58,7 @@ const getCheckInReportsColumns = () => [
     title: "Fecha de registro",
     dataIndex: "CreationDate",
     key: "CreationDate",
-    render: (date) => moment(date).format("MMMM D YYYY, h:mm a"),
+    render: (date) => moment(date).format("YYYY/MM/DD, h:mm a"),
   },
 ];
 

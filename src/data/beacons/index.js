@@ -3,9 +3,15 @@ require("dotenv").config();
 
 const { REACT_APP_API_URL } = process.env;
 
-const getBeacons = async () => {
+const getBeacons = async (idFacility) => {
   try {
-    const url = REACT_APP_API_URL + "/beacons/available";
+    let url;
+    if(idFacility){
+      url = REACT_APP_API_URL + `/beacons/available?idFacility=${idFacility}`;
+    }
+    else{
+      url = REACT_APP_API_URL + `/beacons/available`;
+    }
     const { data } = await axios.get(url);
     return data;
   } catch ({ response }) {

@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import { getEmployees, createEmployee, getPrivilegeLevel, putEmployee, deleteEmployee, postPrivilegeLevel, putPrivilegeLevel, deletePrivilegeLevel } from "../../data/employees";
 import { postBeacon } from "../../data/beacons";
-import { notification } from "antd";
-
-const openNotification = (type, title, message) =>
-  notification[type]({
-    message: title,
-    description: message,
-  });
 
 export const useEmployees = (idFacility) => {
   const [facilities, setFacilities] = useState(null);
@@ -21,11 +14,11 @@ export const useEmployees = (idFacility) => {
       setEmployees(response.data);
       setLoading(false)
     };
-    if (employees.length === 0 && loading){
+    if (employees.length === 0 && loading) {
       fetchEmployees();
       fetchPrivilegeLevels();
     }
-  },[employees, loading]);
+  }, [employees, loading]);
 
   const fetchPrivilegeLevels = async () => {
     const response = await getPrivilegeLevel();
@@ -34,33 +27,25 @@ export const useEmployees = (idFacility) => {
   }
 
   const postNewEmployee = async (body) => {
-    const response = await postBeacon({macAddress:body.macAddress, idFacility: body.idFacility});
-    const status = await createEmployee({idBeacon: response.idBeacon, ...body});
+    if (body.macAddress) {
+      const response = await postBeacon({ macAddress: body.macAddress, idFacility: body.idFacility });
+      const status = await createEmployee({ idBeacon: response.idBeacon, ...body });
+    }
+    else {
+      const status = await createEmployee({ ...body });
+    }
     setLoading(true);
     setEmployees([])
-    if (status === 201) {
-      openNotification(
-        "success",
-        "Listo",
-        "El empleado fue agregado con éxito"
-      );
-    } else {
-      openNotification(
-        "error",
-        "Error",
-        "Error interno favor de intentar más tarde."
-      );
-    }
   }
 
   const editEmployee = async (body) => {
-    const status  = await putEmployee(body);
+    const status = await putEmployee(body);
     setLoading(true);
     setEmployees([]);
   }
 
   const removeEmployee = async (body) => {
-    const  status  = await deleteEmployee(body);
+    const status = await deleteEmployee(body);
     setLoading(true);
     setEmployees([])
   }
@@ -72,13 +57,13 @@ export const useEmployees = (idFacility) => {
   }
 
   const editPrivilegeLevel = async (body) => {
-    const status  = await putPrivilegeLevel(body);
+    const status = await putPrivilegeLevel(body);
     setLoading(true);
     setEmployees([]);
   }
 
   const removePrivilegelevel = async (body) => {
-    const  status  = await deletePrivilegeLevel(body);
+    const status = await deletePrivilegeLevel(body);
     setLoading(true);
     setEmployees([])
   }

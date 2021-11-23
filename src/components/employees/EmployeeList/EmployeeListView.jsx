@@ -7,7 +7,7 @@ const EmployeeListView = ({ employees, facilities, editEmployee, privilegeLevels
   const columns = getEmployeesColumns(facilities, editEmployee, privilegeLevels)
   return (
     <div style={{ paddingTop: 16 }}>
-      <Table columns={columns} dataSource={employees} loading={loading} scroll={{ y: 450 }} pagination={{position:["none","none"]}}/>
+      <Table columns={columns} dataSource={employees} loading={loading} scroll={{ y: 450 }}  />
     </div>
   )
 }

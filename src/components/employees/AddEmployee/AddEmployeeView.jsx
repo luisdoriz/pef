@@ -129,7 +129,7 @@ class AddEmployeeView extends Component {
                 rules={[
                   {
                     type: 'email',
-                    required: false,
+                    required: true,
                   },
                 ]}
               >
@@ -145,7 +145,7 @@ class AddEmployeeView extends Component {
             </Row>
             {(!newMacAddress) ? (
               <Col span={24}>
-                <Form.Item name="macAddress" label="Beacons ya registrados" rules={[{ required: true, }]}>
+                <Form.Item name="idBeacon" label="Beacons ya registrados" rules={[{ required: true, }]}>
                   <Select
                     showSearch
                     placeholder="Selecciona el beacon"

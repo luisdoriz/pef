@@ -10,7 +10,7 @@ const getAreasColumns = ( editArea ) => ([
       key: 'name',
     },
     {
-        title: 'Tiempo límite',
+        title: 'Tiempo límite (minutos)',
         dataIndex: 'timeLimit',
         key: 'timeLimit',
     },

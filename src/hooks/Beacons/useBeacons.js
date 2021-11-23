@@ -7,7 +7,7 @@ export const useBeacons = (idFacility) => {
 
   useEffect(() => {
     const fetchBeacons = async () => {
-      const response = await getBeacons();
+      const response = await getBeacons(idFacility);
       setBeacons(response.data);
       setLoading(false)
     };

@@ -8,7 +8,7 @@ import { mergeVertices } from "../../helpers/mergeVertices"
 
 const { confirm } = Modal
 const RegisterFacilityView = () => {
-    const colors = [{ name: "Rojo", color: "#FF0000" }, { name: "Rosa", color: "#FF00FB" }, { name: "Azul oscuro", color: "#1B00FF" }, { name: "Azul claro", color: "#00E0FF" }, { name: "Naranja", color: "#FF9700" }, { name: "Verde", color: "#008C0D" }]
+    const colors = [{ name: "Rojo", color: "#FF0000" }, { name: "Rosa", color: "#FF00FB" }, { name: "Azul oscuro", color: "#1B00FF" }, { name: "Azul claro", color: "#00E0FF" }, { name: "Naranja", color: "#FF9700" }, { name: "Verde", color: "#008C0D" }, { name: "Café", color: "#826249" }, { name: "Cian", color: "#009999" }, { name: "Morado", color: "#6A0AAB" }]
     const { facilities, createArea, loading, createFacility, removeFacility } = useFacilities();
     const { createGateway, gateways: existingGateways } = useGateways();
     const [points, setPoints] = useState({});
@@ -39,7 +39,7 @@ const RegisterFacilityView = () => {
         return (obj1.x === obj2.x && obj1.y === obj2.y)
     }
 
-    const saveRoom = (values) => {
+    const saveRoom = async (values) => {
         let finalVertices = Object.values(currentRoom.vertices)
         let changed = true;
         while (changed) {
@@ -93,8 +93,9 @@ const RegisterFacilityView = () => {
             }
             finalVertices = newVertices
         }
-        // const idArea = createArea({ ...values, vertices: currentRoom.vertices })
-        // setCurrentAreaId(idArea);
+        const response = await createArea({ area: { ...values, idFacility: createdFacility.idFacility }, vertices: finalVertices })
+        const { idArea } = response;
+        setCurrentAreaId(idArea);
         let newRoom = rooms[rooms.length - 2];
         newRoom = { name: values.name, ...newRoom };
         let newRooms = rooms;
@@ -132,17 +133,18 @@ const RegisterFacilityView = () => {
         setWalls([]);
     }
 
-    const saveFacility = (prop) => {
-        // const id = createFacility(prop)
-        setCreatedFacility({ name: prop.name, idFacility: '1', sizeX: prop.sizeX, sizeY: prop.sizeY }); //TODO: CAMBIAR A ID
+    const saveFacility = async (prop) => {
+        const result = await createFacility(prop)
+        const { idFacility: id } = result
+        setCreatedFacility({ name: prop.name, idFacility: id, sizeX: prop.sizeX, sizeY: prop.sizeY });
     }
 
     const saveGateways = () => {
-        // if (gateways) {
-        //     gateways.map((gateway) =>
-        //         createGateway({ ...gateway, idArea: currentAreaId })
-        //     )
-        // }
+        if (gateways) {
+            gateways.map((gateway) =>
+                createGateway({ ...gateway, idArea: currentAreaId })
+            )
+        }
         setAddingGateways(false);
         setCurrentRoom(null);
         setCurrentAreaId(null);
@@ -231,12 +233,13 @@ const RegisterFacilityView = () => {
                         printError={printGatewayError}
                         registering={true}
                         cancelGateway={cancelGateway}
+                        setGateways={setGateways}
                     />
                     <Row justify="end" style={{ padding: 10 }}>
                         {addingGateways ?
                             <>
                                 <Col span={10}>
-                                    <h2>Agregando gateways</h2>
+                                    <h2>Agregando GATEWAYS</h2>
                                 </Col>
                                 <Col span={8}>
                                     <Button
@@ -252,7 +255,7 @@ const RegisterFacilityView = () => {
                             :
                             <>
                                 <Col span={8}>
-                                    <h2>Agregando área</h2>
+                                    <h2>Agregando ÁREA</h2>
                                 </Col>
                                 <Col span={10}>
                                     <Button
@@ -309,10 +312,23 @@ const RegisterFacilityView = () => {
                             />
                         </Col>
                         <Col span={6} style={{ padding: 10 }}>
+                            <div style={{ paddingTop: 20, paddingBottom: 20 }}>
+                                {addingGateways ?
+                                    <>
+                                        <h4>Da click en el punto donde desee colocar el gateway.</h4>
+                                        <div style={{ display: 'flex', alignItems: "center" }}>
+                                            <span style={{ height: "15px", width: "15px", backgroundColor: "#2A96C1", borderRadius: "50%", display: 'inline-block' }}>
+                                            </span>
+                                            <h4 style={{ paddingLeft: 10 }}>Gateways</h4>
+                                        </div>
+                                    </>
+                                    :
+                                        <h4>Para crear paredes da click en los vértices del área de manera consecutiva, uno a la vez. Para cerrar el área haz click en el primer vértice.</h4>
+                                }
+                            </div>
                             <h2>Áreas terminadas</h2>
                             <CurrentAreasList
                                 names={names}
-                                colors={colors}
                             />
                         </Col>
                     </Row>
@@ -337,6 +353,7 @@ const RegisterFacilityView = () => {
                     <FacilitiesList
                         facilities={facilities}
                         loading={loading}
+                        removeFacility={removeFacility}
                     />
                 </>
             }

@@ -27,7 +27,7 @@ class AddGatewayView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea, gateways, printError, registering } = this.props
+    const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea, gateways, printError, registering, setGateways} = this.props
     let notValid = false;
     if (gateways && gateways.length > 0) {
       gateways.map((gateway) => {
@@ -44,6 +44,11 @@ class AddGatewayView extends Component {
         defineArea(values.idArea)
         setAddGatewaysPositionsVisible(true)
         setNewGateway(values);
+      }
+      else{
+        let newGateways = [...gateways]
+        newGateways[newGateways.length-1] = {macAddress: values.macAddress, ...newGateways[newGateways.length-1]}
+        setGateways(newGateways)
       }
       setAddGatewayVisible(false);
       this.onReset();

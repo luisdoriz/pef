@@ -31,7 +31,7 @@ const FacilityMapView = ({
       <p> Hasta: {moment(to).format("HH:MMa")}</p>
     </div>
   )
-  const colors = ["#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D"];
+  const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#826249", "#009999", "#6A0AAB"];
   return (
     <div className="blueprint-container" >
       <svg height="100%" width="100%" viewBox="0 0 401 401">
@@ -87,7 +87,7 @@ const FacilityMapView = ({
                 style={{ cursor: "pointer" }}
                 cx={`${(x * (100 / sizeX))}%`}
                 cy={`${(100 - (y * (100 / sizeY)))}%`}
-                r="5"
+                r="4"
                 fill="#31327A"
               />
             </Popover>

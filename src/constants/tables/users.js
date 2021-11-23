@@ -8,7 +8,7 @@ const getUserColumns = (editUser, roles) => [
     key: "name",
   },
   {
-    title: "Correo",
+    title: "Correo electrónico",
     dataIndex: "email",
     key: "email",
   },
