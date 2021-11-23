@@ -26,7 +26,6 @@ const getUserColumns = (editUser, roles) => [
     render: (row) => (
       <Button
         onClick={() => editUser(row)}
-        type="primary"
         shape="round"
         icon={<EditOutlined />}
       />

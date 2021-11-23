@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 
 import {
-  ArrowRightOutlined
+  EyeOutlined
 } from "@ant-design/icons";
 
 const getCasesColumns = (seeCaseDetail, facilities) => ([
@@ -28,10 +28,8 @@ const getCasesColumns = (seeCaseDetail, facilities) => ([
       key: 'x',
       render: (row) => <Button
         onClick={() => seeCaseDetail(row)}
-        type="primary"
         shape="round"
-        ghost
-        icon={<ArrowRightOutlined />}
+        icon={<EyeOutlined />}
       />,
     },
   ]);

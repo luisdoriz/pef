@@ -18,7 +18,6 @@ const getFacilitiesColumns = ( ) => ([
       key: 'x',
       render: (row) =>  <Link to={`/settings/facility/${row.idFacility}`}>
           <Button
-              type="primary"
               shape="round"
               icon={<EditOutlined />}
       /></Link>,

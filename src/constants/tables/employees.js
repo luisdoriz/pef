@@ -43,7 +43,6 @@ const getEmployeesColumns = (facilities, editEmployee, privilegeLevels) => [
     render: (row) => (
       <Button
         onClick={() => editEmployee(row)}
-        type="primary"
         shape="round"
         icon={<EditOutlined />}
       />

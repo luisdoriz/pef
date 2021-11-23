@@ -36,7 +36,6 @@ const getPrivilegeLevelColumns = (editRole) => ([
         key: 'x',
         render: (row) => <Button
           onClick={() => editRole(row)}
-          type="primary"
           shape="round"
           icon={<EditOutlined />}
         />,

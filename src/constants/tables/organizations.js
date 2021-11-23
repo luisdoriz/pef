@@ -24,7 +24,6 @@ const getOrganizationsColumns = (editOrganization) => ([
         key: 'x',
         render: (row) => <Button
             onClick={() => editOrganization(row)}
-            type="primary"
             shape="round"
             icon={<EditOutlined />}
         />,

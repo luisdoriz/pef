@@ -19,7 +19,6 @@ const getAdminColumns = (editAdmin) => [
     render: (row) => (
       <Button
         onClick={() => editAdmin(row)}
-        type="primary"
         shape="round"
         icon={<EditOutlined />}
       />

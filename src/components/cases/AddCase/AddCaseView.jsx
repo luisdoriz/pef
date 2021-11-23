@@ -108,10 +108,10 @@ class AddCaseView extends Component {
                   style={{
                     margin: '0 8px',
                   }}
-                  type="button" onClick={this.onReset}>
+                  type="button" shape="round" onClick={this.onReset}>
                   Cancelar
                 </Button>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" shape="round" htmlType="submit">
                   Guardar
                 </Button>
               </Form.Item>

@@ -20,7 +20,6 @@ const getGatewaysColumns = (editGateway) => ([
     key: 'x',
     render: (row) => <Button
       onClick={() => editGateway(row)}
-      type="primary"
       shape="round"
       icon={<EditOutlined />}
     />,

@@ -27,27 +27,31 @@ class AddGatewayView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea, gateways, printError } = this.props
+    const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea, gateways, printError, registering } = this.props
     let notValid = false;
-    gateways.map((gateway) => {
-      if (gateway.macAddress === values.macAddress) {
-        notValid = true;
-      }
-    })
+    if (gateways && gateways.length > 0) {
+      gateways.map((gateway) => {
+        if (gateway.macAddress === values.macAddress) {
+          notValid = true;
+        }
+      })
+    }
     if (notValid) {
       printError();
     }
     else {
-      defineArea(values.idArea)
+      if (!registering) {
+        defineArea(values.idArea)
+        setAddGatewaysPositionsVisible(true)
+        setNewGateway(values);
+      }
       setAddGatewayVisible(false);
-      setAddGatewaysPositionsVisible(true)
-      setNewGateway(values);
       this.onReset();
     }
   };
 
   render() {
-    const { visible, onClose, areas, registering } = this.props;
+    const { visible, areas, registering } = this.props;
     return (
       <Modal footer={null} title="Añadir gateway" visible={visible} onCancel={this.onCancel}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
@@ -91,12 +95,18 @@ class AddGatewayView extends Component {
                   style={{
                     margin: '0 8px',
                   }}
-                  type="button" onClick={this.onCancel}>
+                  type="button" shape="round" onClick={this.onCancel}>
                   Cancelar
                 </Button>
-                <Button type="primary" htmlType="submit">
-                  Continuar a selección de ubicación
-                </Button>
+                {!registering ?
+                  <Button type="primary" shape="round" htmlType="submit">
+                    Continuar a selección de ubicación
+                  </Button>
+                  :
+                  <Button type="primary" shape="round" htmlType="submit">
+                    Confirmar
+                  </Button>
+                }
               </Form.Item>
             </Col>
           </Row>

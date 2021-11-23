@@ -227,42 +227,52 @@ const RegisterFacilityView = () => {
                         visible={addGatewayVisible}
                         onClose={() => setAddGatewayVisible(false)}
                         setAddGatewayVisible={setAddGatewayVisible}
-                        gateways={existingGateways}
+                        gateways={gateways}
                         printError={printGatewayError}
-                        gatewaysList={gateways}
                         registering={true}
                         cancelGateway={cancelGateway}
                     />
                     <Row justify="end" style={{ padding: 10 }}>
                         {addingGateways ?
-                            <Button
-                                type="primary"
-                                size="large"
-                                shape="round"
-                                onClick={saveGateways}
-                            >
-                                Terminar de agregar gateways de área
-                            </Button>
+                            <>
+                                <Col span={10}>
+                                    <h2>Agregando gateways</h2>
+                                </Col>
+                                <Col span={8}>
+                                    <Button
+                                        type="primary"
+                                        size="large"
+                                        shape="round"
+                                        onClick={saveGateways}
+                                    >
+                                        Terminar de agregar gateways de área
+                                    </Button>
+                                </Col>
+                            </>
                             :
                             <>
-                                <Button
-                                    type="primary"
-                                    size="large"
-                                    shape="round"
-                                    onClick={cancelRoom}
-                                    disabled={(currentRoom === null)}
-                                >
-                                    Borrar área actual
-                                </Button>
-                                <Button
-                                    type="primary"
-                                    size="large"
-                                    shape="round"
-                                    onClick={confirmFinish}
-                                    disabled={(!(currentRoom === null) || gateways.length === 0 || rooms.length === 0)}
-                                >
-                                    Terminar de agregar edificio
-                                </Button>
+                                <Col span={8}>
+                                    <h2>Agregando área</h2>
+                                </Col>
+                                <Col span={10}>
+                                    <Button
+                                        size="large"
+                                        shape="round"
+                                        onClick={cancelRoom}
+                                        disabled={(currentRoom === null)}
+                                    >
+                                        Borrar área actual
+                                    </Button>
+                                    <Button
+                                        type="primary"
+                                        size="large"
+                                        shape="round"
+                                        onClick={confirmFinish}
+                                        disabled={(!(currentRoom === null) || gateways.length === 0 || rooms.length === 0)}
+                                    >
+                                        Terminar de agregar edificio
+                                    </Button>
+                                </Col>
                             </>
                         }
                     </Row>

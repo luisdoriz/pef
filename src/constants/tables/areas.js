@@ -25,7 +25,6 @@ const getAreasColumns = ( editArea ) => ([
       key: 'x',
       render: (row) => <Button
         onClick={() => editArea(row)}
-        type="primary"
         shape="round"
         icon={<EditOutlined />}
       />,

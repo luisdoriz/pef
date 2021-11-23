@@ -106,10 +106,10 @@ class AddRoomView extends Component {
                   style={{
                     margin: '0 8px',
                   }}
-                  type="button" onClick={this.onCancel}>
+                  type="button" shape="round" onClick={this.onCancel}>
                   Cancelar
                 </Button>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" shape="round" htmlType="submit">
                   Continuar a agregar gateways
                 </Button>
               </Form.Item>

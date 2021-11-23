@@ -60,7 +60,6 @@ const getVisitorColumns = (editVisitor) => [
     render: (row) => (
       <Button
         onClick={() => editVisitor(row)}
-        type="primary"
         shape="round"
         icon={<EditOutlined />}
       />
