@@ -83,6 +83,8 @@ class EditRoleView extends Component {
             onConfirm={() => this.deleteRole(role)}
             okText="Confirmar"
             cancelText="Cancelar"
+            okButtonProps={{ shape: "round" }}
+            cancelButtonProps={{ shape: "round" }}
           >
             <Button
               type="danger"

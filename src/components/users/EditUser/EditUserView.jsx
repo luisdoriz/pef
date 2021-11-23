@@ -41,7 +41,7 @@ class EditEmployeeView extends Component {
   onFinish = (values) => {
     this.onReset();
     const { editUser, user } = this.props;
-    editUser({idUser:user.idUser, ...values});
+    editUser({ idUser: user.idUser, ...values });
   };
 
   deleteUser = (user) => {
@@ -50,26 +50,28 @@ class EditEmployeeView extends Component {
     removeUser(idUser);
     setEditUserVisible(false);
   }
-  
+
   render() {
     const { visible, onClose, user, roles } = this.props;
     return (
       <Modal footer={null} title="Editar usuario" visible={visible} onCancel={onClose}>
-       <Row justify="end">
-        <Popconfirm
-          title="¿Seguro que quieres borrar esta alerta?"
-          onConfirm={() => this.deleteUser(user)}
-          okText="Confirmar"
-          cancelText="Cancelar"
+        <Row justify="end">
+          <Popconfirm
+            title="¿Seguro que quieres borrar esta alerta?"
+            onConfirm={() => this.deleteUser(user)}
+            okText="Confirmar"
+            cancelText="Cancelar"
+            okButtonProps={{ shape: "round" }}
+            cancelButtonProps={{ shape: "round" }}
           >
-          <Button
-            type="danger"
-            shape="round"
-            icon={<DeleteOutlined />}
-        />
-        </Popconfirm>
+            <Button
+              type="danger"
+              shape="round"
+              icon={<DeleteOutlined />}
+            />
+          </Popconfirm>
         </Row>
-        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{paddingTop:16}}>
+        <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
           <Row gutter={24}>
             <Col span={12}>
               <Form.Item
@@ -99,7 +101,7 @@ class EditEmployeeView extends Component {
               </Form.Item>
             </Col>
             <Col span={12}>
-            <Form.Item name="idRole" label="Rol" rules={[{ required: true, }]}>
+              <Form.Item name="idRole" label="Rol" rules={[{ required: true, }]}>
                 <Select
                   showSearch
                   placeholder="Selecciona el rol"
@@ -109,7 +111,7 @@ class EditEmployeeView extends Component {
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {roles.map(({idRole, name}) => (
+                  {roles.map(({ idRole, name }) => (
                     <Option value={idRole}>{name}</Option>
                   ))}
                 </Select>

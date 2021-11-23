@@ -244,6 +244,8 @@ class AddVisitorView extends Component {
               onConfirm={() => this.desactivateVisitor()}
               okText="Confirmar"
               cancelText="Cancelar"
+              okButtonProps={{ shape: "round" }}
+              cancelButtonProps={{ shape: "round" }}
             >
               <Button
                 shape="round"
@@ -258,6 +260,8 @@ class AddVisitorView extends Component {
               onConfirm={() => this.deleteVisitor()}
               okText="Confirmar"
               cancelText="Cancelar"
+              okButtonProps={{ shape: "round" }}
+              cancelButtonProps={{ shape: "round" }}
             >
               <Button
                 type="danger"
@@ -466,10 +470,12 @@ class AddVisitorView extends Component {
                   style={{
                     margin: '0 8px',
                   }}
-                  type="button" onClick={this.onReset}>
+                  type="button"
+                  shape="round"
+                  onClick={this.onReset}>
                   Cancelar
                 </Button>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" shape="round" htmlType="submit">
                   Guardar
                 </Button>
               </Form.Item>

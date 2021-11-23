@@ -53,6 +53,8 @@ const getAlertsColumns = (deleteAlert, idRole, types, facilities) => {
           onConfirm={() => deleteAlert(row)}
           okText="Confirmar"
           cancelText="Cancelar"
+          okButtonProps={{shape:"round"}}
+          cancelButtonProps={{shape:"round"}}
         >
           <Button type="danger" shape="round" icon={<DeleteOutlined />} />
         </Popconfirm>

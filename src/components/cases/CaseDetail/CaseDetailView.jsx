@@ -28,6 +28,8 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setI
               onConfirm={confirmEdit}
               okText="Confirmar"
               cancelText="Cancelar"
+              okButtonProps={{ shape: "round" }}
+              cancelButtonProps={{ shape: "round" }}
             >
               <Button
                 type="primary"
@@ -42,6 +44,8 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setI
               onConfirm={confirmDelete}
               okText="Confirmar"
               cancelText="Cancelar"
+              okButtonProps={{ shape: "round" }}
+              cancelButtonProps={{ shape: "round" }}
             >
               <Button
                 type="danger"
@@ -69,7 +73,7 @@ const CaseDetailView = ({ activeCase, visible, onClose, deleteCase, idRole, setI
         </Col>
         <Col style={{ paddingTop: 30 }}>
           <h2>Contactos cercanos a caso positivo</h2>
-          <Table columns={columns} dataSource={contacts} loading={loading} scroll={{ y: 300 }} pagination={{position:["none","none"]}}/>
+          <Table columns={columns} dataSource={contacts} loading={loading} scroll={{ y: 300 }} pagination={{ position: ["none", "none"] }} />
         </Col>
       </Col>
     </Modal>

@@ -120,6 +120,8 @@ class EditEmployeeView extends Component {
             onConfirm={() => this.deleteEmployee(employee)}
             okText="Confirmar"
             cancelText="Cancelar"
+            okButtonProps={{ shape: "round" }}
+            cancelButtonProps={{ shape: "round" }}
           >
             <Button
               type="danger"

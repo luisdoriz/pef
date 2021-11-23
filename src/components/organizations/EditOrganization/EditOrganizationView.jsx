@@ -54,7 +54,7 @@ class EditOrganizationView extends Component {
         }
         else {
             setEditOrganizationVisible(false)
-            editOrganization({...values, idOrganization: selectedOrganization.idOrganization});
+            editOrganization({ ...values, idOrganization: selectedOrganization.idOrganization });
             this.onReset()
         }
     };
@@ -76,6 +76,8 @@ class EditOrganizationView extends Component {
                         onConfirm={() => this.deleteOrganization(selectedOrganization)}
                         okText="Confirmar"
                         cancelText="Cancelar"
+                        okButtonProps={{ shape: "round" }}
+                        cancelButtonProps={{ shape: "round" }}
                     >
                         <Button
                             type="danger"

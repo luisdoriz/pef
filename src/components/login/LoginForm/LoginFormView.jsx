@@ -50,7 +50,7 @@ class LoginForm extends Component {
         </Form.Item>
         <Row justify="center">
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading}>
+            <Button type="primary" size="large" shape="round" htmlType="submit" loading={loading}>
               Iniciar sesión
             </Button>
           </Form.Item>

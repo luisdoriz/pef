@@ -77,6 +77,8 @@ class EditAreaView extends Component {
             onConfirm={() => this.deleteArea(area)}
             okText="Confirmar"
             cancelText="Cancelar"
+            okButtonProps={{ shape: "round" }}
+            cancelButtonProps={{ shape: "round" }}
           >
             <Button
               type="danger"

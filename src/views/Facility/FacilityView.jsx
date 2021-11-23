@@ -18,7 +18,7 @@ const FacilityView = () => {
         <Button
           type="primary"
           size="large"
-          // shape="round"
+          shape="round"
           onClick={fetchPositions}
         >
           Actualizar

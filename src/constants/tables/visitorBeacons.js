@@ -27,6 +27,8 @@ const getVisitorBeaconsColumns = (deleteVisitorBeacon) => [
         onConfirm={() => deleteVisitorBeacon(row)}
         okText="Confirmar"
         cancelText="Cancelar"
+        okButtonProps={{ shape: "round" }}
+        cancelButtonProps={{ shape: "round" }}
       >
         <Button type="danger" shape="round" icon={<DeleteOutlined />} />
       </Popconfirm>

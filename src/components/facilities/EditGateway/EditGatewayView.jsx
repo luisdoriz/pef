@@ -38,7 +38,7 @@ class EditGatewayView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { setAddGatewaysPositionsVisible, setGateway, setEditGatewayVisible, defineArea, setEditing, gateway} = this.props
+    const { setAddGatewaysPositionsVisible, setGateway, setEditGatewayVisible, defineArea, setEditing, gateway } = this.props
     defineArea(values.idArea)
     setEditGatewayVisible(false);
     setAddGatewaysPositionsVisible(true);
@@ -64,6 +64,8 @@ class EditGatewayView extends Component {
             onConfirm={() => this.deleteGateway(gateway)}
             okText="Confirmar"
             cancelText="Cancelar"
+            okButtonProps={{ shape: "round" }}
+            cancelButtonProps={{ shape: "round" }}
           >
             <Button
               type="danger"

@@ -54,7 +54,7 @@ class EditAdminView extends Component {
         }
         else {
             setEditAdminVisible(false)
-            editAdmin({...values, idUser: selectedAdmin.idUser});
+            editAdmin({ ...values, idUser: selectedAdmin.idUser });
             this.onReset()
         }
     };
@@ -76,6 +76,8 @@ class EditAdminView extends Component {
                         onConfirm={() => this.deleteAdmin(selectedAdmin)}
                         okText="Confirmar"
                         cancelText="Cancelar"
+                        okButtonProps={{ shape: "round" }}
+                        cancelButtonProps={{ shape: "round" }}
                     >
                         <Button
                             type="danger"
