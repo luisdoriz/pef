@@ -33,7 +33,7 @@ const FacilityMapView = ({
   )
   const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#826249", "#009999", "#6A0AAB"];
   return (
-    <div className="blueprint-container" >
+    <div style={{ height: 550 }} >
       <svg height="100%" width="100%" viewBox="0 0 401 401">
         {areas.map(({ vertices }, i) => vertices
           .map(({ vertices }) => {

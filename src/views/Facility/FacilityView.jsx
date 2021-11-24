@@ -6,24 +6,25 @@ import FacilityMap from '../../components/facility/FacilityMap';
 import { CurrentAreasList } from "../../components/facilities";
 
 const FacilityView = () => {
-  const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#FF7400", "#009999", "#6A0AAB"];
   let { idFacility } = useParams();
   const { loading, areas, positions, getPositions } = useFacility(idFacility)
   const [names, setNames] = useState([]);
 
   useEffect(() => {
+    const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#FF7400", "#009999", "#6A0AAB"];
+    const setNamesList = () => {
+      let newNames = [];
+      areas.forEach((area, i) => {
+        newNames.push({ name: area.name, color: colors[i % colors.length] })
+      })
+      setNames(newNames)
+    }
     if (areas && areas.length > 0) {
       setNamesList();
     }
   }, [areas])
 
-  const setNamesList = () => {
-    let newNames = [];
-    areas.map((area, i) => {
-      newNames.push({ name: area.name, color: colors[i % colors.length] })
-    })
-    setNames(newNames)
-  }
+
 
   return (
     <>

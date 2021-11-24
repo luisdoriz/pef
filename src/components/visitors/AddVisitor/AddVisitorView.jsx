@@ -69,7 +69,6 @@ class AddVisitorView extends Component {
   setFormData = visitor => {
     const {
       email,
-      expirationDate,
       idFacility,
       idBeacon,
       idPrivilegeLevel,
@@ -80,7 +79,6 @@ class AddVisitorView extends Component {
     } = visitor
     this.formRef.current.setFieldsValue({
       email,
-      expirationDate: moment(expirationDate),
       idFacility,
       idBeacon,
       idPrivilegeLevel,

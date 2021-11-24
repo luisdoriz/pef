@@ -162,7 +162,7 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
     }
   }
   return (
-    <div className="blueprint-container">
+    <div className="blueprint-container" style={{ height: 550 }}>
       <svg height="100%" width="100%" onClick={printCoordinates} viewBox="0 0 401 401">
         {rooms.map((room, i) => (
           <>
