@@ -16,7 +16,8 @@ const validateMessages = {
 };
 
 const initialState = {
-  selectedFacility: null
+  selectedFacility: null,
+  currentBeacon: null,
 }
 
 class EditEmployeeView extends Component {
@@ -51,8 +52,9 @@ class EditEmployeeView extends Component {
     else
       this.formRef.current.setFieldsValue(employee);
 
-    const { idFacility } = employee;
-    this.setState({ selectedFacility: idFacility })
+    const { idFacility, idBeacon, macAddress } = employee;
+
+    this.setState({ selectedFacility: idFacility, currentBeacon: {idBeacon, macAddress} })
 
   }
 
@@ -104,8 +106,12 @@ class EditEmployeeView extends Component {
   }
 
   render() {
-    const { visible, facilities, privilegeLevels, employee, beacons } = this.props;
-    const { selectedFacility } = this.state
+    const { visible, facilities, privilegeLevels, employee, beacons: propsBeacons } = this.props;
+    const { selectedFacility, currentBeacon } = this.state
+    let beacons = [...propsBeacons]
+    if (currentBeacon) {
+      beacons.push(currentBeacon)
+    }
     return (
       <Modal footer={null} title="Editar empleado" visible={visible} onCancel={this.onCancel}>
         <Row justify="end">
