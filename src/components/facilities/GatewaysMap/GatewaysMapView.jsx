@@ -38,7 +38,6 @@ const GatewaysMapView = ({ sizeX, sizeY, area, gatewayPosition, setGatewayPositi
   return (
     <div className="blueprint-container" style={{ height: 550 }}>
       <svg height="100%" width="100%" onClick={printCoordinates} viewBox="0 0 401 401">
-        {area.vertices.map((coord) => (<circle cx={`${(coord[0] * (100 / sizeX))}%`} cy={`${(100 - (coord[1] * (100 / sizeY)))}%`} r="2" fill="black" />))}
         {area.vertices.map((coord, i) => (
           (i < area.vertices.length - 1) ?
           <line
