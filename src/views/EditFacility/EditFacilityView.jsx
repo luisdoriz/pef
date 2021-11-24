@@ -33,6 +33,7 @@ const EditFacilityView = () => {
     const [addGatewaysPositionsVisible, setAddGatewaysPositionsVisible] = useState(false)
     const [areaPoints, setAreaPoints] = useState(null)
     const [editing, setEditing] = useState(false)
+    const [selectedGateways, setSelectedGateways] = useState([])
 
     const openNotification = (type, title, message) =>
         notification[type]({
@@ -60,8 +61,10 @@ const EditFacilityView = () => {
     }
 
     const defineArea = (prop) => {
-        const selectedArea = areas.filter((room) => room.idArea === prop)
+        const selectedArea = areas.filter((room) => room.idArea === prop);
         setAreaPoints(selectedArea[0].vertices[0]);
+        const gatewaysInArea = gateways.filter((gateway) => gateway.idArea === selectedArea[0].idArea);
+        setSelectedGateways(gatewaysInArea);
     }
 
     const addBeacon = (prop) => {
@@ -89,6 +92,7 @@ const EditFacilityView = () => {
                 }
                 setAddGatewaysPositionsVisible(false);
                 setAreaPoints(null);
+                setSelectedGateways([])
                 setNewGateway(null);
                 setEditing(false);
                 setGateway(null)
@@ -146,7 +150,7 @@ const EditFacilityView = () => {
                                 sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
                                 gatewayPosition={gatewayPosition}
                                 setGatewayPosition={setGatewayPosition}
-                                gateways={gateways}
+                                gateways={selectedGateways}
                                 editing={editing}
                             />
                         </Col>
