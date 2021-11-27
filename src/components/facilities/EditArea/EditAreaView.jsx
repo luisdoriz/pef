@@ -1,9 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Input, Button, Row, Col, Popconfirm, InputNumber } from 'antd';
-import {
-  DeleteOutlined
-} from "@ant-design/icons";
+import { Modal, Form, Input, Button, Row, Col, InputNumber } from 'antd';
 
 const validateMessages = {
   required: '¡${label} es requerido!',
@@ -47,7 +44,7 @@ class EditAreaView extends Component {
     }
     values.name = name.join(' ')
     let notValid = false;
-    areas.map((indArea) => {
+    areas.forEach((indArea) => {
       if (indArea.name === values.name && values.name !== area.name)
         notValid = true
     })
@@ -60,33 +57,10 @@ class EditAreaView extends Component {
     }
   };
 
-  deleteArea = (area) => {
-    const { setEditAreaVisible, removeArea } = this.props;
-    const idArea = area.idArea;
-    removeArea(idArea);
-    setEditAreaVisible(false);
-  }
-
   render() {
-    const { visible, onClose, area } = this.props;
+    const { visible, onClose } = this.props;
     return (
       <Modal footer={null} title="Editar área" visible={visible} onCancel={onClose}>
-        <Row justify="end">
-          <Popconfirm
-            title="¿Seguro que quieres borrar esta área?"
-            onConfirm={() => this.deleteArea(area)}
-            okText="Confirmar"
-            cancelText="Cancelar"
-            okButtonProps={{ shape: "round" }}
-            cancelButtonProps={{ shape: "round" }}
-          >
-            <Button
-              type="danger"
-              shape="round"
-              icon={<DeleteOutlined />}
-            />
-          </Popconfirm>
-        </Row>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
           <Row gutter={24}>
             <Col span={12}>

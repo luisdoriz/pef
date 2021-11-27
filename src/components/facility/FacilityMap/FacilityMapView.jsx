@@ -3,7 +3,6 @@ import { Spin, Popover } from "antd"
 import { LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 
-
 const FacilityMapView = ({
   loading,
   areas,
@@ -27,13 +26,13 @@ const FacilityMapView = ({
   }
   const renderContent = (from, to) => (
     <div>
-      <p> Desde: {moment(from).format("HH:MMa")}</p>
-      <p> Hasta: {moment(to).format("HH:MMa")}</p>
+      <p> Desde: {moment(from).local().format("HH:mm")}</p>
+      <p> Hasta: {moment(to).local().format("HH:mm")}</p>
     </div>
   )
   const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#826249", "#009999", "#6A0AAB"];
   return (
-    <div style={{ height: 550 }} >
+    <div >
       <svg height="100%" width="100%" viewBox="0 0 401 401">
         {areas.map(({ vertices }, i) => vertices
           .map(({ vertices }) => {

@@ -45,7 +45,7 @@ class EditOrganizationView extends Component {
         }
         values.name = name.join(' ')
         let notValid = false;
-        organizations.map((organization) => {
+        organizations.forEach((organization) => {
             if (organization.name === values.name && values.name !== selectedOrganization.name)
                 notValid = true
         })

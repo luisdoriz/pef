@@ -10,7 +10,7 @@ const { confirm } = Modal
 const RegisterFacilityView = () => {
     const colors = [{ name: "Rojo", color: "#FF0000" }, { name: "Rosa", color: "#FF00FB" }, { name: "Azul oscuro", color: "#1B00FF" }, { name: "Azul claro", color: "#00E0FF" }, { name: "Naranja", color: "#FF9700" }, { name: "Verde", color: "#008C0D" }, { name: "Café", color: "#826249" }, { name: "Cian", color: "#009999" }, { name: "Morado", color: "#6A0AAB" }]
     const { facilities, createArea, loading, createFacility, removeFacility } = useFacilities();
-    const { createGateway, gateways: existingGateways } = useGateways();
+    const { createGateway } = useGateways();
     const [points, setPoints] = useState({});
     const [walls, setWalls] = useState([]);
     const [createdFacility, setCreatedFacility] = useState({});
@@ -220,7 +220,6 @@ const RegisterFacilityView = () => {
             {facilitySetupVisible ?
                 <>
                     <PageHeader
-                        onBack={null}
                         title="Crear"
                         subTitle={createdFacility?.name}
                         onBack={showConfirm}
@@ -258,23 +257,25 @@ const RegisterFacilityView = () => {
                                     <h2>Agregando ÁREA</h2>
                                 </Col>
                                 <Col span={10}>
-                                    <Button
-                                        size="large"
-                                        shape="round"
-                                        onClick={cancelRoom}
-                                        disabled={(currentRoom === null)}
-                                    >
-                                        Borrar área actual
-                                    </Button>
-                                    <Button
-                                        type="primary"
-                                        size="large"
-                                        shape="round"
-                                        onClick={confirmFinish}
-                                        disabled={(!(currentRoom === null) || gateways.length === 0 || rooms.length === 0)}
-                                    >
-                                        Terminar de agregar edificio
-                                    </Button>
+                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                        <Button
+                                            size="large"
+                                            shape="round"
+                                            onClick={cancelRoom}
+                                            disabled={(currentRoom === null)}
+                                        >
+                                            Borrar área actual
+                                        </Button>
+                                        <Button
+                                            type="primary"
+                                            size="large"
+                                            shape="round"
+                                            onClick={confirmFinish}
+                                            disabled={(!(currentRoom === null) || gateways.length === 0 || rooms.length === 0)}
+                                        >
+                                            Terminar de agregar edificio
+                                        </Button>
+                                    </div>
                                 </Col>
                             </>
                         }
@@ -323,7 +324,7 @@ const RegisterFacilityView = () => {
                                         </div>
                                     </>
                                     :
-                                        <h4>Para crear paredes da click en los vértices del área de manera consecutiva, uno a la vez. Para cerrar el área haz click en el primer vértice.</h4>
+                                    <h4>Para crear paredes da click en los vértices del área de manera consecutiva, uno a la vez. Para cerrar el área haz click en el primer vértice.</h4>
                                 }
                             </div>
                             <h2>Áreas terminadas</h2>

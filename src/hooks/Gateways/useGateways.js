@@ -7,14 +7,16 @@ export const useGateways = (idFacility) => {
 
     useEffect(() => {
         const fetchGateways = async () => {
-            const response = await getGateways(idFacility);
-            setGateways(response);
-            setLoading(false);
+            if (idFacility) {
+                const response = await getGateways(idFacility);
+                setGateways(response);
+                setLoading(false);
+            }
         };
         if (gateways.length === 0 && loading) {
             fetchGateways();
         }
-    }, [gateways, loading]);
+    }, [gateways, loading, idFacility]);
 
     const createGateway = async (body) => {
         const { status } = await postGateway(body);

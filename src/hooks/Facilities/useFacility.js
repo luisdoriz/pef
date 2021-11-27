@@ -16,7 +16,7 @@ export const useFacility = (idFacility) => {
     if (areas.length === 0 && loading){
       fetchAreas();
     }
-  },[areas, loading]);
+  },[areas, loading, idFacility]);
 
   useEffect(() => {
     const fetchPositions = async () => {

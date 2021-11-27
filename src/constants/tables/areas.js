@@ -13,11 +13,13 @@ const getAreasColumns = ( editArea ) => ([
         title: 'Tiempo límite (minutos)',
         dataIndex: 'timeLimit',
         key: 'timeLimit',
+        render: (row) => (row===null) ? 'Ilimitado' : row
     },
     {
         title: 'Capacidad máxima',
         dataIndex: 'maxCapacity',
         key: 'maxCapacity',
+        render: (row) => (row===null) ? 'Ilimitada' : row
       },
     {
       title: 'Editar',

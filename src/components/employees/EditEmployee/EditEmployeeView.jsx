@@ -1,7 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Input, Button, Select, Row, Col, Popconfirm, Switch } from 'antd';
-import MaskedInput from 'antd-mask-input'
+import { Modal, Form, Input, Button, Select, Row, Col, Popconfirm } from 'antd';
 import {
   DeleteOutlined
 } from "@ant-design/icons";

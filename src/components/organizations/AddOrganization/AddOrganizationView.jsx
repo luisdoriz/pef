@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import React, { Component } from 'react'
-import { Modal, Form, Button, Select, Row, Col, Input, InputNumber } from 'antd';
+import { Modal, Form, Button, Row, Col, Input, InputNumber } from 'antd';
 
 const validateMessages = {
   required: '¡${label} es requerido!',
@@ -12,9 +12,6 @@ const validateMessages = {
 
 class AddOrganizationView extends Component {
   formRef = React.createRef();
-  constructor(props) {
-    super(props)
-  }
 
   onReset = () => {
     const { onClose } = this.props;
@@ -35,7 +32,7 @@ class AddOrganizationView extends Component {
     }
     values.name = name.join(' ')
     let notValid = false;
-    organizations.map((organization) => {
+    organizations.forEach((organization) => {
       if (organization.name === values.name)
         notValid = true
     })

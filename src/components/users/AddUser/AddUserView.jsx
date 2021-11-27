@@ -23,15 +23,25 @@ class AddUserView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    const { addUser } = this.props;
+    const { addUser, users, printError } = this.props;
     const names = values.name.split(' ');
     for (var i = 0; i < names.length; i++) {
       names[i] = names[i].charAt(0).toUpperCase() + names[i].slice(1);
-   }
+    }
     const ucName = names.join(' ');
     values.name = ucName;
-    addUser(values);
-    this.onReset()
+    let notValid = false;
+    users.forEach((user) => {
+      if (user.email === values.email)
+        notValid = true
+    })
+    if (notValid) {
+      printError();
+    }
+    else {
+      addUser(values);
+      this.onReset()
+    }
   };
   render() {
     const { visible, onClose, roles } = this.props;
@@ -67,7 +77,7 @@ class AddUserView extends Component {
               </Form.Item>
             </Col>
             <Col span={12}>
-            <Form.Item name="idRole" label="Rol" rules={[{ required: true, }]}>
+              <Form.Item name="idRole" label="Rol" rules={[{ required: true, }]}>
                 <Select
                   showSearch
                   placeholder="Selecciona el rol"
@@ -77,14 +87,14 @@ class AddUserView extends Component {
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {roles.map(({idRole, name}) => (
+                  {roles.map(({ idRole, name }) => (
                     <Option value={idRole}>{name}</Option>
                   ))}
                 </Select>
               </Form.Item>
             </Col>
             <Col span={12}>
-            <Form.Item
+              <Form.Item
                 name="password"
                 label="Contraseña"
                 rules={[
@@ -99,8 +109,8 @@ class AddUserView extends Component {
               >
                 <Input.Password />
               </Form.Item>
-              </Col>
-              <Col span={12}>
+            </Col>
+            <Col span={12}>
               <Form.Item
                 name="confirmPassword"
                 dependencies={['password']}

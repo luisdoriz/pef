@@ -2,23 +2,11 @@ import axios from "axios";
 require("dotenv").config();
 
 const { REACT_APP_API_URL } = process.env;
-const createAdmin = async (raw_body) => {
-  try {
-    const url = REACT_APP_API_URL + "/users";
-    const body = { idOrganization: 1, idRole: 1, ...raw_body };
-    const {
-      data: { data },
-    } = await axios.post(url, body);
-    return data;
-  } catch ({ response }) {
-    return response;
-  }
-};
 
 const createUser = async (raw_body) => {
   try {
     const url = REACT_APP_API_URL + "/users";
-    const body = { idOrganization: 1, ...raw_body };
+    const body = { ...raw_body };
     const {
       data: { data },
     } = await axios.post(url, body);
@@ -105,6 +93,6 @@ const deleteUser = async (idUser) => {
   }
 };
 
-export { createAdmin, createUser, sendLogin, getUsers, getRoles, deleteUser, getUser, putUser, getAdmins };
+export { createUser, sendLogin, getUsers, getRoles, deleteUser, getUser, putUser, getAdmins };
 
 export default createUser;
