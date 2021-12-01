@@ -6,6 +6,7 @@ import HeatMap from '../../components/reports/HeatMap'
 import TimeRange from '../../components/reports/TimeRange'
 import ReportQueryBar from '../../components/reports/ReportQueryBar'
 import CasesReport from '../../components/reports/CasesReport'
+import TimeSpent from '../../components/reports/TimeSpent'
 import "./styles.css"
 
 const ReportsView = () => {
@@ -23,6 +24,7 @@ const ReportsView = () => {
     setIdFacility,
     casesReport,
     casesReportData,
+    timeSpent,
   } = useReports()
   return (
     <div className="reports-container">
@@ -43,6 +45,7 @@ const ReportsView = () => {
         <AreaTraffic data={traffic} loading={loading} />
         <HeatMap data={heatMap} loading={loading} />
         <TimeRange from={from.format("YYYY-MM-DD")} to={to.format("YYYY-MM-DD")} data={checkIn} loading={loading} />
+        <TimeSpent data={timeSpent} loading={loading} />
         <CasesReport
           casesReport={casesReport}
           casesReportData={casesReportData}

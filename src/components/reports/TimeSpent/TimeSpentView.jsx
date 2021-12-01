@@ -1,24 +1,24 @@
 import React, { useState } from 'react'
 import { Col, Row, Spin, Switch, Table, Empty } from 'antd'
 import { ResponsiveHeatMap } from '@nivo/heatmap'
-import { getHeatMapReportsColumns } from '../../../constants/tables/reports'
+import { getTimeSpentReportsColumns } from '../../../constants/tables/reports'
 
-const HeatMapView = ({ data, loading }) => {
+const TimeSpentView = ({ data, loading }) => {
   const formatData = () => {
     const newData = {}
     const areas = {}
     data.forEach((item) => {
-      areas[item.name] = 1
-      if (newData[item.personName]) {
-        const newDataInstance = newData[item.personName][item.name]
+      areas[item.areaName] = 1
+      if (newData[item.name]) {
+        const newDataInstance = newData[item.name][item.areaName]
         if (newDataInstance) {
-          newData[item.personName][item.name] = newDataInstance + Number(item.count)
+          newData[item.name][item.areaName] = newDataInstance + item.daysSpent
         } else {
-          newData[item.personName][item.name] = Number(item.count)
+          newData[item.name][item.areaName] = item.daysSpent
         }
       } else {
-        newData[item.personName] = {
-          [item.name]: Number(item.count)
+        newData[item.name] = {
+          [item.areaName]: item.daysSpent
         }
       }
     });
@@ -31,7 +31,7 @@ const HeatMapView = ({ data, loading }) => {
     data={formatedData}
     keys={areas}
     indexBy="person"
-    margin={{ top: 60, right: 30, bottom: 30, left: 30 }}
+    margin={{ top: 60, right: 30, bottom: 30, left: 100 }}
     forceSquare={true}
     colors={['#86c9ca', '#77C9CB', '#2A96C1', '#14a1da', '#4d4e9c', '#31327A']}
     colorBy="index"
@@ -51,6 +51,7 @@ const HeatMapView = ({ data, loading }) => {
     cellBorderWidth={3}
     cellBorderColor={{ from: 'color', modifiers: [['darker', '0.5']] }}
     labelTextColor="white"
+
     defs={[
       {
         id: 'lines',
@@ -78,7 +79,7 @@ const HeatMapView = ({ data, loading }) => {
       return <Table
         scroll={{ y: 300 }}
         dataSource={data}
-        columns={getHeatMapReportsColumns()}
+        columns={getTimeSpentReportsColumns()}
         pagination={false}
       />
     }
@@ -88,7 +89,7 @@ const HeatMapView = ({ data, loading }) => {
     <Col span={13} className="reports-container__traffic">
       <Row justify="space-between">
         <Col>
-          <h3>Frecuencia de visitas a área por persona</h3>
+          <h3>Tiempo pasado en área por persona (minutos)</h3>
         </Col>
         <Col>
           <Switch checked={showTable} onChange={setShowTable} />
@@ -101,4 +102,4 @@ const HeatMapView = ({ data, loading }) => {
   )
 }
 
-export default HeatMapView
+export default TimeSpentView

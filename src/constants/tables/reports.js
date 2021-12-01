@@ -41,6 +41,31 @@ const getHeatMapReportsColumns = () => [
   },
 ];
 
+const getTimeSpentReportsColumns = () => [
+  {
+    title: "Persona",
+    dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Apellidos",
+    dataIndex: "",
+    key: "x",
+    render: ({ firstLastName, secondLastName }) =>
+      `${firstLastName} ${secondLastName}`,
+  },
+  {
+    title: "Área",
+    dataIndex: "areaName",
+    key: "areaName",
+  },
+  {
+    title: "Tiempo (minutos)",
+    dataIndex: "daysSpent",
+    key: "daysSpent",
+  },
+];
+
 const getCheckInReportsColumns = () => [
   {
     title: "Persona",
@@ -94,6 +119,7 @@ export {
   getHeatMapReportsColumns,
   getCheckInReportsColumns,
   getCasesReportColumns,
+  getTimeSpentReportsColumns,
 };
 
 export default getAreasTrafficReportsColumns;

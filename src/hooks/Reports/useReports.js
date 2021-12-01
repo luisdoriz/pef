@@ -9,11 +9,12 @@ export const useReports = () => {
   const [heatMap, setHeatMap] = useState([]);
   const [checkIn, setCheckIn] = useState([]);
   const [casesReport, setCasesReport] = useState([]);
+  const [timeSpent, setTimeSpent] = useState([]);
   const [casesReportData, setCasesReportData] = useState([]);
   const [facilites, setFacilites] = useState([]);
   const [idFacility, setIdFacility] = useState(null);
-  const [from, setFrom] = useState(moment("2021-09-02"));
-  const [to, setTo] = useState(moment("2021-11-11"));
+  const [from, setFrom] = useState(moment().startOf('week'));
+  const [to, setTo] = useState(moment());
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchInfo = async () => {
@@ -41,6 +42,7 @@ export const useReports = () => {
             casesReportData: casesReportDataLocal,
           },
           checkIn: checkInData,
+          timeSpentData,
         } = await getFacilityReport(body);
         setTraffic(areaTraffic);
         setHeatMap(areaOcurrencies);
@@ -48,6 +50,7 @@ export const useReports = () => {
         setCasesReport(casesReportLocal);
         setCasesReportData(casesReportDataLocal);
         setCheckIn(checkInData);
+        setTimeSpent(timeSpentData)
         setLoading(false);
       }
     };
@@ -68,6 +71,7 @@ export const useReports = () => {
     setIdFacility,
     casesReport,
     casesReportData,
+    timeSpent,
   };
 };
 
