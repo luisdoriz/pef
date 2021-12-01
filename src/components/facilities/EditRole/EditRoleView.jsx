@@ -51,7 +51,7 @@ class EditRoleView extends Component {
     }
     values.name = name.join(' ')
     let notValid = false;
-    privilegeLevels.map((indPL) => {
+    privilegeLevels.forEach((indPL) => {
       if (indPL.name === values.name && values.name !== role.name)
         notValid = true
     })

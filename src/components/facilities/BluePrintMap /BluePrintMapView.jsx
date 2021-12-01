@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { intersect, insideArea } from "../../../helpers/determineArea"
 import { notification } from "antd";
 import "./styles.css"
@@ -35,7 +35,7 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
       let formattedX = decimalX
       let formattedY = decimalY
       if (decimalX % 1 !== 0.5) {
-        if (Math.round((decimalX % 1) * 10) / 10 == 0.4 || Math.round((decimalX % 1) * 10) / 10 == 0.6) {
+        if (Math.round((decimalX % 1) * 10) / 10 === 0.4 || Math.round((decimalX % 1) * 10) / 10 === 0.6) {
           formattedX = parseFloat(decimalX.toString().replace(/.$/, '5'));
         }
         else {
@@ -43,7 +43,7 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
         }
       }
       if (decimalY % 1 !== 0.5) {
-        if (Math.round((decimalY % 1) * 10) / 10 == 0.4 || Math.round((decimalY % 1) * 10) / 10 == 0.6) {
+        if (Math.round((decimalY % 1) * 10) / 10 === 0.4 || Math.round((decimalY % 1) * 10) / 10 === 0.6) {
           formattedY = parseFloat(decimalY.toString().replace(/.$/, '5'));
         }
         else {
@@ -162,7 +162,7 @@ const BluePrintMapView = ({ point, setCurrentPoint, points, setPoints, walls, se
     }
   }
   return (
-    <div className="blueprint-container" style={{ height: 550 }}>
+    <div className="blueprint-container" >
       <svg height="100%" width="100%" onClick={printCoordinates} viewBox="0 0 401 401">
         {rooms.map((room, i) => (
           <>

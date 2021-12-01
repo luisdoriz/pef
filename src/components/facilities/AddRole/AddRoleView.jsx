@@ -39,7 +39,7 @@ class AddRoleView extends Component {
     }
     values.name = name.join(' ')
     let notValid = false;
-    privilegeLevels.map((indPL) => {
+    privilegeLevels.forEach((indPL) => {
       if (indPL.name === values.name)
         notValid = true
     })
@@ -47,8 +47,10 @@ class AddRoleView extends Component {
       printError();
     }
     else {
-      const formattedTime = values.entryTime.format('HH:mm');
-      values.entryTime = formattedTime
+      if (values.entryTime) {
+        const formattedTime = values.entryTime.format('HH:mm');
+        values.entryTime = formattedTime
+      }
       addRole(values);
       this.onReset()
     }
@@ -57,7 +59,7 @@ class AddRoleView extends Component {
   render() {
     const { visible, onClose, areas } = this.props;
     return (
-      <Modal footer={null} title="Editar rol" visible={visible} onCancel={onClose}>
+      <Modal footer={null} title="Agregar rol" visible={visible} onCancel={onClose}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages} style={{ paddingTop: 16 }}>
           <Row gutter={24}>
             <Col span={12}>
@@ -86,6 +88,15 @@ class AddRoleView extends Component {
                 <Select
                   mode="multiple"
                   placeholder="Selecciona las áreas permitidas"
+                  allowClear
+                  optionFilterProp="children"
+                  filterOption={(input, option) => {
+                    if (option.children) {
+                      return option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 ? true : false;
+                    } else if (option.label) {
+                      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0 ? true : false;
+                    }
+                  }}
                 >
                   {areas.map(({ idArea, name }) => (
                     <Option value={idArea}>{name}</Option>

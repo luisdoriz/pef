@@ -39,9 +39,28 @@ class EditEmployeeView extends Component {
     this.onReset()
   }
   onFinish = (values) => {
-    this.onReset();
-    const { editUser, user } = this.props;
-    editUser({ idUser: user.idUser, ...values });
+    const { editUser, user, users, printError } = this.props;
+    const names = values.name.split(' ');
+    for (var i = 0; i < names.length; i++) {
+      names[i] = names[i].charAt(0).toUpperCase() + names[i].slice(1);
+    }
+    const ucName = names.join(' ');
+    values.name = ucName;
+    let notValid = false;
+
+    users.forEach((indUser) => {
+      if (indUser.email === values.email && values.email !== user.email)
+        notValid = true
+    })
+    if (notValid) {
+      printError();
+    }
+    else {
+      editUser({ idUser: user.idUser, ...values });
+      this.onReset()
+    }
+
+
   };
 
   deleteUser = (user) => {

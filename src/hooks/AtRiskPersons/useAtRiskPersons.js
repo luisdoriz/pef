@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
 import { getAtRiskPersons } from "../../data/cases";
-import { notification } from "antd";
-
-const openNotification = (type, title, message) =>
-  notification[type]({
-    message: title,
-    description: message,
-  });
 
 export const useAtRiskPersons = (idCase) => {
   const [atRiskPersons, setAtRiskPersons] = useState([]);

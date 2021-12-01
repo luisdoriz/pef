@@ -13,10 +13,6 @@ const validateMessages = {
 
 class AddBeaconView extends Component {
   formRef = React.createRef();
-  constructor(props) {
-    super(props)
-
-  }
 
   onReset = () => {
     const { onClose } = this.props;
@@ -31,7 +27,7 @@ class AddBeaconView extends Component {
   onFinish = (values) => {
     const { addBeacon, beacons, printError } = this.props;
     let notValid = false;
-    beacons.map((indBeacon) => {
+    beacons.forEach((indBeacon) => {
       if (indBeacon.macAddress === values.macAddress)
         notValid = true
     })

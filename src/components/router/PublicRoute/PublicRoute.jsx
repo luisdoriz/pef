@@ -9,7 +9,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import useAuth from '../../../hooks/Auth';
 
 const PublicRoute = ({ children, ...props }) => {
-  const { loading, checkAuth, auth, user } = useAuth()
+  const { loading, checkAuth, auth } = useAuth()
   useEffect(() => {
     const init = async () => checkAuth()
     if (loading) {

@@ -45,7 +45,7 @@ class EditAdminView extends Component {
         }
         values.name = name.join(' ')
         let notValid = false;
-        admins.map((admin) => {
+        admins.forEach((admin) => {
             if (admin.name === values.name && values.name !== selectedAdmin.name)
                 notValid = true
         })

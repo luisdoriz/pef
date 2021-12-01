@@ -12,9 +12,6 @@ const validateMessages = {
 
 class AddAdminView extends Component {
   formRef = React.createRef();
-  constructor(props) {
-    super(props)
-  }
 
   onReset = () => {
     const { onClose } = this.props;
@@ -35,7 +32,7 @@ class AddAdminView extends Component {
     }
     values.name = name.join(' ')
     let notValid = false;
-    admins.map((admin) => {
+    admins.forEach((admin) => {
       if (admin.name === values.name || admin.email === values.email)
         notValid = true
     })

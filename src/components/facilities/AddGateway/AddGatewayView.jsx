@@ -30,7 +30,7 @@ class AddGatewayView extends Component {
     const { setAddGatewaysPositionsVisible, setNewGateway, setAddGatewayVisible, defineArea, gateways, printError, registering, setGateways} = this.props
     let notValid = false;
     if (gateways && gateways.length > 0) {
-      gateways.map((gateway) => {
+      gateways.forEach((gateway) => {
         if (gateway.macAddress === values.macAddress) {
           notValid = true;
         }

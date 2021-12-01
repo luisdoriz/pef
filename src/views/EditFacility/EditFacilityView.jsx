@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { PageHeader, Row, Button, Col, Modal, notification } from 'antd';
 import { AreasList, EditArea, GatewaysList, EditGateway, AddGateway, RolesList, EditRole, AddRole, GatewaysMap } from "../../components/facilities";
 import useFacility from '../../hooks/Facilities/useFacility';
@@ -17,7 +16,7 @@ const EditFacilityView = () => {
     let { idFacility } = useParams();
     const { beacons, removeBeacon, createBeacon, loading: loadingBeacons } = useBeacons(idFacility);
     const { gateways, createGateway, editGateway, removeGateway } = useGateways(idFacility);
-    const { areas, editArea, loading: loadingAreas, removeArea } = useFacility(idFacility);
+    const { areas, editArea, loading: loadingAreas } = useFacility(idFacility);
     const { privilegeLevels, loading: loadingRoles, createPrivilegeLevel, editPrivilegeLevel, removePrivilegelevel } = useEmployees(idFacility);
     const [area, setArea] = useState(null);
     const [editAreaVisible, setEditAreaVisible] = useState(false)
@@ -33,6 +32,7 @@ const EditFacilityView = () => {
     const [addGatewaysPositionsVisible, setAddGatewaysPositionsVisible] = useState(false)
     const [areaPoints, setAreaPoints] = useState(null)
     const [editing, setEditing] = useState(false)
+    const [selectedGateways, setSelectedGateways] = useState([])
 
     const openNotification = (type, title, message) =>
         notification[type]({
@@ -60,8 +60,10 @@ const EditFacilityView = () => {
     }
 
     const defineArea = (prop) => {
-        const selectedArea = areas.filter((room) => room.idArea === prop)
+        const selectedArea = areas.filter((room) => room.idArea === prop);
         setAreaPoints(selectedArea[0].vertices[0]);
+        const gatewaysInArea = gateways.filter((gateway) => gateway.idArea === selectedArea[0].idArea);
+        setSelectedGateways(gatewaysInArea);
     }
 
     const addBeacon = (prop) => {
@@ -89,6 +91,7 @@ const EditFacilityView = () => {
                 }
                 setAddGatewaysPositionsVisible(false);
                 setAreaPoints(null);
+                setSelectedGateways([])
                 setNewGateway(null);
                 setEditing(false);
                 setGateway(null)
@@ -118,7 +121,6 @@ const EditFacilityView = () => {
             {addGatewaysPositionsVisible ?
                 <>
                     <PageHeader
-                        onBack={null}
                         title={editing ? "Editar posición de gateway" : "Agregar gateway"}
                         onBack={() => {
                             setAddGatewaysPositionsVisible(false)
@@ -146,13 +148,14 @@ const EditFacilityView = () => {
                                 sizeY={areas && areas.length > 0 ? areas[0].facilitySizeY : 0}
                                 gatewayPosition={gatewayPosition}
                                 setGatewayPosition={setGatewayPosition}
-                                gateways={gateways}
+                                gateways={selectedGateways}
                                 editing={editing}
                             />
                         </Col>
                         <Col span={6}>
                             <div style={{ paddingTop: 20 }}>
                                 <h4>Da click en el punto donde desee colocar el gateway.</h4>
+                                <h4> Solo se muestra el área que seleccionó, no todo el edificio.</h4>
                                 <div style={{ display: 'flex', alignItems: "center" }}>
                                     <span style={{ height: "15px", width: "15px", backgroundColor: "#31327A", borderRadius: "50%", display: 'inline-block' }}>
                                     </span>
@@ -170,7 +173,6 @@ const EditFacilityView = () => {
                 :
                 <>
                     <PageHeader
-                        onBack={null}
                         title="Editar"
                         subTitle={areas && areas.length > 0 ? areas[0].facilityName : ''}
                         onBack={() => history.goBack()}
@@ -179,7 +181,6 @@ const EditFacilityView = () => {
                         area={area}
                         visible={editAreaVisible}
                         onClose={() => setEditAreaVisible(!editAreaVisible)}
-                        removeArea={removeArea}
                         editArea={editArea}
                         setEditAreaVisible={setEditAreaVisible}
                         areas={areas}
@@ -245,8 +246,8 @@ const EditFacilityView = () => {
                             />
                         </Col>
                         <Col span={11}>
-                            <h3>Roles</h3>
-                            <Row justify="end">
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <h3>Roles</h3>
                                 <Button
                                     type="primary"
                                     size="large"
@@ -255,7 +256,7 @@ const EditFacilityView = () => {
                                 >
                                     Agregar
                                 </Button>
-                            </Row>
+                            </div>
                             <RolesList
                                 roles={privilegeLevels}
                                 loading={loadingRoles}
@@ -266,8 +267,8 @@ const EditFacilityView = () => {
                     </Row>
                     <Row gutter={8} justify="space-between">
                         <Col span={11}>
-                            <h3>Gateways</h3>
-                            <Row justify="end">
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <h3>Gateways</h3>
                                 <Button
                                     type="primary"
                                     size="large"
@@ -276,7 +277,7 @@ const EditFacilityView = () => {
                                 >
                                     Agregar
                                 </Button>
-                            </Row>
+                            </div>
                             <GatewaysList
                                 gateways={gateways}
                                 editGateway={setEditGateway}
@@ -284,8 +285,8 @@ const EditFacilityView = () => {
                             />
                         </Col>
                         <Col span={11}>
-                            <h3>Beacons disponibles</h3>
-                            <Row justify="end">
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <h3>Beacons disponibles</h3>
                                 <Button
                                     type="primary"
                                     size="large"
@@ -294,7 +295,7 @@ const EditFacilityView = () => {
                                 >
                                     Agregar
                                 </Button>
-                            </Row>
+                            </div>
                             <BeaconsList
                                 beacons={beacons}
                                 deleteBeacon={deleteBeacon}

@@ -31,7 +31,7 @@ class AddFacilityView extends Component {
     }
     values.name = name.join(' ')
     let notValid = false;
-    facilities.map((facility) => {
+    facilities.forEach((facility) => {
       if (facility.name === values.name)
         notValid = true
     })

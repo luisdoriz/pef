@@ -38,7 +38,7 @@ class AddRoomView extends Component {
     }
     values.name = name.join(' ')
     let notValid = false;
-    names.map((indName) => {
+    names.forEach((indName) => {
       if (indName.name === values.name)
         notValid = true
     })
@@ -53,7 +53,7 @@ class AddRoomView extends Component {
   };
 
   render() {
-    const { visible, onClose } = this.props;
+    const { visible } = this.props;
     return (
       <Modal footer={null} title="Agregar área" visible={visible} onCancel={this.onCancel}>
         <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish} validateMessages={validateMessages}>

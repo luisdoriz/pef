@@ -13,7 +13,7 @@ export const useBeacons = (idFacility) => {
     };
     if (beacons.length === 0 && loading)
       fetchBeacons();
-  },[beacons, loading]);
+  },[beacons, loading, idFacility]);
 
   const removeBeacon = async (body) => {
     // eslint-disable-next-line no-unused-vars

@@ -4,12 +4,13 @@ import { useFacility } from '../../hooks/Facilities';
 import { useParams } from 'react-router';
 import FacilityMap from '../../components/facility/FacilityMap';
 import { CurrentAreasList } from "../../components/facilities";
+import moment from 'moment';
 
 const FacilityView = () => {
   let { idFacility } = useParams();
   const { loading, areas, positions, getPositions } = useFacility(idFacility)
   const [names, setNames] = useState([]);
-
+  const [updateTime, setUpdateTime] = useState(moment().format("YYYY-MM-DD HH:mm"));
   useEffect(() => {
     const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#FF7400", "#009999", "#6A0AAB"];
     const setNamesList = () => {
@@ -24,7 +25,10 @@ const FacilityView = () => {
     }
   }, [areas])
 
-
+  const updatePositions = async () =>{
+    await getPositions();
+    setUpdateTime(moment().format("HH:mm"))
+  }
 
   return (
     <>
@@ -33,12 +37,13 @@ const FacilityView = () => {
         title="En vivo"
         subTitle={areas && areas.length > 0 ? areas[0].facilityName : ''}
       />
-      <Row justify="end">
+      <Row justify="end" style={{padding: 20, alignItems: "baseline"}}>
+        <h4 style={{paddingRight: 20, color: "#777777"}}>Última actualización: {updateTime}</h4>
         <Button
           type="primary"
           size="large"
           shape="round"
-          onClick={getPositions}
+          onClick={updatePositions}
         >
           Actualizar
         </Button>

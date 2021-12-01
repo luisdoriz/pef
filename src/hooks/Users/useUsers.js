@@ -1,6 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { getUsers, getRoles, createUser, deleteUser, putUser, getAdmins } from "../../data/user";
+import { notification } from 'antd';
+
+const openNotification = (type, title, message) =>
+  notification[type]({
+    message: title,
+    description: message,
+  });
 
 export const useUsers = (idOrganization) => {
   const [users, setUsers] = useState([]);
@@ -19,7 +26,7 @@ export const useUsers = (idOrganization) => {
       fetchRoles();
       fetchAdmins();
     }
-  }, [users, loading]);
+  }, [users, loading, idOrganization]);
 
   const fetchRoles = async () => {
     const response = await getRoles();
@@ -27,15 +34,27 @@ export const useUsers = (idOrganization) => {
   };
 
   const fetchAdmins = async () => {
-    const response = await getAdmins(idOrganization);
-    setAdmins(response.data.admins);
-    setLoading(false);
+    if (idOrganization) {
+      const response = await getAdmins(idOrganization);
+      setAdmins(response.data.admins);
+      setLoading(false);
+    }
   };
 
   const postUser = async (body) => {
-    const { status } = await createUser(body);
-    setLoading(true);
-    setUsers([]);
+    const status = await createUser(body);
+    if (status.status === 409) {
+      openNotification(
+        "error",
+        "Correo no válido",
+        "El correo que ingresó ya existe"
+      );
+    }
+    else {
+      setLoading(true);
+      setUsers([]);
+    }
+
   }
 
   const removeUser = async (body) => {
