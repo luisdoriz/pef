@@ -1,10 +1,15 @@
-self.addEventListener('push', event => {
-  const data = event.data.json()
-  console.log('New notification', data)
-  const options = {
-    body: data.body,
+self.addEventListener("push", (event) => {
+  let title = "Alerta";
+  let text = "";
+  try {
+    const data = event.data.json();
+    title = data.title;
+    text = data.body;
+  } catch {
+    text = event.data.text();
   }
-  event.waitUntil(
-    self.registration.showNotification(data.title, options)
-  );
-})
+  const options = {
+    body: text,
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
