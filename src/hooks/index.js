@@ -4,7 +4,6 @@ import useAuth from "./Auth";
 import useCases from "./ActiveCases";
 import useAlerts from "./Alerts";
 import useEmployeeFacility from "./EmployeeFacility";
-import useRecoveredCases from "./RecoveredCases";
 import useUsers from "./Users";
 import { useFacilities, useFacility } from "./Facilities";
 import useBeacons from "./Beacons"
@@ -20,7 +19,6 @@ export {
   useCases,
   useAlerts,
   useEmployeeFacility,
-  useRecoveredCases,
   useUsers,
   useFacilities,
   useVisitors,

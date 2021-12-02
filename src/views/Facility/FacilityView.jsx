@@ -10,7 +10,7 @@ const FacilityView = () => {
   let { idFacility } = useParams();
   const { loading, areas, positions, getPositions } = useFacility(idFacility)
   const [names, setNames] = useState([]);
-  const [updateTime, setUpdateTime] = useState(moment().format("YYYY-MM-DD HH:mm"));
+  const [updateTime, setUpdateTime] = useState(moment().format("HH:mm"));
   useEffect(() => {
     const colors = ["#FF0000", "#FF00FB", "#1B00FF", "#00E0FF", "#FF9700", "#008C0D", "#FF7400", "#009999", "#6A0AAB"];
     const setNamesList = () => {
@@ -25,7 +25,7 @@ const FacilityView = () => {
     }
   }, [areas])
 
-  const updatePositions = async () =>{
+  const updatePositions = async () => {
     await getPositions();
     setUpdateTime(moment().format("HH:mm"))
   }
@@ -37,8 +37,8 @@ const FacilityView = () => {
         title="En vivo"
         subTitle={areas && areas.length > 0 ? areas[0].facilityName : ''}
       />
-      <Row justify="end" style={{padding: 20, alignItems: "baseline"}}>
-        <h4 style={{paddingRight: 20, color: "#777777"}}>Última actualización: {updateTime}</h4>
+      <Row justify="end" style={{ padding: 20, alignItems: "baseline" }}>
+        <h4 style={{ paddingRight: 20, color: "#777777" }}>Última actualización: {updateTime}</h4>
         <Button
           type="primary"
           size="large"
@@ -60,6 +60,7 @@ const FacilityView = () => {
         </Col>
         <Col span={6} style={{ padding: 10 }}>
           <div style={{ paddingTop: 20, paddingBottom: 20 }}>
+            <h4>*Cada línea representa un metro.</h4>
             <h4>Da click en una persona para ver más detalle.</h4>
             <div style={{ display: 'flex', alignItems: "center" }}>
               <span style={{ height: "15px", width: "15px", backgroundColor: "#31327A", borderRadius: "50%", display: 'inline-block' }}>

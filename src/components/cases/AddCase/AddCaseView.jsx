@@ -39,7 +39,7 @@ class AddCaseView extends Component {
 
   onFinish = (values) => {
     const { addCase } = this.props;
-    const date = values.date.format('YYYY/MM/DD');
+    const date = moment(values.date).format('YYYY/MM/DD')
     const body = { idEmployee: values.idEmployee, date: date }
     addCase(body);
     this.onReset()

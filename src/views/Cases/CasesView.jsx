@@ -4,14 +4,12 @@ import { Button, PageHeader, Row } from 'antd';
 
 import { ActiveCasesList, AddCase, RecoveredCasesList, CaseDetail } from "../../components/cases";
 import useActiveCases from '../../hooks/ActiveCases/useCases';
-import useRecoveredCases from '../../hooks/RecoveredCases/useRecoveredCases';
 import useEmployeesFacilities from '../../hooks/EmployeeFacility/useEmployeesFacilities';
 
 const CasesView = ({ user }) => {
   const { idRole } = user;
 
-  const { activeCases, postActiveCase, deleteActiveCase, loading: loadingActive, setInactiveCase } = useActiveCases();
-  const { recoveredCases, loading: loadingRecovered } = useRecoveredCases();
+  const { activeCases, postActiveCase, deleteActiveCase, recoveredCases, loading, setInactiveCase } = useActiveCases();
 
   const { facilities } = useEmployeesFacilities();
   const [addCaseVisible, setAddCaseVisible] = useState(false)
@@ -72,12 +70,12 @@ const CasesView = ({ user }) => {
         cases={activeCases}
         seeCaseDetail={seeCaseDetail}
         facilities={facilities}
-        loading={loadingActive}
+        loading={loading}
       />
       <h3>Casos recuperados</h3>
       <RecoveredCasesList
         cases={recoveredCases}
-        loading={loadingRecovered}
+        loading={loading}
         facilities={facilities}
       />
     </>

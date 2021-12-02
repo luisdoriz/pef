@@ -26,6 +26,7 @@ const ReportQueryBarView = ({
           onChange={onChange}
           disabledDate={disableDateTime}
           disabledTime={disableDateTime}
+          allowClear={false}
         />
       </Col>
       <Col span={8}>

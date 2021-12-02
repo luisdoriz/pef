@@ -1,5 +1,6 @@
 import { Popconfirm, Button } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import moment from 'moment';
 
 const getAlertsColumns = (deleteAlert, idRole, types, facilities) => {
   const columns = [
@@ -17,7 +18,7 @@ const getAlertsColumns = (deleteAlert, idRole, types, facilities) => {
       sorter: (a, b) => a.date.localeCompare(b.date),
       sortDirections: ['descend', 'ascend', 'descend'],
       defaultSortOrder: 'descend',
-      render: (row) => row.substring(0, 10),
+      render: (row) => moment(row).local().format("YYYY/MM/DD"),
     },
     {
       title: "Responsable",
