@@ -34,6 +34,8 @@ async function askUserPermission() {
 export async function subscribeUser(idUser) {
   const notificationSupport = "serviceWorker" in navigator  && "PushManager" in window;
   const permision = await askUserPermission();
+  console.log("permision", permision)
+
   if (notificationSupport && permision === "granted") {
     navigator.serviceWorker.ready
       .then(function (registration) {
@@ -54,7 +56,7 @@ export async function subscribeUser(idUser) {
                 })
                 .then(function (newSubscription) {
                   console.log("New subscription added.");
-                  sendSubscription(idUser, newSubscription);
+                  sendSubscription(newSubscription);
                 })
                 .catch(function (e) {
                   if (Notification.permission !== "granted") {
