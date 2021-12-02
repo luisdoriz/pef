@@ -46,7 +46,7 @@ class LoginForm extends Component {
             },
           ]}
         >
-          <Input type="password" />
+          <Input.Password type="password" />
         </Form.Item>
         <Row justify="center">
           <Form.Item>
